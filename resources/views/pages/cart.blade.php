@@ -46,7 +46,7 @@
     padding: 8px 0px;
     outline: none;
     border: none;
-    border-top: .px solid;
+    border-top: 1px solid;
 }
 </style>
 
@@ -186,8 +186,9 @@ document.addEventListener('DOMContentLoaded', function() {
             var button = this;
             if (confirm("Bạn có thật sự muốn xóa?")) {
                 button.disabled = true;
+
                 $.ajax({
-                    url: '{{ route('remove_from_cart') }}',
+                    url: '{{ route("remove_from_cart") }}',
                     method: 'DELETE',
                     data: {
                         _token: '{{ csrf_token() }}',
@@ -215,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         $.ajax({
-            url: '{{ route('update_cart') }}',
+            url: '{{ route("update_cart") }}',
             method: 'PATCH',
             data: {
                 _token: '{{ csrf_token() }}',

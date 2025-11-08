@@ -1,44 +1,17 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🏋️‍♀️ GymZone – Website Bán Sản Phẩm & Giới Thiệu Dịch Vụ Phòng Gym
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 🌟 Giới thiệu
+**GymZone** là website thương mại điện tử kết hợp giới thiệu dịch vụ phòng tập thể hình.  
+Dự án được xây dựng nhằm cung cấp nền tảng giúp **khách hàng dễ dàng mua sắm các sản phẩm thể thao** (như whey protein, găng tay, bình nước, quần áo gym...) và **tìm hiểu thông tin các gói tập luyện**, huấn luyện viên cá nhân, hoặc chương trình khuyến mãi của phòng gym.
 
-## About Shop thú cưng Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 💪 Tính năng chính
+- 🛒 **Bán sản phẩm thể hình:** hiển thị danh mục, chi tiết sản phẩm, thêm vào giỏ hàng, thanh toán.  
+- 💬 **Giới thiệu dịch vụ:** trình bày các gói tập (Basic, Pro, VIP), các lớp học và chương trình ưu đãi.  
+- 🔍 **Tìm kiếm & lọc:** theo tên, giá, hoặc loại sản phẩm/dịch vụ.  
+- 📱 **Giao diện thân thiện:** hiển thị tốt trên cả máy tính và điện thoại.  
+- 📧 **Liên hệ nhanh:** hỗ trợ khách hàng qua biểu mẫu hoặc mạng xã hội.  
 
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-- **abc**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-
-## Cách chạy 
-
-php artisan serve

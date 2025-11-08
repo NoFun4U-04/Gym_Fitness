@@ -34,9 +34,10 @@
                     <input type="password" name="password" class="form-control" id="password">
                     <span class="form-message"></span>
 
-                    <span id="togglePassword" style="position: absolute; right: 10px; top: 50px; cursor: pointer;">
-                        <i class="fa-solid fa-eye" id="eyeIcon" style="cursor: pointer;"></i>
-                    </span>
+
+                    <span id="togglePassword" style="position: absolute; right: 10px; top: 50px; cursor: pointer;"> <i class="fa-solid fa-eye" id="eyeIcon" style="cursor: pointer;"></i> </span>
+
+
                 </div>
 
 
