@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý cửa hàng túi xách</title>
-    <link rel="shortcut icon" type="image/png" href="/frontend/img/icon.png" />
+    <title>Quản lý cửa hàng Gym Fitness</title>
+    <link rel="shortcut icon" type="image/png" href="/frontend/img/LOGO.png" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
@@ -18,7 +18,9 @@
     <link rel="stylesheet" href="/frontend/css/style.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" />
     
+    <!-- header-footer -->
     <link rel="stylesheet" href="/frontend/css/main.css" />
+    @stack('styles')
 </head>
 
 <body style="margin: 0; min-height: 100vh; display: flex; flex-direction: column;">
@@ -133,6 +135,7 @@
             <center>© 2025 Sacha Shop. All rights reserved.</center>
         </div>
     </footer>
+    @stack('scripts')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
     <script>
