@@ -9,7 +9,7 @@
 <section class="hero-banner">
 
     <video autoplay muted loop playsinline" class="banner-video">
-      <source src="https://res.cloudinary.com/ddtn4zjge/video/upload/v1762400426/Video_ch%C6%B0a_c%C3%B3_ti%C3%AAu_%C4%91%E1%BB%81_%C4%90%C6%B0%E1%BB%A3c_t%E1%BA%A1o_b%E1%BA%B1ng_Clipchamp_1_p5bsxl.mp4" type="video/mp4">
+      <source src="https://res.cloudinary.com/dyk9mzb5t/video/upload/v1763131649/1114_xiw66b.mp4" type="video/mp4">
     </video>
      <!-- Lớp phủ tối -->
   <div class="overlay"></div>

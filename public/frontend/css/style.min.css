@@ -33,7 +33,7 @@ a:hover {
     /*box-shadow: 0 3px 8px rgb(0 0 0 / 15%);*/
     border-radius: 10px;
     padding: 0 0px;
-    height: 70px;
+    height: 65px;
 }
 .navbar::before {
     content: unset;
@@ -211,7 +211,6 @@ a:hover {
     position: sticky;
     top: 25px;
     z-index: 1;
-
     display: flex;
     justify-content: center;
 }
