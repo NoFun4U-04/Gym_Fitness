@@ -126,44 +126,65 @@
     </div>
 </section> -->
 
-<!-- BRAND CATEGORIES -->
-<section class="brand-section">
+<!-- BRAND SHOWCASE -->
+<section class="brand-section" id="brands">
     <div class="container">
-        <div class="section-title">
-            <h2>Danh mục thương hiệu</h2>
+        <div class="home-section-heading">
+            <p class="home-tag">THƯƠNG HIỆU NỔI BẬT</p>
+            <h2 class="home-title">Danh mục thương hiệu</h2>
+            <p class="home-subtitle">
+                Chọn thương hiệu yêu thích để khám phá những mẫu túi xách cao cấp, sang trọng và thời thượng.
+            </p>
         </div>
 
-        <div class="brand-grid">
-            <a href="{{ route('viewAll', ['danhmuc_id' => 9]) }}" class="brand-card brand-gucci">
-                <span>Gucci Collection</span>
+        <div class="brand-row">
+            <a href="#gucci-collection" class="brand-pill brand-pill--gucci">
+                <div class="brand-pill__label">Gucci</div>
+                <div class="brand-pill__name">Gucci Collection</div>
             </a>
-            <a href="{{ route('viewAll', ['danhmuc_id' => 10]) }}" class="brand-card brand-dior">
-                <span>Christian Dior</span>
+
+            <a href="#dior-collection" class="brand-pill brand-pill--dior">
+                <div class="brand-pill__label">Christian Dior</div>
+                <div class="brand-pill__name">Christian Dior</div>
             </a>
-            <a href="{{ route('viewAll', ['danhmuc_id' => 11]) }}" class="brand-card brand-hermes">
-                <span>Hermès</span>
+
+            <a href="#hermes-collection" class="brand-pill brand-pill--hermes">
+                <div class="brand-pill__label">Hermès</div>
+                <div class="brand-pill__name">Hermès Heritage</div>
             </a>
-            <a href="{{ route('viewAll', ['danhmuc_id' => 12]) }}" class="brand-card brand-chanel">
-                <span>Chanel Luxury</span>
+
+            <a href="#chanel-collection" class="brand-pill brand-pill--chanel">
+                <div class="brand-pill__label">Chanel</div>
+                <div class="brand-pill__name">Chanel Luxury</div>
             </a>
         </div>
     </div>
 </section>
 
-<!-- GUCCI PRODUCTS -->
-<section class="products-section">
+<!-- GUCCI COLLECTION -->
+<section class="home-collection home-collection--gucci" id="gucci-collection">
     <div class="container">
-        <div class="section-title">
-            <h2>Túi Gucci</h2>
+        <div class="home-collection-header">
+            <div class="home-collection-text">
+                <span class="home-pill home-pill--gucci">GUCCI</span>
+                <h2 class="home-collection-title">Túi Gucci</h2>
+                <p class="home-collection-subtitle">
+                    Những thiết kế mang đậm dấu ấn Ý với đường nét mạnh mẽ, hiện đại.
+                </p>
+            </div>
+            <a href="{{ route('viewAll', ['danhmuc_id' => 9]) }}" class="home-view-all">
+                Xem tất cả
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
         </div>
 
-        <div class="products-grid">
+        <div class="home-collection-grid">
             @foreach($gucciProducts as $product)
-            <div class="product-card">
+            <article class="product-card product-card--collection">
                 <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}">
                     <div class="product-image">
                         <img src="{{ asset($product->anhsp) }}" alt="{{ $product->tensp }}" onerror="this.src='{{ asset('frontend/upload/placeholder.jpg') }}'">
-                        
+
                         <div class="product-badge">
                             @if($product->giamgia)
                                 -{{ $product->giamgia }}%
@@ -173,10 +194,12 @@
                         </div>
 
                         <div class="product-actions">
-                            <a href="{{ route('add_to_cart', $product->id_sanpham) }}" title="Thêm vào giỏ hàng" onclick="event.preventDefault(); event.stopPropagation();">
-                                <i class="fa-solid fa-cart-shopping"></i>
+                            <a href="{{ route('add_to_cart', $sanpham->id_sanpham) }}"
+                                class="btn-add-to-cart"
+                                title="Thêm vào giỏ hàng">
+                                    <i class="fa-solid fa-cart-shopping"></i>
                             </a>
-                            <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}" title="Xem chi tiết">
+                            <a href="{{ route('detail', ['id' => $sanpham->id_sanpham]) }}" title="Xem chi tiết">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </a>
                         </div>
@@ -196,26 +219,36 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </article>
             @endforeach
         </div>
     </div>
 </section>
 
-<!-- DIOR PRODUCTS -->
-<section class="products-section" style="background: #fff;">
+<!-- DIOR COLLECTION -->
+<section class="home-collection home-collection--dior" id="dior-collection">
     <div class="container">
-        <div class="section-title">
-            <h2>Túi Christian Dior</h2>
+        <div class="home-collection-header">
+            <div class="home-collection-text">
+                <span class="home-pill home-pill--dior">CHRISTIAN DIOR</span>
+                <h2 class="home-collection-title">Túi Christian Dior</h2>
+                <p class="home-collection-subtitle">
+                    Sự kết hợp hoàn hảo giữa tinh tế cổ điển và hơi thở hiện đại.
+                </p>
+            </div>
+            <a href="{{ route('viewAll', ['danhmuc_id' => 10]) }}" class="home-view-all">
+                Xem tất cả
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
         </div>
 
-        <div class="products-grid">
+        <div class="home-collection-grid">
             @foreach($diorProducts as $product)
-            <div class="product-card">
+            <article class="product-card product-card--collection">
                 <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}">
                     <div class="product-image">
                         <img src="{{ asset($product->anhsp) }}" alt="{{ $product->tensp }}" onerror="this.src='{{ asset('frontend/upload/placeholder.jpg') }}'">
-                        
+
                         <div class="product-badge">
                             @if($product->giamgia)
                                 -{{ $product->giamgia }}%
@@ -225,10 +258,12 @@
                         </div>
 
                         <div class="product-actions">
-                            <a href="{{ route('add_to_cart', $product->id_sanpham) }}" title="Thêm vào giỏ hàng" onclick="event.preventDefault(); event.stopPropagation();">
-                                <i class="fa-solid fa-cart-shopping"></i>
+                            <a href="{{ route('add_to_cart', $sanpham->id_sanpham) }}"
+                                class="btn-add-to-cart"
+                                title="Thêm vào giỏ hàng">
+                                    <i class="fa-solid fa-cart-shopping"></i>
                             </a>
-                            <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}" title="Xem chi tiết">
+                            <a href="{{ route('detail', ['id' => $sanpham->id_sanpham]) }}" title="Xem chi tiết">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </a>
                         </div>
@@ -248,26 +283,36 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </article>
             @endforeach
         </div>
     </div>
 </section>
 
-<!-- HERMES PRODUCTS -->
-<section class="products-section">
+<!-- HERMÈS COLLECTION -->
+<section class="home-collection home-collection--hermes" id="hermes-collection">
     <div class="container">
-        <div class="section-title">
-            <h2>Túi Hermès</h2>
+        <div class="home-collection-header">
+            <div class="home-collection-text">
+                <span class="home-pill home-pill--hermes">HERMÈS</span>
+                <h2 class="home-collection-title">Túi Hermès</h2>
+                <p class="home-collection-subtitle">
+                    Biểu tượng của sự sang trọng vượt thời gian với chất liệu cao cấp.
+                </p>
+            </div>
+            <a href="{{ route('viewAll', ['danhmuc_id' => 11]) }}" class="home-view-all">
+                Xem tất cả
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
         </div>
 
-        <div class="products-grid">
+        <div class="home-collection-grid">
             @foreach($hermesProducts as $product)
-            <div class="product-card">
+            <article class="product-card product-card--collection">
                 <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}">
                     <div class="product-image">
                         <img src="{{ asset($product->anhsp) }}" alt="{{ $product->tensp }}" onerror="this.src='{{ asset('frontend/upload/placeholder.jpg') }}'">
-                        
+
                         <div class="product-badge">
                             @if($product->giamgia)
                                 -{{ $product->giamgia }}%
@@ -277,10 +322,12 @@
                         </div>
 
                         <div class="product-actions">
-                            <a href="{{ route('add_to_cart', $product->id_sanpham) }}" title="Thêm vào giỏ hàng" onclick="event.preventDefault(); event.stopPropagation();">
-                                <i class="fa-solid fa-cart-shopping"></i>
+                            <a href="{{ route('add_to_cart', $sanpham->id_sanpham) }}"
+                                class="btn-add-to-cart"
+                                title="Thêm vào giỏ hàng">
+                                    <i class="fa-solid fa-cart-shopping"></i>
                             </a>
-                            <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}" title="Xem chi tiết">
+                            <a href="{{ route('detail', ['id' => $sanpham->id_sanpham]) }}" title="Xem chi tiết">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </a>
                         </div>
@@ -300,26 +347,36 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </article>
             @endforeach
         </div>
     </div>
 </section>
 
-<!-- CHANEL PRODUCTS -->
-<section class="products-section" style="background: #fff;">
+<!-- CHANEL COLLECTION -->
+<section class="home-collection home-collection--chanel" id="chanel-collection">
     <div class="container">
-        <div class="section-title">
-            <h2>Túi Chanel</h2>
+        <div class="home-collection-header">
+            <div class="home-collection-text">
+                <span class="home-pill home-pill--chanel">CHANEL</span>
+                <h2 class="home-collection-title">Túi Chanel</h2>
+                <p class="home-collection-subtitle">
+                    Những thiết kế mang vẻ đẹp cổ điển, sang trọng và đầy nữ tính.
+                </p>
+            </div>
+            <a href="{{ route('viewAll', ['danhmuc_id' => 12]) }}" class="home-view-all">
+                Xem tất cả
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
         </div>
 
-        <div class="products-grid">
+        <div class="home-collection-grid">
             @foreach($chanelProducts as $product)
-            <div class="product-card">
+            <article class="product-card product-card--collection">
                 <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}">
                     <div class="product-image">
                         <img src="{{ asset($product->anhsp) }}" alt="{{ $product->tensp }}" onerror="this.src='{{ asset('frontend/upload/placeholder.jpg') }}'">
-                        
+
                         <div class="product-badge">
                             @if($product->giamgia)
                                 -{{ $product->giamgia }}%
@@ -329,10 +386,12 @@
                         </div>
 
                         <div class="product-actions">
-                            <a href="{{ route('add_to_cart', $product->id_sanpham) }}" title="Thêm vào giỏ hàng" onclick="event.preventDefault(); event.stopPropagation();">
-                                <i class="fa-solid fa-cart-shopping"></i>
+                            <a href="{{ route('add_to_cart', $sanpham->id_sanpham) }}"
+                                class="btn-add-to-cart"
+                                title="Thêm vào giỏ hàng">
+                                    <i class="fa-solid fa-cart-shopping"></i>
                             </a>
-                            <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}" title="Xem chi tiết">
+                            <a href="{{ route('detail', ['id' => $sanpham->id_sanpham]) }}" title="Xem chi tiết">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </a>
                         </div>
@@ -352,7 +411,7 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </article>
             @endforeach
         </div>
     </div>
