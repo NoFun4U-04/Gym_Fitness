@@ -226,5 +226,25 @@ $(document).ready(function () {
         span1.innerText = '';
     });
 
+    $(document).on('click', '.btn-add-to-cart', function (e) {
+    e.preventDefault(); 
+
+    var url = $(this).attr('href');
+
+    $.ajax({
+        url: url,
+        method: 'GET', 
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        success: function (res) {
+            alert('Đã thêm sản phẩm vào giỏ hàng');
+        },
+        error: function () {
+            alert('Thêm vào giỏ hàng thất bại, vui lòng thử lại sau!');
+        }
+    });
+});
+
 })
 
