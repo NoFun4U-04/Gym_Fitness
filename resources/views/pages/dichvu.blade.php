@@ -1,4 +1,5 @@
 @push('styles')
+<<<<<<< HEAD
 <link rel="stylesheet" href="{{ asset('frontend/css/dichvu1.css') }}">
 @endpush
 
@@ -15,3 +16,11 @@
         </div>
     </div>
 </section>
+=======
+<link rel="stylesheet" href="{{ asset('frontend/css/home.css') }}">
+@endpush
+
+
+
+
+>>>>>>> 2ebc7ab99b63af136f803dbf5370a5ff74b40dbe
