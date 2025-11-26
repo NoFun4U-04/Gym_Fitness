@@ -1,0 +1,54 @@
+.service-banner {
+    position: relative;
+    width: 100%;
+    height: 90vh;
+    background: url('/frontend/images/banner-gym.jpg') center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.service-banner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.55);
+}
+
+.banner-content {
+    position: relative;
+    text-align: center;
+    color: #fff;
+    max-width: 900px;
+    padding: 0 20px;
+}
+
+.banner-content h1 {
+    font-size: 60px;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+.banner-content p {
+    font-size: 22px;
+    line-height: 1.5;
+    margin-bottom: 40px;
+}
+
+.banner-buttons .btn-primary {
+    background: #34A4E0;
+    color: white;
+    padding: 15px 40px;
+    border-radius: 10px;
+    font-size: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.banner-buttons .btn-primary:hover {
+    background: #0d7bd8;
+}
