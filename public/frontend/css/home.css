@@ -518,8 +518,9 @@
     }
 
     .product-card:hover {
+        border: 1px solid #ff4d4d; 
         transform: translateY(-10px);
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 4px 16px rgba(255, 77, 77, 0.2);
     }
 
     .product-image {
@@ -618,8 +619,8 @@
     }
 
     .product-name {
-        font-size: 16px;
-        font-weight: 600;
+        font-size: 15px;
+        font-weight: 700 !important;
         color: #2c3e50;
         margin-bottom: 12px;
         height: 48px;
@@ -1057,10 +1058,9 @@
 
 /* Grid sản phẩm trong collection */
 .home-collection-grid {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 22px;
-    justify-content: center;
-    flex-wrap: nowrap;
 }
 
 /* Card dùng lại nhưng tinh chỉnh nhẹ */
@@ -1070,8 +1070,6 @@
     box-shadow: 0 10px 26px rgba(15, 23, 42, 0.12);
     overflow: hidden;
     transition: transform 0.24s ease, box-shadow 0.24s ease;
-    width: 240px; 
-    flex: 0 0 240px;
 }
 
 .product-card--collection .product-image {
@@ -1137,3 +1135,155 @@
         font-size: 1.5rem;
     }
 }
+
+
+/* === Price layout for Gucci collection cards === */
+.home-collection-grid .product-info {
+    padding: 14px 18px 16px;
+}
+
+.home-collection-grid .product-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #111827;
+    margin-bottom: 6px;
+    min-height: 38px;
+    line-height: 1.3;
+}
+
+.home-collection-grid .product-price-main {
+    margin-bottom: 4px;
+}
+
+.home-collection-grid .product-price-main .price-new {
+    color: #e74c3c;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.home-collection-grid .product-price-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 2px;
+}
+
+.home-collection-grid .product-price-row .price-old {
+    text-decoration: line-through;
+    color: #9ca3af;
+    font-size: 13px;
+}
+
+.home-collection-grid .discount-inline {
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: #ffecec;
+    color: #e74c3c;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.home-collection-grid .cart-inline {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: #ff4d4d;
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(255, 77, 77, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.home-collection-grid .cart-inline i {
+    font-size: 14px;
+}
+
+.home-collection-grid .cart-inline:hover {
+    background: #ff3333;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 77, 77, 0.5);
+}
+
+/* Generic product price layout for all product cards */
+.product-price-main .price-new {
+    color: #e74c3c;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.product-price-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 2px;
+}
+
+.product-price-row .price-old {
+    text-decoration: line-through;
+    color: #9ca3af;
+    font-size: 13px;
+}
+
+.discount-inline {
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: #ffecec;
+    color: #e74c3c;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.cart-inline {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: #ff4d4d;
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(255, 77, 77, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.cart-inline i {
+    font-size: 14px;
+}
+
+.cart-inline:hover {
+    background: #ff3333;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 77, 77, 0.5);
+}
+
+.cart-toast {
+    position: fixed;
+    top: 75px;              
+    right: 24px;           
+    padding: 10px 20px;
+    background: #333;
+    color: #fff;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+    transition: all .25s ease;
+    z-index: 9999;
+}
+
+.cart-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
