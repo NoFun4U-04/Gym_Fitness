@@ -10,7 +10,7 @@
     left: 0;
     right: 0;
     width: 100%;
-    height: 65px;
+    height: 75px;
     background-color: rgba(0, 0, 0, 0.7); /* đen nhưng có độ trong suốt */
     backdrop-filter: blur(8px); /* tạo hiệu ứng mờ nội dung phía sau */
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -111,7 +111,7 @@
     /* General hover effect for icons/images (e.g., login, cart) */
 .hover-effect {
         transition: color 0.3s ease, filter 0.3s ease;
-        color: inherit; /* Inherit color by default */
+        color: #fff; /* Inherit color by default */
     }
 
 .hover-effect i {
@@ -257,7 +257,7 @@
 
     /* Adjust logout button icon color */
 .logout button i {
-        color: #000; /* Ensure it starts black */
+        color: #fff; /* Ensure it starts black */
         transition: color 0.3s ease; /* Smooth transition */
     }
 

@@ -1,5 +1,5 @@
-@extends('layout')
-@section('content')
+@extends('pages.auth')
+@section('right-panel')
 <div class="login-form">
     <div class="height360">
         <div class="main">

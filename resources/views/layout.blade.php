@@ -43,12 +43,12 @@
                         <a href="{{ URL::to('/viewAll') }}" class="hover-a">Sản phẩm </a>
                         <ul class="dropdown-menu" id="dropdown-danhmuc"></ul>
                     </li>
-                    <li class="dropdown {{ request()->is('viewAll*') ? 'active' : '' }}" id="sanpham-dropdown">
-                        <a href="{{ URL::to('/viewAll') }}" class="hover-a">Dịch vụ </a>
+                    <li class="{{ request()->is('test') ? 'active' : '' }}">
+                        <a href="{{ URL::to('/test') }}" class="hover-a">Dịch vụ </a>
                         <ul class="dropdown-menu" id="dropdown-danhmuc"></ul>
                     </li>
-                    <li class="{{ request()->is('donhang') ? 'active' : '' }}">
-                        <a href="{{ URL::to('/donhang') }}" class="hover-a">Đăng ký tập thử</a>
+                    <li class="{{ request()->is('test') ? 'active' : '' }}">
+                        <a href="{{ URL::to('/test') }}" class="hover-a">Đăng ký tập thử</a>
                     </li>
                     <li class="{{ request()->is('donhang') ? 'active' : '' }}">
                         <a href="{{ URL::to('/donhang') }}" class="hover-a">Đơn hàng</a>
