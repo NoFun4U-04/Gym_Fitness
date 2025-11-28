@@ -47,9 +47,10 @@
                         <a href="{{ URL::to('/test') }}" class="hover-a">Dịch vụ </a>
                         <ul class="dropdown-menu" id="dropdown-danhmuc"></ul>
                     </li>
-                    <li class="{{ request()->is('test') ? 'active' : '' }}">
-                        <a href="{{ URL::to('/test') }}" class="hover-a">Đăng ký tập thử</a>
+                    <li class="{{ request()->is('dang-ky-tap-thu') ? 'active' : '' }}">
+                        <a href="{{ route('dang-ky-tap-thu') }}" class="hover-a">Đăng ký tập thử</a>
                     </li>
+
                     <li class="{{ request()->is('donhang') ? 'active' : '' }}">
                         <a href="{{ URL::to('/donhang') }}" class="hover-a">Đơn hàng</a>
                     </li>

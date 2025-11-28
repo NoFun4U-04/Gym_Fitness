@@ -38,6 +38,9 @@ Route::get('/congiong', [HomeController::class, 'congiong']);
 Route::get('/search', [HomeController::class, 'search'])->name('search');
 Route::get('/viewAll', [HomeController::class, 'viewAll'])->name('viewAll');
 Route::get('/services', [HomeController::class, 'services'])->name('services');
+Route::get('/dang-ky-tap-thu', [HomeController::class, 'dangKyTapThu'])->name('dang-ky-tap-thu');
+
+
 // Route::get('/donhang', [HomeController:: class, 'donhang'])->name('donhang');
 
 //cart

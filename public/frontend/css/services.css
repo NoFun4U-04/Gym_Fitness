@@ -521,3 +521,8 @@
 .trial-btn:hover {
     background: #1d8ac0;
 }
+.required {
+    color: red;
+    font-weight: bold;
+}
+

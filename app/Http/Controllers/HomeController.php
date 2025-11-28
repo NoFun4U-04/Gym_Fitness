@@ -77,4 +77,12 @@ class HomeController extends Controller
             'danhmucs' => $danhmucs,
         ]);
     }
+
+    public function dangKyTapThu() {
+        $danhmucs = Danhmuc::all();
+        return view('pages.dangkitapthu', [
+            'danhmucs' => $danhmucs,
+        ]);
+    }
+
 }

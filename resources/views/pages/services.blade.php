@@ -248,27 +248,27 @@
 
         <!-- FORM -->
         <div class="trial-form">
-            <h2>Đăng Ký Tập Thử <span style="color:#34A4E0">Miễn Phí</span></h2>
-            <p class="trial-sub">Điền thông tin để đội ngũ Rise Fitness hỗ trợ bạn trong 24 giờ.</p>
+            <h2><span style="color:#34A4E0">Đăng Ký Tập Thử Miễn Phí</span></h2>
+            <p class="trial-sub" style="color: #fff">Điền thông tin để đội ngũ Rise Fitness hỗ trợ bạn trong 24 giờ.</p>
 
             <form>
                 <div class="input-group">
-                    <label>Họ và tên *</label>
+                    <label>Họ và tên <span class="required">*</span></label>
                     <input type="text" placeholder="Nhập họ và tên">
                 </div>
 
                 <div class="input-group">
-                    <label>Số điện thoại *</label>
+                    <label>Số điện thoại <span class="required">*</span></label>
                     <input type="text" placeholder="Nhập số điện thoại">
                 </div>
 
                 <div class="input-group">
-                    <label>Email *</label>
+                    <label>Email <span class="required">*</span></label>
                     <input type="email" placeholder="Nhập email">
                 </div>
 
                 <div class="input-group">
-                    <label>Môn thể thao tập thử *</label>
+                    <label>Môn thể thao tập thử <span class="required">*</span></label>
                     <select>
                         <option>Gym</option>
                         <option>Yoga</option>
@@ -278,7 +278,7 @@
                 </div>
 
                 <div class="input-group">
-                    <label>Khung giờ *</label>
+                    <label>Khung giờ <span class="required">*</span></label>
                     <select>
                         <option>6h – 9h</option>
                         <option>9h – 12h</option>

@@ -288,8 +288,6 @@ footer {
         padding: 50px 20px 20px; /* Ample padding: top, sides, bottom */
         font-family: 'Inter', sans-serif; /* Consistent font */
         box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2); /* Shadow for depth */
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
         z-index: 1010; /* Z-index cho footer */
     }
 
