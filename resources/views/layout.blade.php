@@ -109,22 +109,22 @@
     <section class="footer-newsletter">
     <div class="footer-container">
         <div class="footer-newsletter__left">
-            <p class="footer-newsletter__subtitle">SUBSCRIBE TO OUR NEWS</p>
-            <h2 class="footer-newsletter__title">Stay in Touch</h2>
+            <p class="footer-newsletter__subtitle">ĐĂNG KÝ NHẬN THÔNG TIN</p>
+            <h2 class="footer-newsletter__title">Kết nối với chúng tôi</h2>
         </div>
 
         <div class="footer-newsletter__center">
             <form action="#" method="POST" class="footer-newsletter__form">
                 @csrf
-                <input type="email" name="email" placeholder="Your email ..." required>
-                <button type="submit">SUBSCRIBE NOW</button>
+                <input type="email" name="email" placeholder="Nhập email của bạn ..." required>
+                <button type="submit">Đăng ký ngay</button>
             </form>
         </div>
 
         <div class="footer-newsletter__right">
             <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
             <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" aria-label="Twitter / X"><i class="fab fa-x-twitter"></i></a>
+            <a href="#" aria-label="Twitter / X"><i class="fab fa-twitter"></i></a>
         </div>
     </div>
     </section>
@@ -145,7 +145,7 @@
             </div>
 
             <div class="site-footer__col site-footer__links">
-                <h3>Explore</h3>
+                <h3>Khám phá</h3>
                 <div class="site-footer__links-grid">
                     <ul>
                         <li><a href="{{ URL::to('/services') }}">Giới thiệu</a></li>
@@ -163,14 +163,14 @@
             </div>
 
             <div class="site-footer__col site-footer__contact">
-                <h3>Contact</h3>
+                <h3>Liên hệ</h3>
 
                 <div class="site-footer__contact-item">
                     <div class="site-footer__contact-icon">
                         <i class="fas fa-map-marked-alt"></i>
                     </div>
                     <div class="site-footer__contact-text">
-                        <span class="label">Address:</span>
+                        <span class="label">Địa chỉ:</span>
                         <span>12 Chùa Bộc, Đống Đa, Hà Nội</span>
                     </div>
                 </div>
@@ -180,7 +180,7 @@
                         <i class="fas fa-phone-alt"></i>
                     </div>
                     <div class="site-footer__contact-text">
-                        <span class="label">Phone:</span>
+                        <span class="label">Điện thoại:</span>
                         <span>0-900-856-05-39</span>
                     </div>
                 </div>
@@ -190,8 +190,8 @@
                         <i class="fas fa-clock"></i>
                     </div>
                     <div class="site-footer__contact-text">
-                        <span class="label">Working Hours:</span>
-                        <span>Mon–Fri: 8am – 9pm</span>
+                        <span class="label">Giờ làm việc:</span>
+                        <span>Thứ 2–Thứ 6: 8:00 – 21:00</span>
                     </div>
                 </div>
             </div>
