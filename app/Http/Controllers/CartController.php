@@ -124,32 +124,24 @@ class CartController extends Controller
         ], 400);
     }
 
-    public function remove(Request $request)
+    public function remove($id)
     {
-        $id = $request->id;
         $cart = session()->get('cart', []);
 
         if (isset($cart[$id])) {
             unset($cart[$id]);
             session()->put('cart', $cart);
+        }
 
-            // Tính tổng tiền giỏ hàng
-            $total = 0;
-            foreach ($cart as $item) {
-                $total += $item['giakhuyenmai'] * $item['quantity'];
-            }
-
-            return response()->json([
-                'status' => 'success',
-                'total' => $total,
-                'message' => 'Xóa sản phẩm trong giỏ hàng thành công'
-            ]);
+        $total = 0;
+        foreach ($cart as $item) {
+            $total += $item['giakhuyenmai'] * $item['quantity'];
         }
 
         return response()->json([
-            'status' => 'error',
-            'message' => 'Sản phẩm không tồn tại trong giỏ hàng.'
-        ], 400);
+            'success' => true,
+            'total'   => $total,
+        ]);
     }
 
     public function checkout()
