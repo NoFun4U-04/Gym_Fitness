@@ -129,37 +129,39 @@
 <!-- BRAND SHOWCASE -->
 <section class="brand-section" id="brands">
     <div class="container">
-        <div class="home-section-heading">
-            <p class="home-tag">THƯƠNG HIỆU NỔI BẬT</p>
-            <h2 class="home-title">Danh mục thương hiệu</h2>
-            <p class="home-subtitle">
-                Chọn thương hiệu yêu thích để khám phá những mẫu túi xách cao cấp, sang trọng và thời thượng.
-            </p>
+
+        <div class="brand-tabs">
+
+            <button class="brand-tab active">
+                <i class="fa-solid fa-border-all"></i>
+                Tất cả sản phẩm
+            </button>
+
+            <button class="brand-tab">
+                <i class="fa-solid fa-dumbbell"></i>
+                Dụng cụ tập luyện
+            </button>
+
+            <button class="brand-tab">
+                <i class="fa-solid fa-flask-vial"></i>
+                Whey & Dinh dưỡng
+            </button>
+
+            <button class="brand-tab">
+                <i class="fa-solid fa-shirt"></i>
+                Đồ tập
+            </button>
+
+            <button class="brand-tab">
+                <i class="fa-solid fa-toolbox"></i>
+                Phụ kiện
+            </button>
+
         </div>
 
-        <div class="brand-row">
-            <a href="#gucci-collection" class="brand-pill brand-pill--gucci">
-                <div class="brand-pill__label">Gucci</div>
-                <div class="brand-pill__name">Gucci Collection</div>
-            </a>
-
-            <a href="#dior-collection" class="brand-pill brand-pill--dior">
-                <div class="brand-pill__label">Christian Dior</div>
-                <div class="brand-pill__name">Christian Dior</div>
-            </a>
-
-            <a href="#hermes-collection" class="brand-pill brand-pill--hermes">
-                <div class="brand-pill__label">Hermès</div>
-                <div class="brand-pill__name">Hermès Heritage</div>
-            </a>
-
-            <a href="#chanel-collection" class="brand-pill brand-pill--chanel">
-                <div class="brand-pill__label">Chanel</div>
-                <div class="brand-pill__name">Chanel Luxury</div>
-            </a>
-        </div>
     </div>
 </section>
+
 
 <!-- GUCCI COLLECTION -->
 <section class="home-collection home-collection--gucci" id="gucci-collection">

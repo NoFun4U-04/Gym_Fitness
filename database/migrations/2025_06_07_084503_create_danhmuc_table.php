@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('danhmuc', function (Blueprint $table) {
             $table->integer('id_danhmuc', true);
             $table->string('ten_danhmuc', 100)->nullable();
+            
         });
     }
 
