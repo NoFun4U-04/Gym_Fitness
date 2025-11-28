@@ -9,12 +9,10 @@
 @section('content')
 <section class="page-header">
     <div class="header-overlay"></div>
-
     <div class="header-content">
         <h1>VỀ CHÚNG TÔI</h1>
     </div>
 </section>
-
 <section class="hero-section">
     <div class="hero-container">
         
@@ -63,6 +61,71 @@
 
     </div>
 </section>
+<section class="about-story">
+    <div class="story-container">
+
+        <!-- Ảnh -->
+        <div class="story-image">
+            <img src="/frontend/img/Gioi-thieu/gioi-thieu-5.png" alt="Gym training">
+        </div>
+
+        <!-- Nội dung -->
+        <div class="story-content">
+            <h2 class="story-title">Câu Chuyện Của Chúng Tôi</h2>
+
+            <p class="story-text">
+                Rise Fitness & Yoga được thành lập vào năm 2015 với sứ mệnh mang đến giải pháp tập luyện toàn diện cho cộng đồng. 
+                Từ một phòng gym nhỏ với vài thiết bị cơ bản, chúng tôi đã không ngừng phát triển và mở rộng để trở thành một trong 
+                những hệ thống fitness hàng đầu tại Việt Nam.
+            </p>
+
+            <p class="story-text">
+                Chúng tôi tin rằng mỗi người đều xứng đáng có một cơ thể khỏe mạnh và tinh thần tích cực. Với đội ngũ huấn luyện viên 
+                chuyên nghiệp, thiết bị hiện đại và môi trường tập luyện năng động, Rise Fitness cam kết đồng hành cùng bạn trên mọi 
+                bước đường.
+            </p>
+
+            <!-- Các giá trị -->
+            <div class="story-values">
+
+                <div class="value-item">
+                    <i class="fa-solid fa-heart-circle-plus value-icon"></i>
+                    <div>
+                        <h4>Sức khỏe</h4>
+                        <p>Ưu tiên hàng đầu</p>
+                    </div>
+                </div>
+
+                <div class="value-item">
+                    <i class="fa-solid fa-shield-halved value-icon"></i>
+                    <div>
+                        <h4>Uy tín</h4>
+                        <p>Đáng tin cậy</p>
+                    </div>
+                </div>
+
+                <div class="value-item">
+                    <i class="fa-solid fa-medal value-icon"></i>
+                    <div>
+                        <h4>Chất lượng</h4>
+                        <p>Cam kết hàng đầu</p>
+                    </div>
+                </div>
+
+                <div class="value-item">
+                    <i class="fa-solid fa-headset value-icon"></i>
+                    <div>
+                        <h4>Hỗ trợ</h4>
+                        <p>Tận tâm 24/7</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
 <section class="landing-hero">
 
     <div class="landing-bg"></div>
@@ -81,7 +144,6 @@
         <a href="#" class="hero-btn">KHÁM PHÁ SẢN PHẨM</a>
     </div>
 </section>
-
 <section class="stats-section">
     <div class="stats-header">
         <h2>Hành trình đến <span>body lý tưởng</span> của bạn bắt đầu từ đây.</h2>
@@ -110,6 +172,129 @@
         </div>
     </div>
 </section>
+<section class="why-choose-us">
+    <div class="container">
+
+        <h2 class="why-title">Tại Sao Chọn Chúng Tôi?</h2>
+        <p class="why-subtitle">Những lý do khiến khách hàng tin tưởng</p>
+
+        <div class="why-grid">
+
+            <!-- 1 -->
+            <div class="why-item">
+                <div class="why-icon">
+                    <i class="fa-solid fa-crown"></i>
+                </div>
+                <h4 class="why-name">Sản phẩm chất lượng cao</h4>
+                <p>Nhập khẩu chính hãng từ các thương hiệu hàng đầu thế giới</p>
+            </div>
+
+            <!-- 2 -->
+            <div class="why-item">
+                <div class="why-icon">
+                    <i class="fa-solid fa-truck-fast"></i>
+                </div>
+                <h4 class="why-name">Giao hàng nhanh</h4>
+                <p>Vận chuyển toàn quốc, giao hàng trong 24-48h</p>
+            </div>
+
+            <!-- 3 -->
+            <div class="why-item">
+                <div class="why-icon">
+                    <i class="fa-solid fa-user-check"></i>
+                </div>
+                <h4 class="why-name">Huấn luyện viên đạt chuẩn</h4>
+                <p>Đội ngũ PT có chứng chỉ quốc tế, kinh nghiệm lâu năm</p>
+            </div>
+
+            <!-- 4 -->
+            <div class="why-item">
+                <div class="why-icon">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+                <h4 class="why-name">Hỗ trợ 24/7</h4>
+                <p>Luôn sẵn sàng tư vấn và giải đáp mọi thắc mắc</p>
+            </div>
+
+            <!-- 5 -->
+            <div class="why-item">
+                <div class="why-icon">
+                    <i class="fa-solid fa-tags"></i>
+                </div>
+                <h4 class="why-name">Giá cả minh bạch</h4>
+                <p>Không phát sinh chi phí ẩn, chính sách giá rõ ràng</p>
+            </div>
+
+            <!-- 6 -->
+            <div class="why-item">
+                <div class="why-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h4 class="why-name">Bảo hành chính hãng</h4>
+                <p>Cam kết bảo hành đầy đủ theo tiêu chuẩn nhà sản xuất</p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<section class="trial-wrapper">
+    <div class="trial-container">
+
+        <!-- MAP -->
+        <div class="trial-map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1316.8423346314796!2d105.82753225955905!3d21.008962701887917!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac800f450807%3A0x419a49bcd94b693a!2sBanking%20Academy!5e0!3m2!1sen!2sus!4v1764307110053!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+        <!-- FORM -->
+        <div class="trial-form">
+            <h2>Đăng Ký Tập Thử <span style="color:#34A4E0">Miễn Phí</span></h2>
+            <p class="trial-sub">Điền thông tin để đội ngũ Rise Fitness hỗ trợ bạn trong 24 giờ.</p>
+
+            <form>
+                <div class="input-group">
+                    <label>Họ và tên *</label>
+                    <input type="text" placeholder="Nhập họ và tên">
+                </div>
+
+                <div class="input-group">
+                    <label>Số điện thoại *</label>
+                    <input type="text" placeholder="Nhập số điện thoại">
+                </div>
+
+                <div class="input-group">
+                    <label>Email *</label>
+                    <input type="email" placeholder="Nhập email">
+                </div>
+
+                <div class="input-group">
+                    <label>Môn thể thao tập thử *</label>
+                    <select>
+                        <option>Gym</option>
+                        <option>Yoga</option>
+                        <option>Zumba</option>
+                        <option>Boxing</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Khung giờ *</label>
+                    <select>
+                        <option>6h – 9h</option>
+                        <option>9h – 12h</option>
+                        <option>14h – 17h</option>
+                        <option>18h – 21h</option>
+                    </select>
+                </div>
+
+                <button class="trial-btn">Đăng ký</button>
+            </form>
+        </div>
+
+    </div>
+</section>
+
+
 
 <script>
     const el = document.getElementById("typingText");
