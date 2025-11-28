@@ -18,7 +18,7 @@
     />
 
     <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+    <link rel="shortcut icon" type="image/png" href="/frontend/img/LOGO.png" />
 
     <link rel="canonical" href="https://demo-basic.Admin Dashboard.io/" />
 

@@ -17,8 +17,8 @@
             <h1>Chào mừng đến với Rise Fitness & Yoga</h1>
             <p class="slogan">Chinh phục vóc dáng, bứt phá giới hạn!</p>
             <div class="banner-buttons">
-                <a href="#trial-signup" class="cta-button highlighted rect-button animated">Đăng ký tập thử</a>
-                <a href="#products" class="cta-button highlighted rect-button animated">Xem Dịch Vụ</a>
+                <a href="#trial-signup" class="cta-button highlighted rect-button animated" style="color: #fff;">Đăng ký tập thử</a>
+                <a href="#products" class="cta-button highlighted rect-button animated" style="color: #fff;">Xem Dịch Vụ</a>
             </div>
         </div>
     </div>
