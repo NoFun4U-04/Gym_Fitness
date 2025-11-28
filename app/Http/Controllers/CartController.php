@@ -46,6 +46,14 @@ class CartController extends Controller
         }
 
         session()->put('cart', $cart);
+        if ($request->ajax()) {
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Đã thêm vào giỏ hàng thành công!',
+            'cart_count' => array_sum(array_column($cart, 'quantity')),
+        ]);
+    }
+
         return redirect()->back()->with('success', 'Thêm vào giỏ hàng thành công!');
     }
 
@@ -291,4 +299,5 @@ class CartController extends Controller
         session()->put('order_data', $request->all());
         return redirect($vnp_Url);
     }
+
 }

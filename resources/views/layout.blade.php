@@ -106,35 +106,103 @@
 
     <div class="go-to-top"><i class="fas fa-chevron-up"></i></div>
 
-    <footer>
-        <div class="footer__info">
-            <div class="footer__info-content">
-                <h3>Về SACHA</h3>
-                <p>Chúng tôi cam kết mang đến những sản phẩm và dịch vụ tốt nhất, luôn đặt trải nghiệm khách hàng lên hàng đầu với sự tận tâm và chuyên nghiệp.</p>
+    <section class="footer-newsletter">
+    <div class="footer-container">
+        <div class="footer-newsletter__left">
+            <p class="footer-newsletter__subtitle">SUBSCRIBE TO OUR NEWS</p>
+            <h2 class="footer-newsletter__title">Stay in Touch</h2>
+        </div>
+
+        <div class="footer-newsletter__center">
+            <form action="#" method="POST" class="footer-newsletter__form">
+                @csrf
+                <input type="email" name="email" placeholder="Your email ..." required>
+                <button type="submit">SUBSCRIBE NOW</button>
+            </form>
+        </div>
+
+        <div class="footer-newsletter__right">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="Twitter / X"><i class="fab fa-x-twitter"></i></a>
+        </div>
+    </div>
+    </section>
+
+    <footer class="site-footer">
+    <div class="footer-container">
+
+        <div class="site-footer__top">
+            <div class="site-footer__col site-footer__brand">
+                <div class="site-footer__logo">
+                    <img src="{{ asset('frontend/img/LOGO.png') }}" alt="Rise Fitness">
+                    <span>RISE FITNESS</span>
+                </div>
+                <p class="site-footer__desc">
+                    Dù bạn mới bắt đầu hay đã tập luyện lâu năm, Rise Fitness luôn đồng hành
+                    để mỗi buổi tập của bạn trở nên đặc biệt, tràn đầy năng lượng và cảm hứng.
+                </p>
             </div>
-            <div class="footer__info-content">
-                <h3>Thương hiệu</h3>
-                <p><a href="{{ route('viewAll', ['danhmuc_id' => 12]) }}">CHANEL</a></p>
-                <p><a href="{{ route('viewAll', ['danhmuc_id' => 10]) }}">CHRISTIAN DIOR</a></p>
-                <p><a href="{{ route('viewAll', ['danhmuc_id' => 11]) }}">HERMES</a></p>
-                <p><a href="{{ route('viewAll', ['danhmuc_id' => 9]) }}">GUCCI</a></p>
+
+            <div class="site-footer__col site-footer__links">
+                <h3>Explore</h3>
+                <div class="site-footer__links-grid">
+                    <ul>
+                        <li><a href="{{ URL::to('/services') }}">Giới thiệu</a></li>
+                        <li><a href="{{ URL::to('/test') }}">Dịch vụ</a></li>
+                        <li><a href="{{ URL::to('/donhang') }}">Đơn hàng</a></li>
+                        <li><a href="{{ URL::to('/viewAll') }}">Sản phẩm</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Liên hệ</a></li>
+                        <li><a href="#">Chính sách bảo mật</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="footer__info-content">
-                <h3>Liên hệ</h3>
-                <p><i class="fas fa-home"></i> Địa chỉ: Số 12, Chùa Bộc, Đống Đa, Hà Nội</p>
-                <p><i class="fas fa-envelope"></i> Email: sacha@gmail.com</p>
-                <p><i class="fas fa-phone"></i> Sđt: 1900 1596</p>
-                <div class="footer__social">
-                    <a href="https://www.facebook.com/hocviennganhang1961" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/tuanphan_272" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="Google"><i class="fab fa-google"></i></a>
+
+            <div class="site-footer__col site-footer__contact">
+                <h3>Contact</h3>
+
+                <div class="site-footer__contact-item">
+                    <div class="site-footer__contact-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <div class="site-footer__contact-text">
+                        <span class="label">Address:</span>
+                        <span>12 Chùa Bộc, Đống Đa, Hà Nội</span>
+                    </div>
+                </div>
+
+                <div class="site-footer__contact-item">
+                    <div class="site-footer__contact-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="site-footer__contact-text">
+                        <span class="label">Phone:</span>
+                        <span>0-900-856-05-39</span>
+                    </div>
+                </div>
+
+                <div class="site-footer__contact-item">
+                    <div class="site-footer__contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="site-footer__contact-text">
+                        <span class="label">Working Hours:</span>
+                        <span>Mon–Fri: 8am – 9pm</span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="footer__copyright">
-            <center>© 2025 Sacha Shop. All rights reserved.</center>
+
+        <div class="site-footer__bottom">
+            <span>Rise Fitness © All Rights Reserved – 2025</span>
         </div>
+    </div>
     </footer>
+    
     @stack('scripts')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
