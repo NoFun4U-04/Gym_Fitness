@@ -65,9 +65,18 @@
     <div class="story-container">
 
         <!-- Ảnh -->
-        <div class="story-image">
-            <img src="/frontend/img/Gioi-thieu/gioi-thieu-5.png" alt="Gym training">
+        <div class="story-slider">
+            <div class="story-images">
+                <img src="/frontend/img/Gioi-thieu/gioi-thieu-5.jpg" class="active" alt="gym 1">
+                <img src="/frontend/img/Gioi-thieu/gioi-thieu-7.jpg" alt="gym 2">
+                <img src="/frontend/img/Gioi-thieu/gioi-thieu-8.jpg" alt="gym 3">
+            </div>
+
+            <!-- Nút chuyển ảnh -->
+            <button class="arrow left" id="prev">&#10094;</button>
+            <button class="arrow right" id="next">&#10095;</button>
         </div>
+
 
         <!-- Nội dung -->
         <div class="story-content">
@@ -295,6 +304,25 @@
 </section>
 
 
+<script>
+    const images = document.querySelectorAll('.story-images img');
+    let index = 0;
+
+    function showImage(i) {
+        images.forEach(img => img.classList.remove('active'));
+        images[i].classList.add('active');
+    }
+
+    document.getElementById("next").onclick = () => {
+        index = (index + 1) % images.length;
+        showImage(index);
+    };
+
+    document.getElementById("prev").onclick = () => {
+        index = (index - 1 + images.length) % images.length;
+        showImage(index);
+    };
+</script>
 
 <script>
     const el = document.getElementById("typingText");
@@ -313,24 +341,43 @@
 </script>
 <script>
     const counters = document.querySelectorAll('.count');
+    let statsStarted = false; // tránh chạy lại nhiều lần
 
-    counters.forEach(counter => {
-        counter.innerText = "0";
-        const updateCounter = () => {
-            const target = +counter.getAttribute('data-target');
-            const current = +counter.innerText;
-            const increment = target / 100;
+    function startCounting() {
+        counters.forEach(counter => {
+            counter.innerText = "0";
 
-            if (current < target) {
-                counter.innerText = `${Math.ceil(current + increment)}`;
-                setTimeout(updateCounter, 20);
-            } else {
-                counter.innerText = target >= 999 ? (target + "+") : target;
+            const updateCounter = () => {
+                const target = +counter.getAttribute('data-target');
+                const current = +counter.innerText;
+                const increment = target / 100;
+
+                if (current < target) {
+                    counter.innerText = `${Math.ceil(current + increment)}`;
+                    setTimeout(updateCounter, 20);
+                } else {
+                    counter.innerText = target >= 999 ? (target + "+") : target;
+                }
+            };
+
+            updateCounter();
+        });
+    }
+
+    // Intersection Observer
+    const section = document.querySelector('.stats-section');
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !statsStarted) {
+                startCounting();
+                statsStarted = true;
             }
-        };
+        });
+    }, { threshold: 0.3 });
 
-        updateCounter();
-    });
+    observer.observe(section);
 </script>
+
 
 @endsection

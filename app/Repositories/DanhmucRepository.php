@@ -6,19 +6,50 @@ use App\Models\Danhmuc;
 
 class DanhmucRepository implements IDanhmucRepository{
 
-    public function allDanhmuc(){
+     // LẤY TẤT CẢ DANH MỤC (kể cả status = 0)
+    public function allDanhmuc()
+    {
         return Danhmuc::all();
     }
-    public function storeDanhmuc($data){
-        Danhmuc::create($data);
+
+    // LẤY DANH MỤC HOẠT ĐỘNG (status = 1)
+    public function getDanhmucActive()
+    {
+        return Danhmuc::where('status', 1)->get();
     }
-    public function findDanhmuc($id){
-        return Danhmuc::where('id_danhmuc', $id)->first();
+
+    // THÊM DANH MỤC
+    public function storeDanhmuc($data)
+    {
+        return Danhmuc::create([
+            'ten_danhmuc'        => $data['ten_danhmuc'],
+            'parent_category_id' => $data['parent_category_id'] ?? null,
+            'description'        => $data['description'] ?? null,
+            'status'             => $data['status'] ?? 1
+        ]);
     }
-    public function updateDanhmuc($data, $id){
-        $this->findDanhmuc($id)->update($data);
+
+    // CẬP NHẬT DANH MỤC
+    public function updateDanhmuc($data, $id)
+    {
+        return Danhmuc::where('id_danhmuc', $id)->update([
+            'ten_danhmuc'        => $data['ten_danhmuc'],
+            'parent_category_id' => $data['parent_category_id'] ?? null,
+            'description'        => $data['description'] ?? null,
+        ]);
     }
-    public function deleteDanhmuc($id){
-        $this->findDanhmuc($id)->delete();
+
+    // TÌM 1 DANH MỤC THEO ID
+    public function findDanhmuc($id)
+    {
+        return Danhmuc::findOrFail($id);
+    }
+
+    // XÓA MỀM DANH MỤC
+    public function deleteDanhmuc($id)
+    {
+        return Danhmuc::where('id_danhmuc', $id)->update([
+            'status' => 0
+        ]);
     }
 }
