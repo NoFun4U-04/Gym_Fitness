@@ -19,11 +19,19 @@ class DanhmucController extends Controller
     // ==============================
     // HIỂN THỊ DANH SÁCH DANH MỤC
     // ==============================
-    public function index()
+    public function index(Request $request)
     {
-        $Danhmucs = $this->DanhmucRepository->getDanhmucActive();
+        $status = $request->get('status'); // null / 1 / 0
 
-        return view('admin.danhmucs.index', compact('Danhmucs'));
+        $query = Danhmuc::query();
+
+        if ($status !== null) {
+            $query->where('status', $status);
+        }
+
+        $Danhmucs = $query->orderBy('id_danhmuc', 'DESC')->get();
+
+        return view('admin.danhmucs.index', compact('Danhmucs', 'status'));
     }
 
     // ==============================
@@ -107,4 +115,23 @@ class DanhmucController extends Controller
 
         return redirect()->route('danhmuc.index')->with('success', 'Danh mục đã được ẩn thành công');
     }
+
+    public function restore($id)
+    {
+        // Kiểm tra danh mục có tồn tại không
+        $danhmuc = $this->DanhmucRepository->findDanhmuc($id);
+
+        if (!$danhmuc) {
+            return redirect()->route('danhmuc.index')
+                ->with('error', 'Danh mục không tồn tại!');
+        }
+
+        // Cập nhật trạng thái
+        $this->DanhmucRepository->updateDanhmuc(['status' => 1], $id);
+
+        return redirect()->route('danhmuc.index')
+            ->with('success', 'Khôi phục danh mục thành công');
+    }
+
+
 }

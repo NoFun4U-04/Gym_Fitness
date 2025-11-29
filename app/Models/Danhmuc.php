@@ -78,4 +78,10 @@ class Danhmuc extends Model
     // Functions ...
 
     // Relations ...
+    public function parent()
+    {
+        return $this->belongsTo(Danhmuc::class, 'parent_category_id', 'id_danhmuc');
+    }
+
 }
+

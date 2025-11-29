@@ -32,12 +32,9 @@ class DanhmucRepository implements IDanhmucRepository{
     // CẬP NHẬT DANH MỤC
     public function updateDanhmuc($data, $id)
     {
-        return Danhmuc::where('id_danhmuc', $id)->update([
-            'ten_danhmuc'        => $data['ten_danhmuc'],
-            'parent_category_id' => $data['parent_category_id'] ?? null,
-            'description'        => $data['description'] ?? null,
-        ]);
+        return Danhmuc::where('id_danhmuc', $id)->update($data);
     }
+
 
     // TÌM 1 DANH MỤC THEO ID
     public function findDanhmuc($id)

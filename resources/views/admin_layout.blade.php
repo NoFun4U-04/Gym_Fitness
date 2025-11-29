@@ -34,7 +34,7 @@
       rel="stylesheet"
     />
   </head>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <body>
     <div class="wrapper">
       <nav id="sidebar" class="sidebar js-sidebar">
@@ -520,6 +520,7 @@ sidebarLinks.forEach(function(link) {
               showConfirmButton: false
           });
       </script>
+      
   @endif
   </body>
 </html>
