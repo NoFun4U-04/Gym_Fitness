@@ -9,17 +9,17 @@
     }
 
     .cart-wrapper {
-        width: 100%;        
-        max-width: 100%;    
-        margin: 0;          
-        padding: 0 40px; 
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 0 40px 0;  
     }
 
     .cart-card {
-        background: #ffffff;
-        border-radius: 24px;
-        box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
-        padding: 28px 28px 24px;
+        background: transparent;   
+        border-radius: 0;     
+        box-shadow: none;         
+        padding: 0;              
         width: 100%;
     }
 
@@ -433,8 +433,60 @@
         background: #00c896;
         color: #020617;
     }
+
+    .cart-page {
+        padding: 40px 0 80px;   
+        background: #ffffff;    
+    }
+
+    .cart-wrapper,
+    .cart-card,
+    .cart-layout {
+        position: relative;
+        z-index: 1;
+    }
+
+    .cart-hero {
+        width: 100%;
+        height: 560px;
+        background-image: url('/frontend/img/giohang.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        display: flex;
+        align-items: flex-end;
+    }
+
+    .cart-hero-content {
+        padding: 30px 40px;
+        color: #ffffff;
+    }
+
+    .cart-hero-content h1 {
+        font-size: 40px;
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+
+    .cart-hero-breadcrumb {
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
+    .cart-hero-breadcrumb a {
+        color: #22c55e;
+        text-decoration: none;
+    }
 </style>
 
+<div class="cart-hero">
+    <div class="cart-hero-title">
+        <h1></h1>
+        <div class="cart-hero-breadcrumb">
+        </div>
+    </div>
+</div>
 
 <div class="cart-page">
     <div class="cart-wrapper">
