@@ -157,6 +157,11 @@
         white-space: nowrap;
     }
 
+    td.cart-price-discount {
+        color: #41c0a0 !important;
+        font-weight: 600;
+    }
+
     .cart-line-total {
         font-weight: 600;
         color: #111827;
@@ -225,13 +230,13 @@
     }
 
     .cart-summary {
-        flex: 0 0 320px;
+        flex: 0 0 380px;
         background: radial-gradient(circle at top left, #00c896 0, #020617 42%, #020617 100%);
         color: #e5e7eb;
         border-radius: 24px;
         padding: 22px 20px 20px;
         position: sticky;
-        top: 110px;
+        top: 110px;   
     }
 
     .cart-summary-title {
@@ -478,6 +483,31 @@
         color: #22c55e;
         text-decoration: none;
     }
+
+    .btn-delete {
+        background: #e53935;
+        color: #fff;
+        padding: 6px 14px;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: 0.2s;
+        display: inline-flex;
+        width: auto;
+    }
+
+    .btn-delete:hover {
+        background: #c62828;
+    }
+
+    .btn-delete i {
+        font-size: 14px;
+    }
+
+    .btn-delete { 
+        align-self: flex-start; 
+    }
 </style>
 
 <div class="cart-hero">
@@ -536,14 +566,14 @@
                                         <td>
                                             <div class="cart-product-meta">
                                                 <div class="cart-product-name">{{ $details['tensp'] }}</div>
-                                                <button type="button" class="cart-remove cart_remove">
+                                                <button type="button" class="btn-delete cart_remove">
                                                     <i class="fa fa-trash-o"></i> Xóa
                                                 </button>
                                             </div>
                                         </td>
 
                                         <td class="cart-price-original" data-th="Price">
-                                            {{ $details['giasp'] }}
+                                            {{ number_format($details['giasp'], 0, ',', '.') }}vnđ
                                         </td>
 
                                         <td class="cart-price-discount" data-th="Price">
@@ -551,7 +581,7 @@
                                         </td>
 
                                         <td class="cart-price-promo text-center" data-th="Subtotal">
-                                            {{ $details['giakhuyenmai'] }}đ
+                                            {{ number_format($details['giakhuyenmai'], 0, ',', '.') }}vnđ
                                         </td>
 
                                         <td class="cart-quantity" data-th="Quantity">
@@ -577,7 +607,7 @@
                                         </td>
 
                                         <td class="cart-line-total text-right product-total" data-th="Total">
-                                            {{ $details['giakhuyenmai'] * $details['quantity'] }}đ
+                                            {{ number_format($details['giakhuyenmai'] * $details['quantity'], 0, ',', '.') }}vnđ
                                         </td>
                                     </tr>
                                 @endforeach
@@ -589,16 +619,23 @@
                         <div class="cart-summary-title">Tóm tắt đơn hàng</div>
 
                         <div class="cart-summary-row">
-                            <span>Tạm tính</span>
-                            <span id="cart-total">
-                                {{ number_format($total, 0, ',', '.') }}đ
+                            <span>Tổng tiền giá gốc</span>
+                            <span id="cart-original">
+                                {{ number_format($totalOriginal, 0, ',', '.') }} vnđ
+                            </span>
+                        </div>
+
+                        <div class="cart-summary-row">
+                            <span>Tổng tiền giảm giá</span>
+                            <span id="cart-discount">
+                                {{ number_format($totalDiscount, 0, ',', '.') }} vnđ
                             </span>
                         </div>
 
                         <div class="cart-summary-row cart-summary-total">
                             <span>Tổng thanh toán</span>
                             <span id="cart-total-final">
-                                {{ number_format($total, 0, ',', '.') }}đ
+                                {{ number_format($totalFinal, 0, ',', '.') }} vnđ
                             </span>
                         </div>
 
@@ -631,7 +668,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Hàm định dạng số tiền
     function formatPrice(price) {
-        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + 'đ';
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' vnđ';
     }
 
     // Xử lý tăng số lượng
@@ -642,10 +679,6 @@ document.addEventListener('DOMContentLoaded', function() {
             var quantityInput = row.querySelector('.quantity');
             var value = parseInt(quantityInput.value, 10);
             var max = parseInt(quantityInput.getAttribute('max'), 10);
-            if (value < max) {
-                quantityInput.value = value + 1;
-                updateCart(row, quantityInput.value, this);
-            }
 
             if (isNaN(value)) value = 1;
             if (value < max) {
@@ -728,15 +761,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     row.remove();
 
-                    let total = 0;
-                    document.querySelectorAll('.product-total').forEach(td => {
-                        const raw = td.textContent.replace(/[^\d]/g, '');
-                        if (raw) total += parseInt(raw, 10);
-                    });
-
-                    if (document.getElementById('cart-total')) {
-                        document.getElementById('cart-total').textContent = formatPrice(total) + 'đ';
-                    }
+                    updateCartTotal();
 
                     showToast('Xóa sản phẩm thành công!');
                 })
@@ -766,7 +791,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateCart(row, quantity, element) {
         var button = element && element.classList.contains('quantity-btn') ? element : null;
         if (button) {
-            button.disabled = true; // Vô hiệu hóa nút trong khi xử lý
+            button.disabled = true; 
         }
 
         $.ajax({
@@ -779,32 +804,74 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             success: function(response) {
                 if (response.status === 'success') {
-                    // Cập nhật tổng tiền của sản phẩm
                     var productTotal = row.querySelector('.product-total');
-                    productTotal.textContent = formatPrice(response.product_total);
+                    if (productTotal && typeof response.product_total !== 'undefined') {
+                        productTotal.textContent = formatPrice(response.product_total);
+                    }
 
-                    // Cập nhật tổng tiền giỏ hàng
-                    updateCartTotal(response.total);
+                    updateCartSummary(response);
                 } else {
-                    // Khôi phục số lượng nếu có lỗi
                     var quantityInput = row.querySelector('.quantity');
                     quantityInput.value = response.quantity || quantityInput.value;
                 }
             },
             complete: function() {
                 if (button) {
-                    button.disabled = false; // Bật lại nút
+                    button.disabled = false;
                 }
             }
         });
     }
 
-    // Hàm cập nhật tổng tiền giỏ hàng
-    function updateCartTotal(total) {
-        var cartTotalElement = document.getElementById('cart-total');
-        if (cartTotalElement) {
-            cartTotalElement.textContent = formatPrice(total);
+    function updateCartSummary(data) {
+        var originalEl = document.getElementById('cart-original');
+        var discountEl = document.getElementById('cart-discount');
+        var finalEl    = document.getElementById('cart-total-final');
+
+        if (originalEl && typeof data.total_original !== 'undefined') {
+            originalEl.textContent = formatPrice(data.total_original);
         }
+        if (discountEl && typeof data.total_discount !== 'undefined') {
+            discountEl.textContent = formatPrice(data.total_discount);
+        }
+        if (finalEl && typeof data.total_final !== 'undefined') {
+            finalEl.textContent = formatPrice(data.total_final);
+        }
+    }
+
+    function updateCartTotal(total) {
+        const rows = document.querySelectorAll('.cart-item');
+
+        let totalOriginal = 0; 
+        let totalFinal    = 0; 
+
+        rows.forEach(row => {
+            const qtyInput = row.querySelector('.quantity');
+            if (!qtyInput) return;
+
+            const qty = parseInt(qtyInput.value, 10) || 0;
+
+            const originalCell = row.querySelector('.cart-price-original');
+            const promoCell    = row.querySelector('.cart-price-promo');
+
+            if (!originalCell || !promoCell) return;
+
+            const originalPrice = parseInt(originalCell.textContent.replace(/[^\d]/g, ''), 10) || 0;
+            const promoPrice    = parseInt(promoCell.textContent.replace(/[^\d]/g, ''), 10) || 0;
+
+            totalOriginal += originalPrice * qty;
+            totalFinal    += promoPrice    * qty;
+        });
+
+        const totalDiscount = totalOriginal - totalFinal;
+
+        const originalEl = document.getElementById('cart-original');
+        const discountEl = document.getElementById('cart-discount');
+        const finalEl    = document.getElementById('cart-total-final');
+
+        if (originalEl) originalEl.textContent = formatPrice(totalOriginal);
+        if (discountEl) discountEl.textContent = formatPrice(totalDiscount);
+        if (finalEl)    finalEl.textContent    = formatPrice(totalFinal);
     }
 });
 </script>

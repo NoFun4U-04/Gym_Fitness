@@ -22,7 +22,28 @@ class CartController extends Controller
 
     public function cart()
     {
-        return view('pages.cart');
+        $cart = session()->get('cart', []);
+
+        $totalOriginal = 0; 
+        $totalFinal    = 0; 
+
+        foreach ($cart as $item) {
+            $qty          = $item['quantity'] ?? 0;
+            $giaGoc       = $item['giasp'] ?? 0;
+            $giaKhuyenMai = $item['giakhuyenmai'] ?? $giaGoc;
+
+            $totalOriginal += $giaGoc       * $qty;
+            $totalFinal    += $giaKhuyenMai * $qty;
+        }
+
+        $totalDiscount = $totalOriginal - $totalFinal; 
+
+        return view('pages.cart', compact(
+            'cart',
+            'totalOriginal',
+            'totalDiscount',
+            'totalFinal'
+        ));
     }
 
     public function addToCart($id)
@@ -101,20 +122,29 @@ class CartController extends Controller
             $cart[$id]['quantity'] = $quantity;
             session()->put('cart', $cart);
 
-            // Tính tổng tiền của sản phẩm
             $productTotal = $cart[$id]['giakhuyenmai'] * $quantity;
+            // Tính tổng tiền giỏ hàng (giá gốc + khuyến mãi)
+            $totalOriginal = 0; 
+            $totalFinal    = 0; 
 
-            // Tính tổng tiền giỏ hàng
-            $total = 0;
             foreach ($cart as $item) {
-                $total += $item['giakhuyenmai'] * $item['quantity'];
+                $qty          = $item['quantity'];
+                $giaGoc       = $item['giasp'];
+                $giaKM        = $item['giakhuyenmai'];
+
+                $totalOriginal += $giaGoc * $qty;
+                $totalFinal    += $giaKM  * $qty;
             }
 
+            $totalDiscount = $totalOriginal - $totalFinal; 
+
             return response()->json([
-                'status' => 'success',
-                'product_total' => $productTotal,
-                'total' => $total,
-                'message' => 'Cập nhật giỏ hàng thành công!'
+                'status'         => 'success',
+                'product_total'  => $productTotal,
+                'total_original' => $totalOriginal,
+                'total_discount' => $totalDiscount,
+                'total_final'    => $totalFinal,
+                'message'        => 'Cập nhật giỏ hàng thành công!'
             ]);
         }
 
