@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Repositories\IOrderRepository;
 use DB;
-
+use App\Models\Dathang;
+use App\Models\ChitietDonhang;
 use Illuminate\Support\Facades\Auth;
 
 class OrderViewController extends Controller
@@ -33,10 +34,14 @@ class OrderViewController extends Controller
 
     public function edit($id)
     {
-        $order = $this->OrderRepository->findOrder($id);
-        $orderdetails = $this->OrderRepository->findDetailProduct($id);
-        $showusers = $this->OrderRepository->findUser($id);
-        return view('pages.donhangdetail', ['order' => $order, 'orderdetails' => $orderdetails, 'showusers' => $showusers]);
+        $order = Dathang::findOrFail($id);
+
+        $orderdetails = ChitietDonhang::where('id_dathang', $id)->get();
+
+        return view('pages.donhangdetail', [
+            'order'        => $order,
+            'orderdetails' => $orderdetails,
+        ]);
     }
 
     public function capnhatThongTin(Request $request)
