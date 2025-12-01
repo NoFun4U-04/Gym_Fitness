@@ -12,7 +12,7 @@
 
 {{-- FILTER --}}
 <div class="d-flex align-items-center mb-3">
-    <a class="btn btn-primary me-3" href="{{ route('danhmuc.create') }}">+ Thêm danh mục</a>
+    <a class="btn btn-primary me-3" href="{{ route('danhmuc.create') }}">Thêm danh mục</a>
 
     <form action="" method="GET">
         <select name="status" class="form-select" onchange="this.form.submit()">
@@ -26,10 +26,10 @@
 <table class="table table-hover">
     <thead class="table-dark">
         <tr>
-            <th width="35%">Tên danh mục</th>
-            <th width="20%">Danh mục cha</th>
-            <th width="15%">Trạng thái</th>
-            <th width="30%" class="text-center">Hành động</th>
+            <th width="35%">TÊN DANH MỤC</th>
+            <th width="20%">DANH MỤC CHA</th>
+            <th width="15%">TRẠNG THÁI</th>
+            <th width="30%" class="text-center">HÀNH ĐỘNG</th>
         </tr>
     </thead>
 

@@ -18,6 +18,11 @@ use App\Repositories\DanhmucRepository;
 
 use App\Repositories\IOrderRepository;
 use App\Repositories\OrderRepository;
+
+use App\Repositories\IKhuyenmaiRepository;
+use App\Repositories\KhuyenmaiRepository;
+
+
 use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
@@ -32,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(IDanhmucRepository::class, DanhmucRepository::class);
         $this->app->bind(IAdminRepository::class, AdminRepository::class);
         $this->app->bind(IOrderRepository::class, OrderRepository::class);
+        $this->app->bind(IKhuyenmaiRepository::class, KhuyenmaiRepository::class);
     }
 
     /**

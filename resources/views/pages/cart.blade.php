@@ -448,7 +448,7 @@
 
     .cart-hero {
         width: 100%;
-        height: 560px;
+        height: 200px;
         background-image: url('/frontend/img/giohang.jpg');
         background-size: cover;
         background-position: center;
