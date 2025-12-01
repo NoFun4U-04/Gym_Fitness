@@ -5,7 +5,7 @@
     .cart-page {
         padding: 40px 0 80px;
         background: #f1f5f9;
-         width: 100%;
+        width: 100%;
     }
 
     .cart-wrapper {
