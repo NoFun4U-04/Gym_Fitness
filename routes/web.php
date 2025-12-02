@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\admin\{AdminController, ProductController, DanhmucController, OrderController};
+use App\Http\Controllers\admin\{AdminController, ProductController, DanhmucController, OrderController, KhuyenmaiController};
 
 use App\Http\Controllers\{
     HomeController,
@@ -122,4 +122,12 @@ Route::prefix('/')->middleware('admin.login')->group(function () {
     Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/admin/orders/edit/{orders}', [OrderController::class, 'edit'])->name('orders.edit');
     Route::put('/admin/orders/update/{orders}', [OrderController::class, 'update'])->name('orders.update');
+
+    Route::get('/admin/khuyenmai', [KhuyenmaiController::class, 'index'])->name('khuyenmai.index');
+    Route::get('/admin/khuyenmai/create', [KhuyenmaiController::class, 'create'])->name('khuyenmai.create');
+    Route::post('/admin/khuyenmai', [KhuyenmaiController::class, 'store'])->name('khuyenmai.store');
+    Route::get('/admin/khuyenmai/{id}/edit', [KhuyenmaiController::class, 'edit'])->name('khuyenmai.edit');
+    Route::put('/admin/khuyenmai/{id}', [KhuyenmaiController::class, 'update'])->name('khuyenmai.update');
+    Route::delete('/admin/khuyenmai/{id}', [KhuyenmaiController::class, 'destroy'])->name('khuyenmai.destroy');
+    Route::post('/admin/khuyenmai/{id}/restore', [KhuyenmaiController::class, 'restore'])->name('khuyenmai.restore');
 });

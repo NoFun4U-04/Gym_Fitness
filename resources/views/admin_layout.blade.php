@@ -52,27 +52,40 @@
                     <span class="align-middle">Dashboard</span>
                 </a>
             </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{URL::to('/admin/orders')}}">
+                    <i class="align-middle me-2" data-feather="package"></i>
+                    <span class="align-middle">Đơn hàng</span>
+                </a>
+            </li>
+
+
+            
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{URL::to('/admin/khuyenmai')}}">
+                    <i class="align-middle" data-feather="percent"></i>
+                    <span class="align-middle">Khuyến mãi</span>
+                </a>
+            </li>
         
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{URL::to('/admin/product')}}">
                     <i class="align-middle" data-feather="box"></i>
-                    <span class="align-middle">Products</span>
+                    <span class="align-middle">Sản phẩm</span>
                 </a>
             </li>
         
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{URL::to('/admin/danhmuc')}}">
                     <i class="align-middle" data-feather="tag"></i>
-                    <span class="align-middle">Categories</span>
+                    <span class="align-middle">Danh mục sản phẩm</span>
                 </a>
             </li>
+
+            
         
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{URL::to('/admin/orders')}}">
-                    <i class="align-middle me-2" data-feather="package"></i>
-                    <span class="align-middle">Orders</span>
-                </a>
-            </li>
+            
         
             
         </ul>

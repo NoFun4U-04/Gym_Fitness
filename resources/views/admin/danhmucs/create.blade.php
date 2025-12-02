@@ -15,7 +15,7 @@
     <form method="POST" action="{{ route('danhmuc.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
-            <label for="danhmuc" class="form-label">Tên danh mục:</label>
+            <label for="danhmuc" class="form-label">Tên danh mục <span style='color: red;'>*</span></label>
             <input type="text" class="form-control" id="danhmuc" name="ten_danhmuc" required>
         </div>
         <div class="mb-3">
