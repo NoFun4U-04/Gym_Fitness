@@ -4,7 +4,7 @@
 <style>
 .orders-hero {
     width: 100%;
-    height: 520px;
+    height: 500px;
     background-image: url('/frontend/img/donhang.jpg');
     background-size: cover;
     background-position: center;
