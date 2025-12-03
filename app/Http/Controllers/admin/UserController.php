@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use Illuminate\Http\Request;
 use App\Models\Danhmuc;
 use App\Models\Phanquyen;
+use App\Models\Nguoidung;
 use App\Http\Controllers\Controller;
 use App\Repositories\IUserRepository;
 
@@ -16,22 +17,45 @@ class UserController extends Controller
         $this->repo = $repo;
     }
 
-    public function index()
-    {
-        $users = $this->repo->all();
+    public function index(Request $request)
+{
+    // Khởi tạo query
+    $query = Nguoidung::with('phanquyen');
 
-        // Tính thống kê người dùng
-        $stats = [
-            'total'    => $users->count(),
-            'active'   => $users->where('trang_thai', 1)->count(),
-            'inactive' => $users->where('trang_thai', 0)->count(),
-        ];
-
-        return view('admin.users.index', [
-            'users' => $users,
-            'stats' => $stats
-        ]);
+    // Tìm kiếm
+    if ($request->q) {
+        $query->where(function ($q) use ($request) {
+            $q->where('hoten', 'like', '%' . $request->q . '%')
+              ->orWhere('email', 'like', '%' . $request->q . '%')
+              ->orWhere('sdt', 'like', '%' . $request->q . '%');
+        });
     }
+
+    // Lọc theo quyền
+    if ($request->role) {
+        $query->where('id_phanquyen', $request->role);
+    }
+
+    // Lọc theo trạng thái
+    if ($request->status !== null && $request->status !== '') {
+        $query->where('trang_thai', $request->status);
+    }
+
+    // Lấy danh sách users sau khi lọc
+    $users = $query->get();
+
+    // Tính thống kê (dựa trên tất cả user, không theo lọc)
+    $allUsers = Nguoidung::all();
+
+    $stats = [
+        'total'    => $allUsers->count(),
+        'active'   => $allUsers->where('trang_thai', 1)->count(),
+        'inactive' => $allUsers->where('trang_thai', 0)->count(),
+    ];
+
+    return view('admin.users.index', compact('users', 'stats'));
+}
+
 
 
     public function create()
@@ -77,6 +101,15 @@ class UserController extends Controller
     public function destroy($id)
     {
         $this->repo->delete($id);
-        return redirect()->route('users.index')->with('success', 'Xóa người dùng thành công!');
+        return redirect()->route('users.index')->with('success', 'Vô hiệu hóa người dùng thành công!');
     }
+
+    public function restore($id)
+    {
+        $this->repo->restore($id);
+        return redirect()->route('users.index')->with('success', 'Khôi phục người dùng thành công!');
+    }
+
+
+    
 }

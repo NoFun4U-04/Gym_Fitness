@@ -2,42 +2,55 @@
 
 namespace App\Repositories;
 
-use App\Repositories\IOrderRepository;
 use App\Models\Dathang;
-
-use Illuminate\Support\Facades\DB;
 
 class OrderRepository implements IOrderRepository
 {
+    // Đơn chờ xác nhận
+    public function getPending()
+    {
+        return Dathang::where('trangthai', 'chờ xác nhận')
+            ->orderByDesc('ngaydathang')
+            ->get();
+    }
 
-    public function allOrder()
+    // Đơn đang giao: chờ giao hàng + đang giao hàng
+    public function getShipping()
     {
-        return Dathang::orderBy('id_dathang', 'desc')->paginate(2);
-    }
-    public function findOrder($id)
-    {
-        return Dathang::where('id_dathang', $id)->first();
-    }
-    public function findDetailProduct($id)
-    {
-        return DB::table('chitiet_donhang')
-            ->join('dathang', 'chitiet_donhang.id_dathang', '=', 'dathang.id_dathang')
-            ->select('chitiet_donhang.*')
-            ->where('dathang.id_dathang', $id)
+        return Dathang::whereIn('trangthai', ['chờ giao hàng', 'đang giao hàng'])
+            ->orderByDesc('ngaydathang')
             ->get();
     }
-    public function findUser($id)
+
+    // Đơn đã hoàn tất: giao thành công + đã hủy
+    public function getFinished()
     {
-        return DB::table('nguoidung')
-            ->join('dathang', 'nguoidung.id_nd', '=', 'dathang.id_nd')
-            ->select('nguoidung.*')
-            ->where('dathang.id_dathang', $id)
+        return Dathang::whereIn('trangthai', ['giao thành công', 'đã hủy'])
+            ->orderByDesc('ngaydathang')
             ->get();
     }
-    public function updateOrder($data, $id)
+
+    public function find($id)
     {
-        $this->findOrder($id)->update($data);
+        return Dathang::findOrFail($id);
     }
+
+    public function updateStatus($id, string $status, array $extraData = [])
+    {
+        $order = $this->find($id);
+
+        $order->trangthai = $status;
+
+        // merge thêm các field liên quan (ngaygiaohang, tiengiam, tienphaitra,...)
+        foreach ($extraData as $field => $value) {
+            $order->{$field} = $value;
+        }
+
+        $order->save();
+
+        return $order;
+    }
+
 
     public function orderView($id)
     {
@@ -45,4 +58,6 @@ class OrderRepository implements IOrderRepository
             ->orderBy('ngaydathang', 'desc')
             ->get();
     }
+
+
 }

@@ -88,7 +88,7 @@
 }
 
 .btn-footer-submit {
-    background: linear-gradient(to right, #059669, #10b981);
+    background: linear-gradient(to right, #0284c7, #0ea5e9);
     color: #fff;
     font-weight: 600;
     border-radius: 12px;

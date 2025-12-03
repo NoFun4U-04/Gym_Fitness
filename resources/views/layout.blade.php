@@ -44,7 +44,6 @@
                         <a href="{{ URL::to('/viewAll') }}" class="hover-a">Sản phẩm </a>
                         <ul class="dropdown-menu" id="dropdown-danhmuc"></ul>
                     </li>
-<<<<<<< HEAD
                     <li class="dropdown {{ request()->is('dich-vu/*') ? 'active' : '' }}">
                         <a href="javascript:void(0)" class="hover-a">Dịch vụ </a>
                         <ul class="dropdown-menu dropdown-services">
@@ -54,11 +53,6 @@
                             <li><a href="{{ route('services.kickboxing') }}">Kick Boxing</a></li>
                             <li><a href="{{ route('services.dance') }}">Dance</a></li>
                         </ul>
-=======
-                    <li class="{{ request()->is('test') ? 'active' : '' }}">
-                        <a href="{{ URL::to('/test') }}" class="hover-a">Dịch vụ </a>
-                        <ul class="dropdown-menu" id="dropdown-danhmuc"></ul>
->>>>>>> 551a0dc05d710e129dc837c495933f7c6afd7d44
                     </li>
                     <li class="{{ request()->is('dang-ky-tap-thu') ? 'active' : '' }}">
                         <a href="{{ route('dang-ky-tap-thu') }}" class="hover-a">Đăng ký tập thử</a>

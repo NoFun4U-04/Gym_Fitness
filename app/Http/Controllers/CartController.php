@@ -203,7 +203,6 @@ class CartController extends Controller
         $validatedDataDatHang['hoten'] = $request->display_hoten;
         $validatedDataDatHang['email'] = $request->display_email;
         $validatedDataDatHang['sdt'] = $request->display_sdt;
-        $validatedDataDatHang['trangthai'] = "đang xử lý";
         $validatedDataDatHang['id_nd'] = Auth::user()->id_nd;
 
         $dathangCre = Dathang::create($validatedDataDatHang);

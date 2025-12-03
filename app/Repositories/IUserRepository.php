@@ -13,4 +13,6 @@ interface IUserRepository
     public function updateUser($id, $data);
 
     public function delete($id);
+
+    public function restore($id);
 }

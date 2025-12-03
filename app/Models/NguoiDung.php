@@ -63,5 +63,4 @@ class NguoiDung extends Authenticatable
     {
         return $this->belongsTo(Phanquyen::class, 'id_phanquyen', 'id_phanquyen');
     }
-
 }
