@@ -3,15 +3,21 @@
 <style>
     /* General product styling */
     .product {
-        position: relative; /* Needed for absolute positioning of .box-icon-new-product */
-        overflow: hidden; /* Hide overflowing parts of the zoomed image */
-        border-radius: 8px; /* Slightly rounded corners for products */
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
-        transition: transform 0.3s ease; /* Smooth transition for product card itself */
+        position: relative;
+        /* Needed for absolute positioning of .box-icon-new-product */
+        overflow: hidden;
+        /* Hide overflowing parts of the zoomed image */
+        border-radius: 8px;
+        /* Slightly rounded corners for products */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        /* Subtle shadow for depth */
+        transition: transform 0.3s ease;
+        /* Smooth transition for product card itself */
     }
 
     .product:hover {
-        transform: translateY(-5px); /* Lift effect on hover for the whole product card */
+        transform: translateY(-5px);
+        /* Lift effect on hover for the whole product card */
     }
 
     /* Icon box styling */
@@ -22,10 +28,12 @@
         width: auto;
         min-height: auto;
         display: flex;
-        flex-direction: column; /* Stack icons vertically */
+        flex-direction: column;
+        /* Stack icons vertically */
         justify-content: flex-end;
         gap: 8px;
-        z-index: 2; /* Ensure icons are above other elements */
+        z-index: 2;
+        /* Ensure icons are above other elements */
     }
 
     /* Individual icon styling */
@@ -34,29 +42,37 @@
         width: 40px;
         height: 40px;
         background-color: white;
-        border-radius: 50%; /* Make icons perfectly round */
+        border-radius: 50%;
+        /* Make icons perfectly round */
         text-align: center;
-        line-height: 40px; /* To center the icon vertically */
-        transition: all 0.4s ease; /* Softer transition for icons */
+        line-height: 40px;
+        /* To center the icon vertically */
+        transition: all 0.4s ease;
+        /* Softer transition for icons */
         opacity: 0;
         cursor: pointer;
-        pointer-events: auto; /* allow icon clicks */
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for icons */
+        pointer-events: auto;
+        /* allow icon clicks */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        /* Shadow for icons */
     }
 
     .product .box-icon-new-product i:hover {
         background-color: var(--Hover-icon, #007bff);
         color: white;
-        transform: scale(1.1); /* Slightly enlarge icon on hover */
+        transform: scale(1.1);
+        /* Slightly enlarge icon on hover */
     }
 
     /* Icon initial positions (off-screen) */
     .product .box-icon-new-product #search-Product {
-        transform: translateX(50px); /* Slide in from right */
+        transform: translateX(50px);
+        /* Slide in from right */
     }
 
     .product .box-icon-new-product #cart-Product {
-        transform: translateX(50px); /* Slide in from right */
+        transform: translateX(50px);
+        /* Slide in from right */
     }
 
     /* Icon animation on product hover */
@@ -64,29 +80,36 @@
     .product:hover .box-icon-new-product #search-Product,
     .product:hover .box-icon-new-product #heart-Product {
         opacity: 1;
-        transform: translateX(0); /* Slide to original position */
+        transform: translateX(0);
+        /* Slide to original position */
     }
 
     .product:hover .box-icon-new-product #cart-Product {
-        transition-delay: 0.1s; /* Stagger the animation */
+        transition-delay: 0.1s;
+        /* Stagger the animation */
     }
 
     .product:hover .box-icon-new-product #search-Product {
-        transition-delay: 0.2s; /* Stagger the animation */
+        transition-delay: 0.2s;
+        /* Stagger the animation */
     }
 
     /* New styles for product image zoom and overlay */
     .product__img {
         position: relative;
-        overflow: hidden; /* Ensures the zoomed part is clipped */
-        border-radius: 8px 8px 0 0; /* Match parent border-radius */
+        overflow: hidden;
+        /* Ensures the zoomed part is clipped */
+        border-radius: 8px 8px 0 0;
+        /* Match parent border-radius */
     }
 
     .product__img img {
-        display: block; /* Removes extra space below image */
+        display: block;
+        /* Removes extra space below image */
         width: 100%;
         height: auto;
-        transition: transform 0.5s ease, filter 0.5s ease; /* Smooth transition for zoom and blur */
+        transition: transform 0.5s ease, filter 0.5s ease;
+        /* Smooth transition for zoom and blur */
     }
 
     .product__img::before {
@@ -96,19 +119,26 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: rgba(0, 0, 0, 0); /* Initial transparent overlay */
-        transition: background-color 0.5s ease; /* Smooth transition for overlay */
-        z-index: 1; /* Place overlay above image but below icons */
-        pointer-events: none; /* Allows clicks to pass through the overlay to the image/link */
+        background-color: rgba(0, 0, 0, 0);
+        /* Initial transparent overlay */
+        transition: background-color 0.5s ease;
+        /* Smooth transition for overlay */
+        z-index: 1;
+        /* Place overlay above image but below icons */
+        pointer-events: none;
+        /* Allows clicks to pass through the overlay to the image/link */
     }
 
     .product:hover .product__img img {
-        transform: scale(1.05); /* Zoom in by 5% */
-        filter: brightness(80%); /* Slightly dim the image */
+        transform: scale(1.05);
+        /* Zoom in by 5% */
+        filter: brightness(80%);
+        /* Slightly dim the image */
     }
 
     .product:hover .product__img::before {
-        background-color: rgba(0, 0, 0, 0.1); /* Slight dark overlay on hover */
+        background-color: rgba(0, 0, 0, 0.1);
+        /* Slight dark overlay on hover */
     }
 
     /* Product content styling */
@@ -138,7 +168,8 @@
 
     .product__pride-newPride {
         font-size: 1.1em;
-        color: #e60023; /* A common color for sale prices */
+        color: #e60023;
+        /* A common color for sale prices */
         font-weight: bold;
     }
 
@@ -146,7 +177,8 @@
         position: absolute;
         top: 8px;
         left: 8px;
-        background-color: #ff4d4d; /* Red background for sale tag */
+        background-color: #ff4d4d;
+        /* Red background for sale tag */
         color: white;
         padding: 4px 8px;
         border-radius: 4px;
@@ -254,6 +286,52 @@
         background-color: #0056b3;
         border-color: #0056b3;
     }
+
+    .product-slider {
+        position: relative;
+        width: 100%;
+        padding-top: 100%; 
+        overflow: hidden;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .product-slider img.slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;        
+        object-fit: cover;    
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    .product-slider img.slide.active {
+        opacity: 1;
+        position: absolute;    
+    }
+    
+    .product-slider-dots {
+        position: absolute;
+        bottom: 6px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 4px;
+        z-index: 3;
+    }
+
+    .product-slider-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+    }
+
+    .product-slider-dot.active {
+        background: #10b981;
+    }
 </style>
 
 <!-- Tất cả sản phẩm -->
@@ -279,84 +357,164 @@
                     <a href="{{ route('detail', ['id' => $sanpham->id_sanpham]) }}">
                         <div class="product">
                             <div class="product__img">
-                                {{-- Added onerror for placeholder image --}}
-                                <img src="{{ asset($sanpham->anhsp) }}" alt="{{ $sanpham->tensp }}" onerror="this.src='{{ asset('frontend/upload/placeholder.jpg') }}'">
-                            </div>
+                                <div class="product-slider">
+                                        @php
+                                            $images = $sanpham->images ?? collect();
+                                        @endphp
+
+                                        @if($images->isNotEmpty())
+                                            @foreach($images as $index => $img)
+                                                <img
+                                                    class="slide {{ $index === 0 ? 'active' : '' }}"
+                                                    src="{{ asset($img->duong_dan) }}"
+                                                    alt="{{ $sanpham->tensp }}"
+                                                >
+                                            @endforeach
+                                        @else
+                                            {{-- fallback nếu chưa có hình trong bảng images --}}
+                                            <img
+                                                class="slide active"
+                                                src="{{ asset('frontend/upload/placeholder.jpg') }}"
+                                                alt="{{ $sanpham->tensp }}">
+                                        @endif
+
+                                        <div class="product-slider-dots">
+                                            @php $total = max($images->count(), 1); @endphp
+                                            @for($i = 0; $i < $total; $i++)
+                                                <span class="product-slider-dot {{ $i === 0 ? 'active' : '' }}" data-index="{{ $i }}"></span>
+                                            @endfor
+                                        </div>
+                                    </div>
+                                </div>
                             <div class="box-icon-new-product">
                                 <a href="{{ route('add_to_cart', $sanpham->id_sanpham) }}" title="Thêm vào giỏ hàng">
                                     <i style="font-size: 19px;" id="cart-Product" class="cart-product fa-solid fa-cart-shopping"></i>
                                 </a>
                                 {{-- <a href="{{ route('wishlist_add', $sanpham->id_sanpham) }}" title="Thêm vào yêu thích">
-                                    <i style="font-size: 18px;" id="heart-Product" class="fa-solid fa-heart"></i>
-                                </a> --}}
-                                <a href="{{ route('detail', ['id' => $sanpham->id_sanpham]) }}" title="Xem chi tiết sản phẩm">
-                                    <i style="font-size: 18px;" id="search-Product" class="fa-solid fa-magnifying-glass"></i>
-                                </a>
-                            </div>
-
-                            <div class="product__sale">
-                                <div>
-                                    @if($sanpham->giamgia)
-                                    -{{$sanpham->giamgia}}%
-                                    @else Mới
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="product__content">
-                                {{-- Added product brand for consistency --}}
-                                @if(isset($sanpham->danhmuc->ten_danhmuc))
-                                <div class="product__brand">
-                                    {{ $sanpham->danhmuc->ten_danhmuc }}
-                                </div>
-                                @endif
-                                <div class="product__title">
-                                    {{$sanpham->tensp}}
-                                </div>
-
-                                <div class="product__pride-oldPride">
-                                    <span class="Price">
-                                        <bdi>
-                                            {{ number_format($sanpham->giasp, 0, ',', '.') }}
-                                            <span class="currencySymbol">₫</span>
-                                        </bdi>
-                                    </span>
-                                </div>
-
-                                <div class="product__pride-newPride">
-                                    <span class="Price">
-                                        <bdi>
-                                            {{ number_format($sanpham->giakhuyenmai, 0, ',', '.') }}
-                                            <span class="currencySymbol">₫</span>
-                                        </bdi>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
+                                <i style="font-size: 18px;" id="heart-Product" class="fa-solid fa-heart"></i>
+                    </a> --}}
+                    <a href="{{ route('detail', ['id' => $sanpham->id_sanpham]) }}" title="Xem chi tiết sản phẩm">
+                        <i style="font-size: 18px;" id="search-Product" class="fa-solid fa-magnifying-glass"></i>
                     </a>
                 </div>
-                @endforeach
+
+                <div class="product__sale">
+                    <div>
+                        @if($sanpham->giamgia)
+                        -{{$sanpham->giamgia}}%
+                        @else Mới
+                        @endif
+                    </div>
+                </div>
+
+                <div class="product__content">
+                    {{-- Added product brand for consistency --}}
+                    @if(isset($sanpham->danhmuc->ten_danhmuc))
+                    <div class="product__brand">
+                        {{ $sanpham->danhmuc->ten_danhmuc }}
+                    </div>
+                    @endif
+                    <div class="product__title">
+                        {{$sanpham->tensp}}
+                    </div>
+
+                    <div class="product__pride-oldPride">
+                        <span class="Price">
+                            <bdi>
+                                {{ number_format($sanpham->giasp, 0, ',', '.') }}
+                                <span class="currencySymbol">₫</span>
+                            </bdi>
+                        </span>
+                    </div>
+
+                    <div class="product__pride-newPride">
+                        <span class="Price">
+                            <bdi>
+                                {{ number_format($sanpham->giakhuyenmai, 0, ',', '.') }}
+                                <span class="currencySymbol">₫</span>
+                            </bdi>
+                        </span>
+                    </div>
+                </div>
             </div>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item @if($sanphams->currentPage() === 1) disabled @endif">
-                        <a class="page-link" href="{{ $sanphams->appends(request()->query())->previousPageUrl() }}">
-                            &laquo;
-                        </a>
-                    </li>
-                    @for ($i = 1; $i <= $sanphams->lastPage(); $i++)
-                        <li class="page-item @if($sanphams->currentPage() === $i) active @endif">
-                            <a class="page-link" href="{{ $sanphams->appends(request()->query())->url($i) }}">{{ $i }}</a>
-                        </li>
-                        @endfor
-                        <li class="page-item @if($sanphams->currentPage() === $sanphams->lastPage()) disabled @endif">
-                            <a class="page-link" href="{{ $sanphams->appends(request()->query())->nextPageUrl() }}">
-                                &raquo;
-                            </a>
-                        </li>
-                </ul>
-            </nav>
+            </a>
         </div>
+        @endforeach
     </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item @if($sanphams->currentPage() === 1) disabled @endif">
+                <a class="page-link" href="{{ $sanphams->appends(request()->query())->previousPageUrl() }}">
+                    &laquo;
+                </a>
+            </li>
+            @for ($i = 1; $i <= $sanphams->lastPage(); $i++)
+                <li class="page-item @if($sanphams->currentPage() === $i) active @endif">
+                    <a class="page-link" href="{{ $sanphams->appends(request()->query())->url($i) }}">{{ $i }}</a>
+                </li>
+                @endfor
+                <li class="page-item @if($sanphams->currentPage() === $sanphams->lastPage()) disabled @endif">
+                    <a class="page-link" href="{{ $sanphams->appends(request()->query())->nextPageUrl() }}">
+                        &raquo;
+                    </a>
+                </li>
+        </ul>
+    </nav>
 </div>
+</div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sliders = document.querySelectorAll('.product-slider');
+
+        sliders.forEach((slider) => {
+            const slides = slider.querySelectorAll('img.slide');
+            const dots = slider.querySelectorAll('.product-slider-dot');
+
+            if (slides.length === 0) return;
+
+            let currentIndex = 0;
+            const intervalMs = 3000;
+
+            function showSlide(index) {
+                slides.forEach((img, i) => {
+                    img.classList.toggle('active', i === index);
+                });
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+                currentIndex = index;
+            }
+
+            let timer = setInterval(() => {
+                const nextIndex = (currentIndex + 1) % slides.length;
+                showSlide(nextIndex);
+            }, intervalMs);
+
+            dots.forEach((dot) => {
+                dot.addEventListener('click', () => {
+                    const index = parseInt(dot.getAttribute('data-index'), 10);
+                    showSlide(index);
+                    clearInterval(timer);
+                    timer = setInterval(() => {
+                        const nextIndex = (currentIndex + 1) % slides.length;
+                        showSlide(nextIndex);
+                    }, intervalMs);
+                });
+            });
+
+            const productCard = slider.closest('.product');
+            if (productCard) {
+                productCard.addEventListener('mouseenter', () => clearInterval(timer));
+                productCard.addEventListener('mouseleave', () => {
+                    clearInterval(timer);
+                    timer = setInterval(() => {
+                        const nextIndex = (currentIndex + 1) % slides.length;
+                        showSlide(nextIndex);
+                    }, intervalMs);
+                });
+            }
+        });
+    });
+</script>
 @endsection

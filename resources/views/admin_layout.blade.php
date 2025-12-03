@@ -47,12 +47,41 @@
                     <span style="color: #fff;">Quản trị hệ thống</span>
                 </li>
 
+<<<<<<< HEAD
                 {{-- DASHBOARD --}}
                 <li class="sidebar-item {{ request()->is('dashboard') ? 'active' : '' }}">
                     <a class="sidebar-link" href="{{ url('/dashboard') }}">
                         <i class="bi bi-house-door me-2"></i> Dashboard
                     </a>
                 </li>
+=======
+            
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{URL::to('/admin/khuyenmai')}}">
+                    <i class="align-middle" data-feather="percent"></i>
+                    <span class="align-middle">Khuyến mãi</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{URL::to('/admin/danhmuc')}}">
+                    <i class="align-middle" data-feather="box"></i>
+                    <span class="align-middle">Danh mục</span>
+                </a>
+            </li>   
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{URL::to('/admin/product')}}">
+                    <i class="align-middle" data-feather="box"></i>
+                    <span class="align-middle">Sản phẩm</span>
+                </a>
+            </li>
+        
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ URL::to('/admin/users') }}">
+                    <i class="align-middle" data-feather="users"></i>
+                    <span class="align-middle">Người dùng</span>
+                </a>
+            </li>
+>>>>>>> 467efdd3c81a748a93b996b9678024efa6c6fbb5
 
                 {{-- ĐƠN HÀNG --}}
                 <li class="sidebar-item {{ request()->routeIs('orders.*') ? 'active' : '' }}">

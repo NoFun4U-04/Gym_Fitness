@@ -173,10 +173,10 @@
 <table class="table table-hover dm-table">
     <thead>
         <tr>
-            <th>TÊN DANH MỤC</th>
-            <th>DANH MỤC CHA</th>
-            <th>TRẠNG THÁI</th>
-            <th>THAO TÁC</th>
+            <th width="35%">TÊN DANH MỤC</th>
+            <th width="20%">DANH MỤC CHA</th>
+            <!-- <th width="15%">TRẠNG THÁI</th> -->
+            <th width="30%" class="text-center">HÀNH ĐỘNG</th>
         </tr>
     </thead>
 
