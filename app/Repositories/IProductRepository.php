@@ -14,4 +14,5 @@ interface IProductRepository {
     public function softDelete($id);
     public function searchProduct($request);
     public function getAllByDanhMuc($request);
+    public function filterProducts($request);
 }

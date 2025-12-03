@@ -28,7 +28,7 @@
         <tr>
             <th width="35%">TÊN DANH MỤC</th>
             <th width="20%">DANH MỤC CHA</th>
-            <th width="15%">TRẠNG THÁI</th>
+            <!-- <th width="15%">TRẠNG THÁI</th> -->
             <th width="30%" class="text-center">HÀNH ĐỘNG</th>
         </tr>
     </thead>
@@ -48,13 +48,13 @@
             </td>
 
             {{-- TRẠNG THÁI --}}
-            <td>
+            <!-- <td>
                 @if($danhmuc->status == 1)
                     <span class="badge bg-success">Hoạt động</span>
                 @else
                     <span class="badge bg-danger">Không hoạt động</span>
                 @endif
-            </td>
+            </td> -->
 
             {{-- ACTION --}}
             <td class="text-center">

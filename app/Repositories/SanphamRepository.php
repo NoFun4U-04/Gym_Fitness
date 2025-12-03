@@ -6,7 +6,7 @@ use App\Models\SanPham;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 
-class SanphamRepository implements ISanphamRepository
+class SanphamRepository
 {
     public function allProduct()
     {

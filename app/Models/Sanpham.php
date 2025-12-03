@@ -23,11 +23,15 @@ class SanPham extends Model
         'soluong',
         'noi_bat',
         'trang_thai',
-        'id_danhmuc',
+        'id_danhmuc'
     ];
 
     public function danhMuc()
     {
         return $this->belongsTo(DanhMuc::class, 'id_danhmuc', 'id_danhmuc');
+    }
+    public function images()
+    {
+        return $this->hasMany(Image::class, 'id_sanpham', 'id_sanpham');
     }
 }

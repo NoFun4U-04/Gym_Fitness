@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Sanpham;
 use App\Models\Danhmuc;
 use App\Repositories\IProductRepository;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -47,23 +47,19 @@ class HomeController extends Controller
     /** ===================== DETAIL PAGE ===================== */
     public function detail($id)
     {
-        $sanpham = Sanpham::findOrFail($id);
+        $sanpham = $this->productRepository->findProduct($id);
 
-        // Tính số lượng thực tế còn lại
         $soluongDaBan = DB::table('chitiet_donhang')
             ->where('id_sanpham', $id)
             ->sum('soluong');
 
         $sanpham->soluong = max($sanpham->soluong - $soluongDaBan, 0);
 
-        // Lấy sản phẩm random
         $randoms = $this->productRepository->randomProduct()->take(5);
 
-        // Comment
         $comments = \App\Models\Comment::where('sanpham_id', $id)
             ->with('user')
             ->get();
-
         return view('pages.detail', compact('sanpham', 'randoms', 'comments'));
     }
 
@@ -89,6 +85,7 @@ class HomeController extends Controller
             'danhmucs' => $danhmucs,
         ]);
     }
+
 
     /** ===================== SERVICES ===================== */
     public function services()

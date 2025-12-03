@@ -68,7 +68,12 @@
                     <span class="align-middle">Khuyến mãi</span>
                 </a>
             </li>
-        
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{URL::to('/admin/danhmuc')}}">
+                    <i class="align-middle" data-feather="box"></i>
+                    <span class="align-middle">Danh mục</span>
+                </a>
+            </li>   
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{URL::to('/admin/product')}}">
                     <i class="align-middle" data-feather="box"></i>

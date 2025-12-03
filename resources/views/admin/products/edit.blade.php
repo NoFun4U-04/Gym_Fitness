@@ -66,7 +66,6 @@
     .grid-2 { grid-template-columns: 1fr; }
 }
 
-/* ===================== FOOTER BUTTONS ===================== */
 .btn-footer-cancel {
     background: #e5e7eb;
     color: #374151;
@@ -94,18 +93,51 @@
     transform: translateY(-1px);
 }
 
-/* ===================== IMAGE PREVIEW ===================== */
-.preview-img {
-    width: 150px;
-    height: 150px;
+#preview-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.preview-box {
+    position: relative;
+    display: inline-block;
+}
+
+.preview-box img {
+    width: 120px;
+    height: 120px;
     object-fit: cover;
     border-radius: 12px;
     border: 1px solid #d1d5db;
-    margin-top: 8px;
+}
+
+.preview-box .remove-btn {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: #ef4444;
+    color: white;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.current-image-box img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #d1d5db;
 }
 </style>
 
-<!-- TITLE -->
 <div class="promo-title mb-3">
     <i class="bi bi-pencil-square"></i>
     Chỉnh sửa sản phẩm
@@ -138,7 +170,6 @@
                    value="{{ old('giasp', $sp->giasp) }}" required>
         </div>
 
-        <!-- % giảm + tiền giảm -->
         <div class="grid-2">
 
             <div>
@@ -160,7 +191,6 @@
 
         </div>
 
-        <!-- Giá bán sau giảm -->
         <div>
             <label class="promo-label">Giá bán (VNĐ) *</label>
             <input type="number" name="giakhuyenmai"
@@ -183,28 +213,35 @@
             </select>
         </div>
 
-        <!-- Ảnh -->
         <div>
-            <label class="promo-label">Ảnh sản phẩm</label>
-            <input type="file" name="anhsp" class="form-control promo-input"
-                   onchange="previewImage(event)">
+            <label class="promo-label">Ảnh sản phẩm (chọn thêm / thay thế)</label>
+            <input type="file"
+                   name="anhsp[]"
+                   class="form-control promo-input"
+                   multiple
+                   onchange="previewImagesEdit(event)">
+            <div id="preview-wrapper"></div>
 
-            <div class="mt-2">
-                <label class="promo-label">Ảnh hiện tại</label><br>
-                <img src="/{{ $sp->anhsp }}" class="preview-img mb-2">
-            </div>
-
-            <img id="preview" class="preview-img" style="display:none;">
+            @if($sp->images && $sp->images->count())
+                <div class="mt-3">
+                    <label class="promo-label">Ảnh hiện tại</label>
+                    <div class="d-flex flex-wrap gap-2">
+                        @foreach($sp->images as $img)
+                            <div class="current-image-box">
+                                <img src="{{ asset($img->duong_dan) }}" alt="Ảnh hiện tại">
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
         </div>
 
-        <!-- Số lượng -->
         <div>
             <label class="promo-label">Số lượng *</label>
             <input type="number" name="soluong" class="form-control promo-input"
                    value="{{ old('soluong', $sp->soluong) }}" required>
         </div>
 
-        <!-- Nổi bật -->
         <div>
             <label class="promo-label d-flex align-items-center" style="gap: 8px;">
                 <input type="hidden" name="noi_bat" value="0">
@@ -216,28 +253,25 @@
         </div>
 
         <div>
-                <label class="promo-label">Trạng thái <span style='color: red;'>*</span></label>
-                <select name="trang_thai" class="form-select promo-select">
-                    <option value="1" {{ $sp->trang_thai==1?'selected':'' }}>Đang hoạt động</option>
-                    <option value="0" {{ $sp->trang_thai==0?'selected':'' }}>Tạm ngưng</option>
-                </select>
+            <label class="promo-label">Trạng thái <span style='color: red;'>*</span></label>
+            <select name="trang_thai" class="form-select promo-select">
+                <option value="1" {{ $sp->trang_thai==1?'selected':'' }}>Đang hoạt động</option>
+                <option value="0" {{ $sp->trang_thai==0?'selected':'' }}>Tạm ngưng</option>
+            </select>
         </div>
 
     </div>
 
-    <!-- Mô tả ngắn -->
     <div class="mt-3">
         <label class="promo-label">Mô tả ngắn</label>
         <textarea name="mota_ngan" class="form-control promo-textarea">{{ old('mota_ngan', $sp->mota_ngan) }}</textarea>
     </div>
 
-    <!-- Mô tả chi tiết -->
     <div class="mt-3">
         <label class="promo-label">Mô tả chi tiết</label>
         <textarea name="mota" class="form-control promo-textarea">{{ old('mota', $sp->mota) }}</textarea>
     </div>
 
-    <!-- Footer Buttons -->
     <div class="d-flex justify-content-between mt-4">
         <a href="{{ route('product.index') }}" class="btn btn-footer-cancel">Hủy</a>
         <button type="submit" id="btnUpdate" class="btn btn-footer-submit">Cập nhật</button>
@@ -256,12 +290,52 @@
 @endif
 
 <script>
-function previewImage(event){
-    const img = document.getElementById('preview');
-    img.src = URL.createObjectURL(event.target.files[0]);
-    img.style.display = 'block';
+let selectedFilesEdit = [];
+
+function previewImagesEdit(event) {
+    const files = Array.from(event.target.files);
+    selectedFilesEdit = files;
+
+    renderPreviewEdit();
 }
 
+function removeImageEdit(index) {
+    selectedFilesEdit.splice(index, 1);
+    renderPreviewEdit();
+}
+
+function renderPreviewEdit() {
+    const wrapper = document.getElementById('preview-wrapper');
+    wrapper.innerHTML = '';
+
+    selectedFilesEdit.forEach((file, index) => {
+        const box = document.createElement('div');
+        box.classList.add('preview-box');
+
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+
+        const removeBtn = document.createElement('div');
+        removeBtn.classList.add('remove-btn');
+        removeBtn.innerHTML = '&times;';
+        removeBtn.onclick = () => removeImageEdit(index);
+
+        box.appendChild(img);
+        box.appendChild(removeBtn);
+        wrapper.appendChild(box);
+    });
+
+    updateFileInputEdit();
+}
+
+function updateFileInputEdit() {
+    const input = document.querySelector('input[name="anhsp[]"]');
+    const dt = new DataTransfer();
+    selectedFilesEdit.forEach(file => dt.items.add(file));
+    input.files = dt.files;
+}
+
+/* ==== TÍNH GIÁ ==== */
 document.addEventListener("DOMContentLoaded", function () {
 
     const giaGoc = document.querySelector("input[name='giasp']");
@@ -283,7 +357,6 @@ document.addEventListener("DOMContentLoaded", function () {
     giaGoc.addEventListener("input", tinhGia);
     giamPT.addEventListener("input", tinhGia);
 
-    // chạy khi load vào để fill đúng số
     tinhGia();
 });
 </script>

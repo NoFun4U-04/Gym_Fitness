@@ -97,13 +97,47 @@
 
 /* ===================== IMAGE PREVIEW ===================== */
 .preview-img {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     object-fit: cover;
     border-radius: 12px;
     border: 1px solid #d1d5db;
     margin-top: 8px;
-    display: none;
+    display: block;
+}
+#preview-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+.preview-box {
+    position: relative;
+    display: inline-block;
+}
+
+.preview-box img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #d1d5db;
+}
+
+.preview-box .remove-btn {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: #ef4444;
+    color: white;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 </style>
 
@@ -181,8 +215,9 @@
         <!-- Ảnh sản phẩm -->
         <div>
             <label class="promo-label">Ảnh sản phẩm *</label>
-            <input type="file" name="anhsp" class="form-control promo-input" required onchange="previewImage(event)">
-            <img id="preview" class="preview-img">
+            <input type="file" name="anhsp[]" class="form-control promo-input" 
+                required multiple onchange="previewImages(event)">
+            <div id="preview-wrapper"></div>
         </div>
         <!-- Số lượng -->
         <div>
@@ -231,32 +266,70 @@
 @endif
 
 
-<!-- Preview ảnh -->
 <script>
-function previewImage(event){
-    let img = document.getElementById('preview');
-    img.src = URL.createObjectURL(event.target.files[0]);
-    img.style.display = 'block';
+let selectedFiles = []; 
+
+function previewImages(event) {
+    const files = Array.from(event.target.files);
+    selectedFiles = selectedFiles.concat(files);
+
+    renderPreview();
+}
+
+function removeImage(index) {
+    selectedFiles.splice(index, 1);
+    renderPreview();
+}
+
+function renderPreview() {
+    const wrapper = document.getElementById('preview-wrapper');
+    wrapper.innerHTML = '';
+
+    selectedFiles.forEach((file, index) => {
+        const box = document.createElement('div');
+        box.classList.add('preview-box');
+
+        const img = document.createElement('img');
+        img.classList.add('preview-img');
+        img.src = URL.createObjectURL(file);
+
+        const removeBtn = document.createElement('div');
+        removeBtn.classList.add('remove-btn');
+        removeBtn.innerHTML = '&times;';
+        removeBtn.onclick = () => removeImage(index);
+
+        box.appendChild(img);
+        box.appendChild(removeBtn);
+
+        wrapper.appendChild(box);
+    });
+
+    updateFileInput();
+}
+
+function updateFileInput() {
+    const input = document.querySelector('input[name="anhsp[]"]');
+
+    const dataTransfer = new DataTransfer();
+    selectedFiles.forEach(file => dataTransfer.items.add(file));
+
+    input.files = dataTransfer.files;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
 
     const giaGoc = document.querySelector("input[name='giasp']");
     const giamPT = document.getElementById("giam_pt");
-    const giaKhuyenMai = document.getElementById("tien_giam"); // giá khuyến mãi (giảm bao nhiêu)
-    const giaBan = document.querySelector("input[name='giakhuyenmai']"); // giá bán cuối
+    const giaKhuyenMai = document.getElementById("tien_giam"); 
+    const giaBan = document.querySelector("input[name='giakhuyenmai']");
 
     function tinhGia() {
         let goc = parseFloat(giaGoc.value) || 0;
         let pt  = parseFloat(giamPT.value) || 0;
 
-        // Số tiền giảm
         let tienGiam = Math.round(goc * pt / 100);
-
-        // Giá sau giảm
         let ban = goc - tienGiam;
 
-        // Điền vào input
         giaKhuyenMai.value = tienGiam;
         giaBan.value = ban;
     }
@@ -266,6 +339,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
-
 
 @endsection

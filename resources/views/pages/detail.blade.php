@@ -616,6 +616,69 @@
             font-size: 0.95rem;
         }
     }
+    .product-image-area {
+        position: relative;
+        background-color: #fdfdfd;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.03);
+        overflow: hidden;
+    }
+
+    .product-image-area {
+        flex: 1.2; 
+    }
+
+    .product-image-area .product-slider {
+        position: relative;
+        width: 100%;
+        height: 500px;        
+        overflow: hidden;
+        border-radius: 10px;
+    }
+
+    .product-image-area .product-slider img.slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;        
+        object-fit: cover;     
+        opacity: 0;
+        transition: opacity 0.5s ease, transform 0.4s ease, filter 0.4s ease;
+    }
+
+    .product-image-area .product-slider img.slide.active {
+        opacity: 1;
+    }
+
+    .product-image-area .product-slider img.slide.active {
+        opacity: 1;
+    }
+
+    .product-image-area .product-slider img.slide:hover {
+        transform: scale(1.15);
+        filter: brightness(0.8);
+    }
+
+    .product-image-area .product-slider-dots {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 6px;
+        z-index: 3;
+    }
+
+    .product-image-area .product-slider-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+    }
+
 </style>
 
 <div class="body-container">
@@ -625,11 +688,38 @@
 
     <div class="product-detail-card mt-3">
         <div class="product-image-area mr-2">
-            <div class="big-img">
-                <img src="{{ asset($sanpham->anhsp) }}" alt="{{ $sanpham->tensp }}" id="zoom">
+            <div class="product-slider">
+                @php
+                    $images = $sanpham->images ?? collect();
+                @endphp
+
+                @if($images->isNotEmpty())
+                    @foreach($images as $index => $img)
+                        <img
+                            class="slide {{ $index === 0 ? 'active' : '' }}"
+                            src="{{ asset($img->duong_dan) }}"
+                            alt="{{ $sanpham->tensp }}"
+                        >
+                    @endforeach
+                @else
+                    {{-- fallback nếu chưa có hình trong bảng images --}}
+                    <img
+                        class="slide active"
+                        src="{{ asset('frontend/upload/placeholder.jpg') }}"
+                        alt="{{ $sanpham->tensp }}">
+                @endif
+
+                <div class="product-slider-dots">
+                    @php $total = max($images->count(), 1); @endphp
+                    @for($i = 0; $i < $total; $i++)
+                        <span
+                            class="product-slider-dot {{ $i === 0 ? 'active' : '' }}"
+                            data-index="{{ $i }}">
+                        </span>
+                    @endfor
+                </div>
             </div>
         </div>
-
         <div class="product-info-area">
             <h3>{{ $sanpham->tensp }}</h3>
 
@@ -1113,6 +1203,60 @@
         });
     </script>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sliders = document.querySelectorAll('.product-slider');
+
+        sliders.forEach((slider) => {
+            const slides = slider.querySelectorAll('img.slide');
+            const dots   = slider.querySelectorAll('.product-slider-dot');
+
+            if (slides.length === 0) return;
+
+            let currentIndex = 0;
+            const intervalMs = 3000;
+
+            function showSlide(index) {
+                slides.forEach((img, i) => {
+                    img.classList.toggle('active', i === index);
+                });
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+                currentIndex = index;
+            }
+
+            let timer = setInterval(() => {
+                const nextIndex = (currentIndex + 1) % slides.length;
+                showSlide(nextIndex);
+            }, intervalMs);
+
+            dots.forEach((dot) => {
+                dot.addEventListener('click', () => {
+                    const index = parseInt(dot.getAttribute('data-index'), 10);
+                    showSlide(index);
+                    clearInterval(timer);
+                    timer = setInterval(() => {
+                        const nextIndex = (currentIndex + 1) % slides.length;
+                        showSlide(nextIndex);
+                    }, intervalMs);
+                });
+            });
+
+            const productCard = slider.closest('.product-detail-card');
+            if (productCard) {
+                productCard.addEventListener('mouseenter', () => clearInterval(timer));
+                productCard.addEventListener('mouseleave', () => {
+                    clearInterval(timer);
+                    timer = setInterval(() => {
+                        const nextIndex = (currentIndex + 1) % slides.length;
+                        showSlide(nextIndex);
+                    }, intervalMs);
+                });
+            }
+        });
+    });
+</script>
 @if(session('success'))
 <script>
     Swal.fire({
