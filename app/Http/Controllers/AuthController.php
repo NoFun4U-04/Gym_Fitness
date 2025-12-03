@@ -27,7 +27,10 @@ class AuthController extends Controller
         $kh->sdt = $request->phone;
         $kh->id_phanquyen = 2;
         $kh->save();
-        return back()->with('thongbao', 'Đăng ký tài khoản thành công');
+        //Tự động đăng nhập
+        Auth::login($kh);
+        
+        return redirect('/')->with('thongbao', 'Chào mừng! Bạn đã đăng nhập.');
     }
 
     public function loginPost(Request $request)

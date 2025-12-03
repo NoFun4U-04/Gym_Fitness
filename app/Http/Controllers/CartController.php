@@ -22,7 +22,28 @@ class CartController extends Controller
 
     public function cart()
     {
-        return view('pages.cart');
+        $cart = session()->get('cart', []);
+
+        $totalOriginal = 0; 
+        $totalFinal    = 0; 
+
+        foreach ($cart as $item) {
+            $qty          = $item['quantity'] ?? 0;
+            $giaGoc       = $item['giasp'] ?? 0;
+            $giaKhuyenMai = $item['giakhuyenmai'] ?? $giaGoc;
+
+            $totalOriginal += $giaGoc       * $qty;
+            $totalFinal    += $giaKhuyenMai * $qty;
+        }
+
+        $totalDiscount = $totalOriginal - $totalFinal; 
+
+        return view('pages.cart', compact(
+            'cart',
+            'totalOriginal',
+            'totalDiscount',
+            'totalFinal'
+        ));
     }
 
     public function addToCart($id)
@@ -46,6 +67,14 @@ class CartController extends Controller
         }
 
         session()->put('cart', $cart);
+        if ($request->ajax()) {
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Đã thêm vào giỏ hàng thành công!',
+            'cart_count' => array_sum(array_column($cart, 'quantity')),
+        ]);
+    }
+
         return redirect()->back()->with('success', 'Thêm vào giỏ hàng thành công!');
     }
 
@@ -93,20 +122,29 @@ class CartController extends Controller
             $cart[$id]['quantity'] = $quantity;
             session()->put('cart', $cart);
 
-            // Tính tổng tiền của sản phẩm
             $productTotal = $cart[$id]['giakhuyenmai'] * $quantity;
+            // Tính tổng tiền giỏ hàng (giá gốc + khuyến mãi)
+            $totalOriginal = 0; 
+            $totalFinal    = 0; 
 
-            // Tính tổng tiền giỏ hàng
-            $total = 0;
             foreach ($cart as $item) {
-                $total += $item['giakhuyenmai'] * $item['quantity'];
+                $qty          = $item['quantity'];
+                $giaGoc       = $item['giasp'];
+                $giaKM        = $item['giakhuyenmai'];
+
+                $totalOriginal += $giaGoc * $qty;
+                $totalFinal    += $giaKM  * $qty;
             }
 
+            $totalDiscount = $totalOriginal - $totalFinal; 
+
             return response()->json([
-                'status' => 'success',
-                'product_total' => $productTotal,
-                'total' => $total,
-                'message' => 'Cập nhật giỏ hàng thành công!'
+                'status'         => 'success',
+                'product_total'  => $productTotal,
+                'total_original' => $totalOriginal,
+                'total_discount' => $totalDiscount,
+                'total_final'    => $totalFinal,
+                'message'        => 'Cập nhật giỏ hàng thành công!'
             ]);
         }
 
@@ -116,32 +154,24 @@ class CartController extends Controller
         ], 400);
     }
 
-    public function remove(Request $request)
+    public function remove($id)
     {
-        $id = $request->id;
         $cart = session()->get('cart', []);
 
         if (isset($cart[$id])) {
             unset($cart[$id]);
             session()->put('cart', $cart);
+        }
 
-            // Tính tổng tiền giỏ hàng
-            $total = 0;
-            foreach ($cart as $item) {
-                $total += $item['giakhuyenmai'] * $item['quantity'];
-            }
-
-            return response()->json([
-                'status' => 'success',
-                'total' => $total,
-                'message' => 'Xóa sản phẩm trong giỏ hàng thành công'
-            ]);
+        $total = 0;
+        foreach ($cart as $item) {
+            $total += $item['giakhuyenmai'] * $item['quantity'];
         }
 
         return response()->json([
-            'status' => 'error',
-            'message' => 'Sản phẩm không tồn tại trong giỏ hàng.'
-        ], 400);
+            'success' => true,
+            'total'   => $total,
+        ]);
     }
 
     public function checkout()
@@ -291,4 +321,5 @@ class CartController extends Controller
         session()->put('order_data', $request->all());
         return redirect($vnp_Url);
     }
+
 }

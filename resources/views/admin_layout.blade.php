@@ -18,7 +18,7 @@
     />
 
     <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+    <link rel="shortcut icon" type="image/png" href="/frontend/img/LOGO.png" />
 
     <link rel="canonical" href="https://demo-basic.Admin Dashboard.io/" />
 
@@ -34,7 +34,7 @@
       rel="stylesheet"
     />
   </head>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <body>
     <div class="wrapper">
       <nav id="sidebar" class="sidebar js-sidebar">
@@ -52,27 +52,41 @@
                     <span class="align-middle">Dashboard</span>
                 </a>
             </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{URL::to('/admin/orders')}}">
+                    <i class="align-middle me-2" data-feather="package"></i>
+                    <span class="align-middle">Đơn hàng</span>
+                </a>
+            </li>
+
+
+            
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{URL::to('/admin/khuyenmai')}}">
+                    <i class="align-middle" data-feather="percent"></i>
+                    <span class="align-middle">Khuyến mãi</span>
+                </a>
+            </li>
         
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{URL::to('/admin/product')}}">
                     <i class="align-middle" data-feather="box"></i>
-                    <span class="align-middle">Products</span>
+                    <span class="align-middle">Sản phẩm</span>
                 </a>
             </li>
         
             <li class="sidebar-item">
-                <a class="sidebar-link" href="{{URL::to('/admin/danhmuc')}}">
-                    <i class="align-middle" data-feather="tag"></i>
-                    <span class="align-middle">Categories</span>
+                <a class="sidebar-link" href="{{ URL::to('/admin/users') }}">
+                    <i class="align-middle" data-feather="users"></i>
+                    <span class="align-middle">Người dùng</span>
                 </a>
             </li>
+
+
+            
         
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{URL::to('/admin/orders')}}">
-                    <i class="align-middle me-2" data-feather="package"></i>
-                    <span class="align-middle">Orders</span>
-                </a>
-            </li>
+            
         
             
         </ul>
@@ -520,6 +534,7 @@ sidebarLinks.forEach(function(link) {
               showConfirmButton: false
           });
       </script>
+      
   @endif
   </body>
 </html>

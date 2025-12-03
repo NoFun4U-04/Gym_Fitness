@@ -88,7 +88,7 @@
                 <th>Giá gốc</th>
                 <th>Giảm giá</th>
                 <th>Giá khuyến mại</th>
-                <th>tổng tiền</th>
+                <th>Tổng tiền</th>
             </thead>
             <tbody>
                 @php
@@ -98,10 +98,10 @@
                 <tr>
                     <td>{{$orderdetail->tensp}}</td>
                     <td>{{$orderdetail->soluong}}</td>
-                    <td>{{$orderdetail->giatien}}</td>
+                    <td>{{ number_format($orderdetail->giatien, 0, ',', '.') }}vnđ</td>
                     <td>{{$orderdetail->giamgia}}%</td>
-                    <td>{{$orderdetail->giakhuyenmai}}</td>
-                    <td>{{$orderdetail->giakhuyenmai * $orderdetail->soluong}}</td>
+                    <td>{{ number_format($orderdetail->giakhuyenmai, 0, ',', '.') }}vnđ</td>
+                    <td>{{ number_format($orderdetail->giakhuyenmai * $orderdetail->soluong, 0, ',', '.') }}vnđ</td>
                 </tr>
 
                 @php
@@ -115,7 +115,7 @@
     </div>
 
     <h3 class="d-flex justify-content-end align-items-center">
-        Tổng thanh toán &nbsp;<div class="text-danger" style="font-size: 40px;">{{ number_format($totalPrice, 0, ',', '.') }}đ</div>
+        Tổng thanh toán &nbsp;<div class="text-danger" style="font-size: 40px;">{{ number_format($totalPrice, 0, ',', '.') }}vnđ</div>
     </h3>
 
     &nbsp;<a class="btn btn-secondary" href="{{URL::to('/donhang')}}">Quay lại</a>

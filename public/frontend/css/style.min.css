@@ -93,8 +93,9 @@ a:hover {
     line-height: 50px;
     color: #666;
     transition: all 0.3s ease;
-    width: 250px; /* Tăng độ rộng của thanh search */
+    width: 215px; /* Tăng độ rộng của thanh search */
     height: 40px;
+    margin: 10px;
 }
 
 .search:focus {
@@ -202,7 +203,7 @@ a:hover {
 .navbar__menu-list li.active > a {
     /* background-color: #9fbbd3; */
     border-radius: 6px;
-    padding: 6px 12px;
+    /* padding: px 10px; */
     transition: background 0.3s;
     color: rgb(13, 94, 199);
 }

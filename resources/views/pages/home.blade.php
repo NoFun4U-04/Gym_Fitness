@@ -129,37 +129,39 @@
 <!-- BRAND SHOWCASE -->
 <section class="brand-section" id="brands">
     <div class="container">
-        <div class="home-section-heading">
-            <p class="home-tag">THƯƠNG HIỆU NỔI BẬT</p>
-            <h2 class="home-title">Danh mục thương hiệu</h2>
-            <p class="home-subtitle">
-                Chọn thương hiệu yêu thích để khám phá những mẫu túi xách cao cấp, sang trọng và thời thượng.
-            </p>
+
+        <div class="brand-tabs">
+
+            <button class="brand-tab active">
+                <i class="fa-solid fa-border-all"></i>
+                Tất cả sản phẩm
+            </button>
+
+            <button class="brand-tab">
+                <i class="fa-solid fa-dumbbell"></i>
+                Dụng cụ tập luyện
+            </button>
+
+            <button class="brand-tab">
+                <i class="fa-solid fa-flask-vial"></i>
+                Whey & Dinh dưỡng
+            </button>
+
+            <button class="brand-tab">
+                <i class="fa-solid fa-shirt"></i>
+                Đồ tập
+            </button>
+
+            <button class="brand-tab">
+                <i class="fa-solid fa-toolbox"></i>
+                Phụ kiện
+            </button>
+
         </div>
 
-        <div class="brand-row">
-            <a href="#gucci-collection" class="brand-pill brand-pill--gucci">
-                <div class="brand-pill__label">Gucci</div>
-                <div class="brand-pill__name">Gucci Collection</div>
-            </a>
-
-            <a href="#dior-collection" class="brand-pill brand-pill--dior">
-                <div class="brand-pill__label">Christian Dior</div>
-                <div class="brand-pill__name">Christian Dior</div>
-            </a>
-
-            <a href="#hermes-collection" class="brand-pill brand-pill--hermes">
-                <div class="brand-pill__label">Hermès</div>
-                <div class="brand-pill__name">Hermès Heritage</div>
-            </a>
-
-            <a href="#chanel-collection" class="brand-pill brand-pill--chanel">
-                <div class="brand-pill__label">Chanel</div>
-                <div class="brand-pill__name">Chanel Luxury</div>
-            </a>
-        </div>
     </div>
 </section>
+
 
 <!-- GUCCI COLLECTION -->
 <section class="home-collection home-collection--gucci" id="gucci-collection">
@@ -183,23 +185,15 @@
             <article class="product-card product-card--collection">
                 <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}">
                     <div class="product-image">
-                        <img src="{{ asset($product->anhsp) }}" alt="{{ $product->tensp }}" onerror="this.src='{{ asset('frontend/upload/placeholder.jpg') }}'">
-
-                        <div class="product-badge">
-                            @if($product->giamgia)
-                                -{{ $product->giamgia }}%
-                            @else
-                                Mới
-                            @endif
-                        </div>
+                        <img src="{{ asset($product->anhsp) }}" onerror="this.src='{{ asset('frontend/upload/placeholder.jpg') }}'">
 
                         <div class="product-actions">
-                            <a href="{{ route('add_to_cart', $sanpham->id_sanpham) }}"
-                                class="btn-add-to-cart"
-                                title="Thêm vào giỏ hàng">
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                            </a>
-                            <a href="{{ route('detail', ['id' => $sanpham->id_sanpham]) }}" title="Xem chi tiết">
+                            <button type="button"
+                                class="cart-inline js-add-to-cart"
+                                data-url="{{ route('add_to_cart', $product->id_sanpham) }}">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </button>
+                            <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}" title="Xem chi tiết">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </a>
                         </div>
@@ -209,19 +203,43 @@
                         <div class="product-name">
                             {{ $product->tensp }}
                         </div>
-                        <div class="product-price">
-                            <span class="price-old">
-                                {{ number_format($product->giasp, 0, ',', '.') }}₫
-                            </span>
+
+                        <div class="product-price-main">
                             <span class="price-new">
                                 {{ number_format($product->giakhuyenmai, 0, ',', '.') }}₫
                             </span>
+                        </div>
+
+                        @php
+                            $discount = 0;
+                            if (!empty($product->giamgia)) {
+                                $discount = $product->giamgia;
+                            } elseif (!empty($product->giasp) && !empty($product->giakhuyenmai) && $product->giakhuyenmai < $product->giasp) {
+                                $discount = round(100 - ($product->giakhuyenmai / $product->giasp * 100));
+                            }
+                        @endphp
+
+                        <div class="product-price-row">
+                            <span class="price-old">
+                                {{ number_format($product->giasp, 0, ',', '.') }}₫
+                            </span>
+
+                            @if($discount > 0)
+                                <span class="discount-inline">-{{ $discount }}%</span>
+                            @endif
+
+                            <a href="#"
+                               class="cart-inline js-add-to-cart"
+                               data-url="{{ route('add_to_cart', $product->id_sanpham) }}">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </a>
                         </div>
                     </div>
                 </a>
             </article>
             @endforeach
         </div>
+
     </div>
 </section>
 
@@ -247,23 +265,15 @@
             <article class="product-card product-card--collection">
                 <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}">
                     <div class="product-image">
-                        <img src="{{ asset($product->anhsp) }}" alt="{{ $product->tensp }}" onerror="this.src='{{ asset('frontend/upload/placeholder.jpg') }}'">
-
-                        <div class="product-badge">
-                            @if($product->giamgia)
-                                -{{ $product->giamgia }}%
-                            @else
-                                Mới
-                            @endif
-                        </div>
+                        <img src="{{ asset($product->anhsp) }}" onerror="this.src='{{ asset('frontend/upload/placeholder.jpg') }}'">
 
                         <div class="product-actions">
-                            <a href="{{ route('add_to_cart', $sanpham->id_sanpham) }}"
-                                class="btn-add-to-cart"
-                                title="Thêm vào giỏ hàng">
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                            </a>
-                            <a href="{{ route('detail', ['id' => $sanpham->id_sanpham]) }}" title="Xem chi tiết">
+                            <button type="button"
+                                class="cart-inline js-add-to-cart"
+                                data-url="{{ route('add_to_cart', $product->id_sanpham) }}">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </button>
+                            <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}" title="Xem chi tiết">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </a>
                         </div>
@@ -273,13 +283,37 @@
                         <div class="product-name">
                             {{ $product->tensp }}
                         </div>
-                        <div class="product-price">
-                            <span class="price-old">
-                                {{ number_format($product->giasp, 0, ',', '.') }}₫
-                            </span>
+
+                        <div class="product-price-main">
                             <span class="price-new">
                                 {{ number_format($product->giakhuyenmai, 0, ',', '.') }}₫
                             </span>
+                        </div>
+
+                        @php
+                            $discount = 0;
+                            if (!empty($product->giamgia)) {
+                                $discount = $product->giamgia;
+                            } elseif (!empty($product->giasp) && !empty($product->giakhuyenmai) && $product->giakhuyenmai < $product->giasp) {
+                                $discount = round(100 - ($product->giakhuyenmai / $product->giasp * 100));
+                            }
+                        @endphp
+
+                        <div class="product-price-row">
+                            <span class="price-old">
+                                {{ number_format($product->giasp, 0, ',', '.') }}₫
+                            </span>
+
+                            @if($discount > 0)
+                                <span class="discount-inline">-{{ $discount }}%</span>
+                            @endif
+
+                            <a href="{{ route('add_to_cart', $product->id_sanpham) }}"
+                               class="cart-inline"
+                               title="Thêm vào giỏ hàng"
+                               onclick="event.preventDefault(); event.stopPropagation(); window.location.href=this.href;">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </a>
                         </div>
                     </div>
                 </a>
@@ -311,23 +345,15 @@
             <article class="product-card product-card--collection">
                 <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}">
                     <div class="product-image">
-                        <img src="{{ asset($product->anhsp) }}" alt="{{ $product->tensp }}" onerror="this.src='{{ asset('frontend/upload/placeholder.jpg') }}'">
-
-                        <div class="product-badge">
-                            @if($product->giamgia)
-                                -{{ $product->giamgia }}%
-                            @else
-                                Mới
-                            @endif
-                        </div>
+                        <img src="{{ asset($product->anhsp) }}" onerror="this.src='{{ asset('frontend/upload/placeholder.jpg') }}'">
 
                         <div class="product-actions">
-                            <a href="{{ route('add_to_cart', $sanpham->id_sanpham) }}"
-                                class="btn-add-to-cart"
-                                title="Thêm vào giỏ hàng">
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                            </a>
-                            <a href="{{ route('detail', ['id' => $sanpham->id_sanpham]) }}" title="Xem chi tiết">
+                            <button type="button"
+                                class="cart-inline js-add-to-cart"
+                                data-url="{{ route('add_to_cart', $product->id_sanpham) }}">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </button>
+                            <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}" title="Xem chi tiết">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </a>
                         </div>
@@ -337,13 +363,37 @@
                         <div class="product-name">
                             {{ $product->tensp }}
                         </div>
-                        <div class="product-price">
-                            <span class="price-old">
-                                {{ number_format($product->giasp, 0, ',', '.') }}₫
-                            </span>
+
+                        <div class="product-price-main">
                             <span class="price-new">
                                 {{ number_format($product->giakhuyenmai, 0, ',', '.') }}₫
                             </span>
+                        </div>
+
+                        @php
+                            $discount = 0;
+                            if (!empty($product->giamgia)) {
+                                $discount = $product->giamgia;
+                            } elseif (!empty($product->giasp) && !empty($product->giakhuyenmai) && $product->giakhuyenmai < $product->giasp) {
+                                $discount = round(100 - ($product->giakhuyenmai / $product->giasp * 100));
+                            }
+                        @endphp
+
+                        <div class="product-price-row">
+                            <span class="price-old">
+                                {{ number_format($product->giasp, 0, ',', '.') }}₫
+                            </span>
+
+                            @if($discount > 0)
+                                <span class="discount-inline">-{{ $discount }}%</span>
+                            @endif
+
+                            <a href="{{ route('add_to_cart', $product->id_sanpham) }}"
+                               class="cart-inline"
+                               title="Thêm vào giỏ hàng"
+                               onclick="event.preventDefault(); event.stopPropagation(); window.location.href=this.href;">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </a>
                         </div>
                     </div>
                 </a>
@@ -375,23 +425,15 @@
             <article class="product-card product-card--collection">
                 <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}">
                     <div class="product-image">
-                        <img src="{{ asset($product->anhsp) }}" alt="{{ $product->tensp }}" onerror="this.src='{{ asset('frontend/upload/placeholder.jpg') }}'">
-
-                        <div class="product-badge">
-                            @if($product->giamgia)
-                                -{{ $product->giamgia }}%
-                            @else
-                                Mới
-                            @endif
-                        </div>
+                        <img src="{{ asset($product->anhsp) }}" onerror="this.src='{{ asset('frontend/upload/placeholder.jpg') }}'">
 
                         <div class="product-actions">
-                            <a href="{{ route('add_to_cart', $sanpham->id_sanpham) }}"
-                                class="btn-add-to-cart"
-                                title="Thêm vào giỏ hàng">
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                            </a>
-                            <a href="{{ route('detail', ['id' => $sanpham->id_sanpham]) }}" title="Xem chi tiết">
+                            <button type="button"
+                                class="cart-inline js-add-to-cart"
+                                data-url="{{ route('add_to_cart', $product->id_sanpham) }}">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </button>
+                            <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}" title="Xem chi tiết">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </a>
                         </div>
@@ -401,13 +443,37 @@
                         <div class="product-name">
                             {{ $product->tensp }}
                         </div>
-                        <div class="product-price">
-                            <span class="price-old">
-                                {{ number_format($product->giasp, 0, ',', '.') }}₫
-                            </span>
+
+                        <div class="product-price-main">
                             <span class="price-new">
                                 {{ number_format($product->giakhuyenmai, 0, ',', '.') }}₫
                             </span>
+                        </div>
+
+                        @php
+                            $discount = 0;
+                            if (!empty($product->giamgia)) {
+                                $discount = $product->giamgia;
+                            } elseif (!empty($product->giasp) && !empty($product->giakhuyenmai) && $product->giakhuyenmai < $product->giasp) {
+                                $discount = round(100 - ($product->giakhuyenmai / $product->giasp * 100));
+                            }
+                        @endphp
+
+                        <div class="product-price-row">
+                            <span class="price-old">
+                                {{ number_format($product->giasp, 0, ',', '.') }}₫
+                            </span>
+
+                            @if($discount > 0)
+                                <span class="discount-inline">-{{ $discount }}%</span>
+                            @endif
+
+                            <a href="{{ route('add_to_cart', $product->id_sanpham) }}"
+                               class="cart-inline"
+                               title="Thêm vào giỏ hàng"
+                               onclick="event.preventDefault(); event.stopPropagation(); window.location.href=this.href;">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </a>
                         </div>
                     </div>
                 </a>
@@ -418,8 +484,55 @@
 </section>
 
 @endsection
+<div id="cart-toast" class="cart-toast">
+    <span class="cart-toast__text"></span>
+</div>
 @push('scripts')
 <script src="{{ asset('frontend/script/about.js') }}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const buttons = document.querySelectorAll('.js-add-to-cart');
+    const toast = document.getElementById('cart-toast');
+    const toastText = toast.querySelector('.cart-toast__text');
+    let toastTimeout;
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault(); 
+
+            const url = this.dataset.url;
+            if (!url) return;
+
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(res => res.json().catch(() => ({})))
+            .then(data => {
+                const msg = data.message || 'Đã thêm sản phẩm vào giỏ hàng';
+                showCartToast(msg);
+            })
+            .catch(() => {
+                showCartToast('Có lỗi xảy ra, vui lòng thử lại!');
+            });
+        });
+    });
+
+    function showCartToast(message) {
+        toastText.textContent = message;
+        toast.classList.add('show');
+
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 2000); // hiện 2s rồi tự ẩn
+    }
+});
+</script>
+
 @endpush
 
 

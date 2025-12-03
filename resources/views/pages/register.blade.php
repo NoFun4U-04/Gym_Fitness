@@ -1,206 +1,193 @@
-@extends('layout')
-@section('content')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<div class="login-form" style="height: unset !important; margin-top: -105px!important;">
-    <div class="main" style="padding-top: 180px; padding-bottom: 15px; margin-bottom: 0;">
+@extends('pages.auth')
 
-        @if(session()->has('thongbao'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Thành công',
-                text: 'Đăng ký tài khoản thành công!',
-                timer: 2000,
-                showConfirmButton: false
-            });
-        </script>
+@section('right-panel')
+<div class="login-card">
+    @if(session()->has('thongbao'))
+
         @endif
-
-        <form action="{{route('register')}}" method="POST" class="form" style="width: 400px;" id="form-1">
-            @csrf
-
-            <h3 class="heading">Đăng ký tài khoản</h3>
-            <div class="dont-have-account">
-                Bạn đã có tài khoản? <a class="account-register" href="{{ URL::to('login')}}">Đăng nhập</a>
-            </div>
-
-            <div class="spacer"></div>
-
-            <style>
-                .form-group {
-                    margin-bottom: 0;
-                }
-                .form-message {
-                    font-size: 13px;
-                    width: 100%;
-                    text-align: start;
-                    color: red;
-                    margin-top: 5px; /* Add some space above the error message */
-                }
-            </style>
-
-
-            <div class="form-group">
-                <label class="control-label text-left">Họ và tên</label>
-                <div>
-                    <input type="text" name="name" class="form-control" id="name" required>
-                    <span class="form-message"></span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label text-left">Email</label>
-                <div>
-                    <input type="email" name="email" class="form-control" id="email" required>
-                    <div id="email-error" class="text-danger form-message"></div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label text-left">Mật khẩu</label>
-                <div>
-                    <input type="password" name="password" class="form-control" id="password" required>
-                    <span class="form-message"></span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label text-left">Địa chỉ</label>
-                <div>
-                    <input type="text" name="address" class="form-control" id="address" required>
-                    <span class="form-message"></span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label text-left">Điện thoại</label>
-                <div>
-                    <input type="text" name="phone" class="form-control" id="phone" required>
-                    <span class="form-message"></span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label text-left">Ngày sinh</label>
-                <div>
-                    <input type="date" class="form-control" name="ngaysinh" id="ngaysinh" required />
-                    <span class="form-message"></span>
-                </div>
-            </div>
-
-            <button type="submit" value="Create" class="form-submit" name="register_submit">Đăng ký</button>
-
-        </form>
+    <div class="logo-container">
+        <div class="logo">
+            <i class="fa-solid fa-user-plus"></i>
+        </div>
+        <div class="login-header">
+            <h3>Đăng ký tài khoản</h3>
+        </div>
     </div>
+
+    <form action="{{ route('register') }}" method="POST" class="login-form" id="form-register">
+        @csrf
+
+        <!-- Name -->
+        <div class="form-group">
+            <label for="name" class="form-label">Họ và tên</label>
+            <div class="input-wrapper">
+                <input type="text" name="name" id="name"
+                    class="form-control" placeholder="Nguyễn Văn A" required>
+                <i class="fa-solid fa-user input-icon"></i>
+            </div>
+            <span class="form-message"></span>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <label for="email" class="form-label">Địa chỉ Email</label>
+            <div class="input-wrapper">
+                <input type="email" name="email" id="email"
+                    class="form-control" placeholder="example@email.com" required>
+                <i class="fa-solid fa-envelope input-icon"></i>
+            </div>
+            <span class="form-message" id="email-error"></span>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+            <label for="password" class="form-label">Mật khẩu</label>
+            <div class="input-wrapper">
+                <input type="password" name="password" id="password"
+                    class="form-control" placeholder="Tối thiểu 6 ký tự" required>
+                <i class="fa-solid fa-lock input-icon"></i>
+                <span class="toggle-password" data-target="password">
+                    <i class="fa-solid fa-eye"></i>
+                </span>
+            </div>
+            <span class="form-message"></span>
+        </div>
+
+        <!-- Confirm password -->
+        <div class="form-group">
+            <label for="password_confirmation" class="form-label">Xác nhận mật khẩu</label>
+            <div class="input-wrapper">
+                <input type="password" name="password_confirmation" id="password_confirmation"
+                    class="form-control" placeholder="Nhập lại mật khẩu" required>
+                <i class="fa-solid fa-lock input-icon"></i>
+                <span class="toggle-password" data-target="password_confirmation">
+                    <i class="fa-solid fa-eye"></i>
+                </span>
+            </div>
+            <span class="form-message"></span>
+        </div>
+
+        <button type="submit" class="form-submit">
+            <span>Đăng ký ngay</span>
+        </button>
+
+        <div class="divider">
+            <span>Hoặc đăng ký bằng</span>
+        </div>
+
+        <div class="social-login">
+            <button type="button" class="social-btn">
+                <i class="fa-brands fa-google" style="color: #DB4437;"></i> Google
+            </button>
+            <button type="button" class="social-btn">
+                <i class="fa-brands fa-facebook" style="color: #1877F2;"></i> Facebook
+            </button>
+        </div>
+
+        <div class="auth-links">
+            <div class="auth-link">
+                Đã có tài khoản? <a href="{{ url('login') }}">Đăng nhập ngay</a>
+            </div>
+        </div>
+    </form>
 </div>
+
 <script>
     let emailIsValid = true;
 
-    // Function to show error message for a given input
+    // Show error
     function showError(input, message) {
         const formGroup = input.closest('.form-group');
         const errorElement = formGroup.querySelector('.form-message');
-        if (errorElement) {
-            errorElement.textContent = message;
-            input.classList.add('is-invalid'); // Add a class for styling invalid inputs
-        }
+        errorElement.textContent = message;
+        input.classList.add('is-invalid');
     }
 
-    // Function to hide error message for a given input
+    // Hide error
     function hideError(input) {
         const formGroup = input.closest('.form-group');
         const errorElement = formGroup.querySelector('.form-message');
-        if (errorElement) {
-            errorElement.textContent = '';
-            input.classList.remove('is-invalid'); // Remove the invalid class
-        }
+        errorElement.textContent = '';
+        input.classList.remove('is-invalid');
     }
 
-    // Validate on blur for all required fields
-    document.querySelectorAll('#form-1 input[required]').forEach(input => {
-        input.addEventListener('blur', function() {
-            if (this.value.trim() === '') {
-                showError(this, 'Vui lòng nhập trường này.');
-            } else {
-                hideError(this);
-            }
+    // Required validation
+    document.querySelectorAll('#form-register input[required]').forEach(input => {
+        input.addEventListener('blur', function () {
+            if (this.value.trim() === '') showError(this, 'Vui lòng nhập trường này.');
+            else hideError(this);
         });
-
-        input.addEventListener('input', function() {
-            if (this.value.trim() !== '') {
-                hideError(this);
-            }
-        });
+        input.addEventListener('input', () => hideError(input));
     });
 
-
-    // Email validation (existing logic)
-    document.getElementById('email').addEventListener('blur', function() {
-        const emailInput = this;
-        const errorSpan = document.getElementById('email-error');
-        const email = emailInput.value;
+    // Email check AJAX
+    document.getElementById('email').addEventListener('blur', function () {
+        const email = this.value;
 
         if (!email) {
-            errorSpan.textContent = '';
-            emailInput.removeAttribute('title');
+            hideError(this);
             emailIsValid = true;
             return;
         }
 
         fetch('{{ route("kiemtra.email") }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({
-                    email: email
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.exists) {
-                    errorSpan.textContent = 'Email này đã được sử dụng. Vui lòng chọn email khác.';
-                    emailIsValid = false;
-                } else {
-                    errorSpan.textContent = '';
-                    emailIsValid = true;
-                }
-            })
-            .catch(() => {
-                errorSpan.textContent = 'Không thể kiểm tra email.';
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ email })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.exists) {
+                showError(this, 'Email này đã được sử dụng. Vui lòng chọn email khác.');
                 emailIsValid = false;
-            });
+            } else {
+                hideError(this);
+                emailIsValid = true;
+            }
+        })
+        .catch(() => {
+            showError(this, 'Không thể kiểm tra email.');
+            emailIsValid = false;
+        });
     });
 
-    // Form submission validation
-    document.getElementById('form-1').addEventListener('submit', function(e) {
+    // Submit validation
+    document.getElementById('form-register').addEventListener('submit', function (e) {
         let formIsValid = true;
 
-        // Check all required fields
-        document.querySelectorAll('#form-1 input[required]').forEach(input => {
+        document.querySelectorAll('#form-register input[required]').forEach(input => {
             if (input.value.trim() === '') {
                 showError(input, 'Vui lòng nhập trường này.');
                 formIsValid = false;
-            } else {
-                hideError(input);
             }
         });
 
-        // Check email validity
         if (!emailIsValid) {
             formIsValid = false;
-            document.getElementById('email').focus(); // Focus on email if it's invalid
+            document.getElementById('email').focus();
         }
 
-        if (!formIsValid) {
-            e.preventDefault(); // Prevent form submission if validation fails
-            // Find the first invalid input and focus on it
-            const firstInvalidInput = document.querySelector('.form-control.is-invalid');
-            if (firstInvalidInput) {
-                firstInvalidInput.focus();
-            }
-        }
+        if (!formIsValid) e.preventDefault();
     });
+
+    // Toggle password
+    document.querySelectorAll('.toggle-password').forEach(toggle => {
+        toggle.addEventListener('click', function () {
+            const input = document.getElementById(this.dataset.target);
+            const icon = this.querySelector('i');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+    });
+
 </script>
 @endsection
