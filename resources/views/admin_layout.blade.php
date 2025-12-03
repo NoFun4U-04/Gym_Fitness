@@ -77,11 +77,12 @@
             </li>
         
             <li class="sidebar-item">
-                <a class="sidebar-link" href="{{URL::to('/admin/danhmuc')}}">
-                    <i class="align-middle" data-feather="tag"></i>
-                    <span class="align-middle">Danh mục sản phẩm</span>
+                <a class="sidebar-link" href="{{ URL::to('/admin/users') }}">
+                    <i class="align-middle" data-feather="users"></i>
+                    <span class="align-middle">Người dùng</span>
                 </a>
             </li>
+
 
             
         

@@ -2,131 +2,289 @@
 @section('admin_content')
 
 <style>
+/* ===================== TITLE ===================== */
 .promo-title {
     font-size: 22px;
     font-weight: 700;
     display: flex;
     align-items: center;
     gap: 10px;
+    color: #111;
 }
+
 .promo-title i {
-    background: #0d9488;
+    background: #f59e0b;
     padding: 8px;
-    border-radius: 8px;
-    color: white;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 18px;
 }
-.promo-label { font-weight: 600; margin-bottom: 6px; }
-.promo-input, .promo-select {
+
+/* ===================== LABEL ===================== */
+.promo-label {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #374151;
+}
+
+/* ===================== INPUT ===================== */
+.promo-input,
+.promo-select {
     border-radius: 12px;
-    border: 1px solid #d1d5db;
     padding: 10px 14px;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    transition: 0.2s;
 }
+
+.promo-input:focus,
+.promo-select:focus,
+.promo-textarea:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16,185,129,0.25);
+    outline: none;
+}
+
+/* ===================== TEXTAREA ===================== */
 .promo-textarea {
     border-radius: 12px;
-    border: 1px solid #d1d5db;
     padding: 12px;
     height: 120px;
+    border: 1px solid #d1d5db;
+    resize: none;
 }
+
+/* ===================== GRID ===================== */
 .grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
-.btn-submit {
-    background: linear-gradient(to right, #059669, #10b981);
-    color: #fff;
-    padding: 12px 26px;
-    font-weight: 600;
-    border-radius: 12px;
+
+@media (max-width: 768px) {
+    .grid-2 { grid-template-columns: 1fr; }
 }
-.btn-cancel {
+
+/* ===================== FOOTER BUTTONS ===================== */
+.btn-footer-cancel {
     background: #e5e7eb;
-    padding: 12px 26px;
-    border-radius: 12px;
+    color: #374151;
     font-weight: 600;
+    border-radius: 12px;
+    padding: 12px 28px;
+    transition: 0.2s;
+    border: none;
 }
-.product-preview {
-    width: 120px;
-    height: 120px;
+
+.btn-footer-cancel:hover { background: #d1d5db; }
+
+.btn-footer-submit {
+    background: linear-gradient(to right, #f59e0b, #fbbf24);
+    color: #fff;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 12px 28px;
+    border: none;
+    transition: 0.2s;
+}
+
+.btn-footer-submit:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+}
+
+/* ===================== IMAGE PREVIEW ===================== */
+.preview-img {
+    width: 150px;
+    height: 150px;
     object-fit: cover;
     border-radius: 12px;
-    border: 1px solid #ccc;
+    border: 1px solid #d1d5db;
+    margin-top: 8px;
 }
 </style>
 
-<h3 class="promo-title mb-3">
-    <i class="bi bi-plus-circle"></i> Thêm sản phẩm mới
-</h3>
+<!-- TITLE -->
+<div class="promo-title mb-3">
+    <i class="bi bi-pencil-square"></i>
+    Chỉnh sửa sản phẩm
+</div>
 
-<form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('product.update', $sp->id_sanpham) }}" method="POST" enctype="multipart/form-data">
     @csrf
+    @method('PUT')
 
     <div class="grid-2">
 
-        {{-- Tên sản phẩm --}}
+        <!-- Tên sản phẩm -->
         <div>
             <label class="promo-label">Tên sản phẩm *</label>
-            <input type="text" name="tensp" class="form-control promo-input" required>
+            <input type="text" name="tensp" class="form-control promo-input"
+                   value="{{ old('tensp', $sp->tensp) }}" required>
         </div>
 
-        {{-- Giá sản phẩm --}}
+        <!-- SKU -->
         <div>
-            <label class="promo-label">Giá (VNĐ) *</label>
-            <input type="number" name="giasp" class="form-control promo-input" required>
+            <label class="promo-label">Mã SKU</label>
+            <input type="text" name="sku" class="form-control promo-input"
+                   value="{{ old('sku', $sp->sku) }}">
         </div>
 
-        {{-- Ảnh --}}
+        <!-- Giá gốc -->
         <div>
-            <label class="promo-label">Ảnh sản phẩm *</label>
-            <input type="file" name="anhsp" class="form-control promo-input" accept="image/*" id="imageInput" required>
-            <img id="previewImage" class="product-preview mt-2" style="display:none;">
+            <label class="promo-label">Giá gốc (VNĐ) *</label>
+            <input type="number" name="giasp" class="form-control promo-input"
+                   value="{{ old('giasp', $sp->giasp) }}" required>
         </div>
 
-        {{-- Giảm giá %}
+        <!-- % giảm + tiền giảm -->
+        <div class="grid-2">
+
+            <div>
+                <label class="promo-label">% Giảm giá</label>
+                <input type="number" min="0" max="100"
+                       name="giamgia"
+                       id="giam_pt"
+                       class="form-control promo-input"
+                       value="{{ old('giamgia', $sp->giamgia) }}">
+            </div>
+
+            <div>
+                <label class="promo-label">Giá khuyến mãi (VNĐ)</label>
+                <input type="number" id="tien_giam"
+                       class="form-control promo-input"
+                       value="{{ old('gia_duoc_giam', $sp->gia_duoc_giam ?? 0) }}"
+                       readonly>
+            </div>
+
+        </div>
+
+        <!-- Giá bán sau giảm -->
         <div>
-            <label class="promo-label">Giảm giá (%)</label>
-            <input type="number" name="giamgia" class="form-control promo-input" min="0" max="100">
+            <label class="promo-label">Giá bán (VNĐ) *</label>
+            <input type="number" name="giakhuyenmai"
+                   class="form-control promo-input"
+                   value="{{ old('giakhuyenmai', $sp->giakhuyenmai) }}"
+                   readonly
+                   style="border-color:#ef4444; color:#dc2626; background:#fff5f5;">
         </div>
 
-        {{-- Số lượng --}}
-        <div>
-            <label class="promo-label">Số lượng *</label>
-            <input type="number" name="soluong" class="form-control promo-input" required>
-        </div>
-
-        {{-- Danh mục --}}
+        <!-- Danh mục -->
         <div>
             <label class="promo-label">Danh mục *</label>
             <select name="id_danhmuc" class="form-select promo-select" required>
-                <option value="">-- Chọn danh mục --</option>
-                @foreach($danhmucs as $dm)
-                    <option value="{{ $dm->id_danhmuc }}">{{ $dm->ten_danhmuc }}</option>
+                @foreach($list_danhmucs as $dm)
+                    <option value="{{ $dm->id_danhmuc }}"
+                        {{ $sp->id_danhmuc == $dm->id_danhmuc ? 'selected' : '' }}>
+                        {{ $dm->ten_danhmuc }}
+                    </option>
                 @endforeach
             </select>
         </div>
 
+        <!-- Ảnh -->
+        <div>
+            <label class="promo-label">Ảnh sản phẩm</label>
+            <input type="file" name="anhsp" class="form-control promo-input"
+                   onchange="previewImage(event)">
+
+            <div class="mt-2">
+                <label class="promo-label">Ảnh hiện tại</label><br>
+                <img src="/{{ $sp->anhsp }}" class="preview-img mb-2">
+            </div>
+
+            <img id="preview" class="preview-img" style="display:none;">
+        </div>
+
+        <!-- Số lượng -->
+        <div>
+            <label class="promo-label">Số lượng *</label>
+            <input type="number" name="soluong" class="form-control promo-input"
+                   value="{{ old('soluong', $sp->soluong) }}" required>
+        </div>
+
+        <!-- Nổi bật -->
+        <div>
+            <label class="promo-label d-flex align-items-center" style="gap: 8px;">
+                <input type="hidden" name="noi_bat" value="0">
+                <input type="checkbox" name="noi_bat" value="1"
+                    {{ old('noi_bat', $sp->noi_bat) == 1 ? 'checked' : '' }}
+                    style="width:18px; height:18px;">
+                Sản phẩm nổi bật
+            </label>
+        </div>
+
+        <div>
+                <label class="promo-label">Trạng thái <span style='color: red;'>*</span></label>
+                <select name="trang_thai" class="form-select promo-select">
+                    <option value="1" {{ $sp->trang_thai==1?'selected':'' }}>Đang hoạt động</option>
+                    <option value="0" {{ $sp->trang_thai==0?'selected':'' }}>Tạm ngưng</option>
+                </select>
+        </div>
+
     </div>
 
-    {{-- Mô tả --}}
+    <!-- Mô tả ngắn -->
     <div class="mt-3">
-        <label class="promo-label">Mô tả</label>
-        <textarea name="mota" class="form-control promo-textarea"></textarea>
+        <label class="promo-label">Mô tả ngắn</label>
+        <textarea name="mota_ngan" class="form-control promo-textarea">{{ old('mota_ngan', $sp->mota_ngan) }}</textarea>
     </div>
 
-    {{-- Buttons --}}
+    <!-- Mô tả chi tiết -->
+    <div class="mt-3">
+        <label class="promo-label">Mô tả chi tiết</label>
+        <textarea name="mota" class="form-control promo-textarea">{{ old('mota', $sp->mota) }}</textarea>
+    </div>
+
+    <!-- Footer Buttons -->
     <div class="d-flex justify-content-between mt-4">
-        <a href="{{ route('product.index') }}" class="btn btn-cancel">Hủy bỏ</a>
-        <button type="submit" class="btn btn-submit">Thêm mới</button>
+        <a href="{{ route('product.index') }}" class="btn btn-footer-cancel">Hủy</a>
+        <button type="submit" id="btnUpdate" class="btn btn-footer-submit">Cập nhật</button>
     </div>
 
 </form>
 
-{{-- Script Preview ảnh --}}
+@if($errors->any())
+<div class="alert alert-danger mt-2">
+    <ul>
+        @foreach($errors->all() as $err)
+            <li>{{ $err }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
+
 <script>
-document.getElementById("imageInput").addEventListener("change", function(e) {
-    const img = document.getElementById("previewImage");
-    img.src = URL.createObjectURL(e.target.files[0]);
-    img.style.display = "block";
+function previewImage(event){
+    const img = document.getElementById('preview');
+    img.src = URL.createObjectURL(event.target.files[0]);
+    img.style.display = 'block';
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const giaGoc = document.querySelector("input[name='giasp']");
+    const giamPT = document.getElementById("giam_pt");
+    const tienGiam = document.getElementById("tien_giam");
+    const giaBan = document.querySelector("input[name='giakhuyenmai']");
+
+    function tinhGia() {
+        let goc = parseFloat(giaGoc.value) || 0;
+        let pt  = parseFloat(giamPT.value) || 0;
+
+        let tien_giam = Math.round(goc * pt / 100);
+        let ban = goc - tien_giam;
+
+        tienGiam.value = tien_giam;
+        giaBan.value = ban;
+    }
+
+    giaGoc.addEventListener("input", tinhGia);
+    giamPT.addEventListener("input", tinhGia);
+
+    // chạy khi load vào để fill đúng số
+    tinhGia();
 });
 </script>
 

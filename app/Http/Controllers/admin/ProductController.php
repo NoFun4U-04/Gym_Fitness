@@ -82,32 +82,29 @@ class ProductController extends Controller
         return true;
     }
 
-    /* ==================== INDEX ==================== */
-    public function index()
-    {
-        // Lấy danh sách sản phẩm từ repo
-        $sanphams = $this->productRepository->allProduct();  // hoặc $products, tuỳ bạn đặt
+    
 
-        // Lấy danh mục để fill combobox lọc
+
+    /* ==================== INDEX ==================== */
+    public function index(Request $request)
+    {
+        // lấy danh sách sản phẩm đã lọc
+        $sanphams = $this->productRepository->filterProducts($request);
+
+        // danh mục
         $danhmucs = Danhmuc::all();
 
-        // Tính thống kê
-        // Nếu $sanphams là Collection:
+        // thống kê
         $stats = [
             'total'   => $sanphams->count(),
             'instock' => $sanphams->where('soluong', '>=', 10)->count(),
-            'low'     => $sanphams->where('soluong', '>', 0)
-                                ->where('soluong', '<', 10)->count(),
+            'low'     => $sanphams->where('soluong', '>', 0)->where('soluong', '<', 10)->count(),
             'out'     => $sanphams->where('soluong', '=', 0)->count(),
         ];
 
-        // Truyền đúng tên biến mà view đang dùng:
-        return view('admin.products.index', [
-            'sanphams'  => $sanphams,
-            'danhmucs'  => $danhmucs,
-            'stats'     => $stats,
-        ]);
+        return view('admin.products.index', compact('sanphams', 'danhmucs', 'stats'));
     }
+
 
 
     /* ==================== CREATE ==================== */
@@ -125,12 +122,14 @@ class ProductController extends Controller
             'sku'             => 'nullable|string',
             'anhsp'           => 'required|image',
             'giasp'           => 'required|numeric',
-            'gia_goc'         => 'nullable|numeric',
-            'phan_tram_giam'  => 'nullable|numeric',
+            'giakhuyenmai'    => 'nullable|numeric',
+            'giamgia'         => 'nullable|numeric',
+            'gia_duoc_giam'   =>'nullable|numeric',
             'mota'            => 'nullable',
             'mota_ngan'       => 'nullable|string',
             'soluong'         => 'required|numeric',
             'id_danhmuc'      => 'required',
+            'noi_bat'          => 'numeric'
         ]);
 
         // Kiểm tra trùng tên
@@ -162,26 +161,30 @@ class ProductController extends Controller
     /* ==================== EDIT ==================== */
     public function edit($id)
     {
-        $product = $this->productRepository->findProduct($id);
+        $sp = $this->productRepository->findProduct($id);
         $list_danhmucs = Danhmuc::all();
 
-        return view('admin.products.edit', compact('product', 'list_danhmucs'));
+
+        return view('admin.products.edit', compact('sp', 'list_danhmucs'));
     }
 
     /* ==================== UPDATE ==================== */
     public function update($id, Request $request)
     {
-        $validatedData = $request->validate([
-            'tensp'          => 'required',
-            'sku'            => 'nullable|string',
-            'anhsp'          => 'nullable|image',
-            'giasp'          => 'required|numeric',
-            'gia_goc'        => 'nullable|numeric',
-            'phan_tram_giam' => 'nullable|numeric',
-            'mota'           => 'nullable',
-            'mota_ngan'      => 'nullable|string',
-            'soluong'        => 'required|numeric',
-            'id_danhmuc'     => 'required'
+         $validatedData = $request->validate([
+            'tensp'           => 'required',
+            'sku'             => 'nullable|string',
+            'anhsp'           => 'image',
+            'giasp'           => 'required|numeric',
+            'giakhuyenmai'    => 'nullable|numeric',
+            'giamgia'         => 'nullable|numeric',
+            'gia_duoc_giam'   =>'nullable|numeric',
+            'mota'            => 'nullable',
+            'mota_ngan'       => 'nullable|string',
+            'soluong'         => 'required|numeric',
+            'id_danhmuc'      => 'required',
+            'noi_bat'         => 'numeric',
+            'trang_thai'      => 'numeric'
         ]);
 
         /* ----- ẢNH ----- */
@@ -211,7 +214,11 @@ class ProductController extends Controller
     /* ==================== DELETE ==================== */
     public function destroy($id)
     {
-        $this->productRepository->deleteProduct($id);
-        return redirect()->route('product.index')->with('success', 'Xóa sản phẩm thành công');
+        $this->productRepository->softDelete($id);
+
+        return redirect()
+            ->route('product.index')
+            ->with('success', 'Sản phẩm đã được chuyển sang trạng thái ẩn');
     }
+
 }

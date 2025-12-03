@@ -5,65 +5,84 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Sanpham;
 use App\Models\Danhmuc;
-use App\Repositories\ISanphamRepository;
+use App\Repositories\IProductRepository;
 use DB;
+
 class HomeController extends Controller
 {
-    private $sanphamRepository;
+    private $productRepository;
 
-    public function __construct(ISanphamRepository $sanphamRepository) {
-        $this->sanphamRepository = $sanphamRepository;
+    public function __construct(IProductRepository $productRepository)
+    {
+        $this->productRepository = $productRepository;
     }
 
-    public function index() {
-    $alls = $this->sanphamRepository->allProduct();
-    $sanphams = $this->sanphamRepository->featuredProducts();
-    $gucciProducts = $this->sanphamRepository->getProductsByCategory(9);
-    $diorProducts = $this->sanphamRepository->getProductsByCategory(10);
-    $hermesProducts = $this->sanphamRepository->getProductsByCategory(11);
-    $chanelProducts = $this->sanphamRepository->getProductsByCategory(12);
+    /** ===================== HOME PAGE ===================== */
+    public function index()
+    {
+        $alls           = $this->productRepository->allProduct();
+        $sanphams       = $this->productRepository->featuredProducts();
+        $gucciProducts  = $this->productRepository->getProductsByCategory(9);
+        $diorProducts   = $this->productRepository->getProductsByCategory(10);
+        $hermesProducts = $this->productRepository->getProductsByCategory(11);
+        $chanelProducts = $this->productRepository->getProductsByCategory(12);
 
-    return view('pages.home', [
-        'alls' => $alls,
-        'sanphams' => $sanphams,
-        'gucciProducts' => $gucciProducts,
-        'diorProducts' => $diorProducts,
-        'hermesProducts' => $hermesProducts,
-        'chanelProducts' => $chanelProducts,
-    ]);
-}
+        return view('pages.home', compact(
+            'alls',
+            'sanphams',
+            'gucciProducts',
+            'diorProducts',
+            'hermesProducts',
+            'chanelProducts'
+        ));
+    }
 
-    public function congiong() {
+    /** ===================== CATEGORY LIST ===================== */
+    public function congiong()
+    {
         $danhmucs = Danhmuc::all();
-        return view('pages.congiong', [
-            'danhmucs' => $danhmucs,
-        ]);
+        return view('pages.congiong', compact('danhmucs'));
     }
 
-    public function detail($id) {
+    /** ===================== DETAIL PAGE ===================== */
+    public function detail($id)
+    {
         $sanpham = Sanpham::findOrFail($id);
-        $soluongDaBan = DB::table('chitiet_donhang')
-        ->where('id_sanpham', $id)
-        ->sum('soluong');
-         $sanpham->soluong = max($sanpham->soluong - $soluongDaBan, 0);
-        $randoms = $this->sanphamRepository->randomProduct()->take(5);
-        $comments = \App\Models\Comment::where('sanpham_id', $id)->with('user')->get();
 
-        return view('pages.detail', [
-            'sanpham' => $sanpham,
-            'randoms' => $randoms,
-            'comments' => $comments,
+        // Tính số lượng thực tế còn lại
+        $soluongDaBan = DB::table('chitiet_donhang')
+            ->where('id_sanpham', $id)
+            ->sum('soluong');
+
+        $sanpham->soluong = max($sanpham->soluong - $soluongDaBan, 0);
+
+        // Lấy sản phẩm random
+        $randoms = $this->productRepository->randomProduct()->take(5);
+
+        // Comment
+        $comments = \App\Models\Comment::where('sanpham_id', $id)
+            ->with('user')
+            ->get();
+
+        return view('pages.detail', compact('sanpham', 'randoms', 'comments'));
+    }
+
+    /** ===================== SEARCH ===================== */
+    public function search(Request $request)
+    {
+        $searchs = $this->productRepository->searchProduct($request);
+
+        return view('pages.search', [
+            'searchs' => $searchs,
+            'tukhoa'  => $request->input('tukhoa')
         ]);
     }
 
-    public function search(Request $request) {
-        $searchs = $this->sanphamRepository->searchProduct($request);
-        return view('pages.search')->with('searchs', $searchs)->with('tukhoa', $request->input('tukhoa'));
-    }
-
-    public function viewAll(Request $request) {
+    /** ===================== VIEW ALL ===================== */
+    public function viewAll(Request $request)
+    {
         $danhmucs = Danhmuc::all();
-        $viewAllPaginations = $this->sanphamRepository->getAllByDanhMuc($request);
+        $viewAllPaginations = $this->productRepository->getAllByDanhMuc($request);
 
         return view('pages.viewall', [
             'sanphams' => $viewAllPaginations,
@@ -71,18 +90,17 @@ class HomeController extends Controller
         ]);
     }
 
-    public function services() {
+    /** ===================== SERVICES ===================== */
+    public function services()
+    {
         $danhmucs = Danhmuc::all();
-        return view('pages.services', [
-            'danhmucs' => $danhmucs,
-        ]);
+        return view('pages.services', compact('danhmucs'));
     }
 
-    public function dangKyTapThu() {
+    /** ===================== ĐĂNG KÝ TẬP THỬ ===================== */
+    public function dangKyTapThu()
+    {
         $danhmucs = Danhmuc::all();
-        return view('pages.dangkitapthu', [
-            'danhmucs' => $danhmucs,
-        ]);
+        return view('pages.dangkitapthu', compact('danhmucs'));
     }
-
 }

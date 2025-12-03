@@ -157,14 +157,14 @@
                         name="gia_duoc_giam" 
                         class="form-control promo-input"
                         id="tien_giam"
-                        disabled>
+                        readonly>
                 </div>
 
         </div>
 
         <div>
             <label class="promo-label">Giá bán (VNĐ) *</label>
-            <input type="number" name="giakhuyenmai" class="form-control promo-input" disabled style="border-color:#ef4444; color:#dc2626; background:#fff5f5;">
+            <input type="number" name="giakhuyenmai" class="form-control promo-input" readonly style="border-color:#ef4444; color:#dc2626; background:#fff5f5;">
         </div>
 
         <!-- Danh mục -->
@@ -199,10 +199,6 @@
                 Sản phẩm nổi bật
             </label>
         </div>
-
-        
-        
-
     </div>
 
     <!-- Mô tả ngắn-->
@@ -248,7 +244,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const giaGoc = document.querySelector("input[name='giasp']");
     const giamPT = document.getElementById("giam_pt");
     const giaKhuyenMai = document.getElementById("tien_giam"); // giá khuyến mãi (giảm bao nhiêu)
-    const giaBan = document.querySelector("input[disabled][name='giakhuyenmai']"); // giá bán cuối
+    const giaBan = document.querySelector("input[name='giakhuyenmai']"); // giá bán cuối
 
     function tinhGia() {
         let goc = parseFloat(giaGoc.value) || 0;

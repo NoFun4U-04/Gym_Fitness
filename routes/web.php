@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\admin\{AdminController, ProductController, DanhmucController, OrderController, KhuyenmaiController};
+use App\Http\Controllers\admin\{AdminController, ProductController, DanhmucController, OrderController, KhuyenmaiController, UserController};
 
 use App\Http\Controllers\{
     HomeController,
@@ -130,4 +130,7 @@ Route::prefix('/')->middleware('admin.login')->group(function () {
     Route::put('/admin/khuyenmai/{id}', [KhuyenmaiController::class, 'update'])->name('khuyenmai.update');
     Route::delete('/admin/khuyenmai/{id}', [KhuyenmaiController::class, 'destroy'])->name('khuyenmai.destroy');
     Route::post('/admin/khuyenmai/{id}/restore', [KhuyenmaiController::class, 'restore'])->name('khuyenmai.restore');
+
+    Route::resource('/admin/users', UserController::class);
+    Route::post('/admin/users/{id}/restore', [DanhmucController::class, 'restore'])->name('users.restore');
 });
