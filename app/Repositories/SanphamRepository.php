@@ -3,48 +3,89 @@
 namespace App\Repositories;
 
 use App\Models\SanPham;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
-class ProductRepository
+class SanphamRepository implements ISanphamRepository
 {
-    public function getAll($filters = [])
+    public function allProduct()
     {
         $query = SanPham::with('danhMuc');
 
-        if (!empty($filters['q'])) {
-            $query->where('tensp','LIKE','%'.$filters['q'].'%');
+        if (Schema::hasColumn('sanpham', 'trang_thai')) {
+            $query->where('trang_thai', 1);
         }
 
-        if (!empty($filters['cate'])) {
-            $query->where('id_danhmuc', $filters['cate']);
+        return $query->orderByDesc('id_sanpham')->get();
+    }
+
+    public function featuredProducts()
+    {
+        $query = SanPham::with('danhMuc');
+
+        if (Schema::hasColumn('sanpham', 'noi_bat')) {
+            $query->where('noi_bat', 1);
         }
 
-        if ($filters['status'] !== null && $filters['status'] !== '') {
-            $query->where('trang_thai', $filters['status']);
+        if (Schema::hasColumn('sanpham', 'trang_thai')) {
+            $query->where('trang_thai', 1);
         }
 
-        return $query->orderBy('id_sanpham','desc')->paginate(20);
+        return $query->orderByDesc('id_sanpham')->take(8)->get();
     }
 
-    public function find($id)
+    public function randomProduct()
     {
-        return SanPham::findOrFail($id);
+        $query = SanPham::with('danhMuc');
+
+        if (Schema::hasColumn('sanpham', 'trang_thai')) {
+            $query->where('trang_thai', 1);
+        }
+
+        return $query->inRandomOrder()->get();
     }
 
-    public function create($data)
+    public function searchProduct(Request $request)
     {
-        return SanPham::create($data);
+        $keyword = $request->input('tukhoa', '');
+
+        $query = SanPham::with('danhMuc');
+
+        if (Schema::hasColumn('sanpham', 'trang_thai')) {
+            $query->where('trang_thai', 1);
+        }
+
+        $query->when($keyword, function ($q, $keyword) {
+            $q->where('tensp', 'LIKE', '%' . $keyword . '%');
+        });
+
+        return $query->orderByDesc('id_sanpham')->paginate(12);
     }
 
-    public function update($id, $data)
+    public function getAllByDanhMuc(Request $request)
     {
-        $sp = SanPham::findOrFail($id);
-        $sp->update($data);
-        return $sp;
+        $query = SanPham::with('danhMuc')->orderByDesc('id_sanpham');
+
+        if (Schema::hasColumn('sanpham', 'trang_thai')) {
+            $query->where('trang_thai', 1);
+        }
+
+        if ($request->filled('danhmuc_id')) {
+            $query->where('id_danhmuc', $request->input('danhmuc_id'));
+        }
+
+        return $query->paginate(12);
     }
 
-    public function delete($id)
+    public function getProductsByCategory($categoryId)
     {
-        $sp = SanPham::findOrFail($id);
-        return $sp->delete();
+        $query = SanPham::with('danhMuc')
+            ->where('id_danhmuc', $categoryId);
+
+        if (Schema::hasColumn('sanpham', 'trang_thai')) {
+            $query->where('trang_thai', 1);
+        }
+
+        return $query->orderByDesc('id_sanpham')->take(8)->get();
     }
 }
