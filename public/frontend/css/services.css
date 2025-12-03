@@ -1,0 +1,202 @@
+/* ============= CÁC GÓI DỊCH VỤ ============= */
+
+.rf-packages-section {
+    background-color: #f5f5f7;
+    padding: 4rem 0 4.5rem;
+    color: #000000;
+}
+
+.rf-packages-heading {
+    margin-bottom: 3rem;
+}
+
+.rf-packages-eyebrow {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: 0;          /* hoặc giữ nếu bạn thích */
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+    color: #000000;
+}
+
+.rf-packages-title {
+    font-size: 0.8rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin: 0;
+    color: #555555;
+}
+
+/* Slider wrapper + track */
+.rf-packages-slider-wrapper {
+    overflow: hidden;
+}
+
+.rf-packages-track {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 0.5rem;
+}
+
+/* Ẩn scrollbar cho đẹp (desktop) */
+.rf-packages-track::-webkit-scrollbar {
+    height: 0;
+}
+.rf-packages-track {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Card */
+.rf-package-card {
+    position: relative;
+    flex: 0 0 280px;
+    max-width: 280px;
+    background-color: #fff;
+    border: 1px solid #fff;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.75rem; /* bo góc nhẹ */
+    overflow: hidden;       /* để ảnh cũng bo theo card */
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.rf-package-card:hover {
+    transform: translateY(-6px); /* nổi nhẹ lên */
+    box-shadow: 0 16px 32px rgba(52, 164, 224, 0.5); /* tỏa glow xanh dương */
+}
+
+/* Vòng tròn nhỏ đánh dấu BEST */
+.rf-package-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background-color: #dd3f27;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+    z-index: 5;
+}
+
+.rf-package-card img {
+    display: block;
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    transition: transform 0.25s ease;
+    border-radius: inherit;
+}
+
+.rf-package-card:hover img {
+    transform: scale(1.03);
+}
+
+/* phần trên: ảnh */
+.rf-package-image {
+    width: 100%;
+}
+
+/* phần dưới: nội dung */
+.rf-package-body {
+    padding: 0.7rem 1.2rem 0.8rem;
+}
+
+.rf-package-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.4rem;
+}
+
+.rf-package-subtitle {
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: center;
+    color: #000;
+    margin-bottom: 0.9rem;
+}
+
+.rf-package-list {
+    list-style: none;
+    margin: 1.25rem 0 0;
+    padding-left: 0;
+}
+
+.rf-package-list li {
+    position: relative;
+    padding-left: 1.4rem;      /* chừa chỗ cho icon ✔ */
+    margin-bottom: 0.45rem;
+    font-size: 0.96rem;
+    line-height: 1.6;
+    color: #444444;
+}
+
+/* Dấu tích V màu xanh dương */
+.rf-package-list li::before {
+    content: "✔";
+    position: absolute;
+    left: 0;
+    top: 0.05rem;
+    color: #34A4E0;            /* xanh dương */
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+/* Arrow buttons */
+.rf-packages-arrows {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+}
+
+.rf-packages-arrow {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #000000;
+    background-color: #ffffff;
+    color: #000000;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+}
+
+.rf-packages-arrow:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+/* Responsive */
+@media (max-width: 991.98px) {
+    .rf-package-card {
+        flex: 0 0 260px;
+        max-width: 260px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .rf-packages-section {
+        padding: 3rem 0 3.5rem;
+    }
+
+    .rf-package-card {
+        flex: 0 0 80%;
+        max-width: 80%;
+    }
+}

@@ -21,6 +21,7 @@
     <!-- header-footer -->
     <link rel="stylesheet" href="/frontend/css/main.css" />
     @stack('styles')
+    @stack('scripts')
 </head>
 
 <body style="margin: 0; min-height: 100vh; display: flex; flex-direction: column;">
@@ -43,9 +44,15 @@
                         <a href="{{ URL::to('/viewAll') }}" class="hover-a">Sản phẩm </a>
                         <ul class="dropdown-menu" id="dropdown-danhmuc"></ul>
                     </li>
-                    <li class="dropdown {{ request()->is('viewAll*') ? 'active' : '' }}" id="sanpham-dropdown">
-                        <a href="{{ URL::to('/viewAll') }}" class="hover-a">Dịch vụ </a>
-                        <ul class="dropdown-menu" id="dropdown-danhmuc"></ul>
+                    <li class="dropdown {{ request()->is('dich-vu/*') ? 'active' : '' }}">
+                        <a href="javascript:void(0)" class="hover-a">Dịch vụ </a>
+                        <ul class="dropdown-menu dropdown-services">
+                            <li><a href="{{ route('services.gym') }}">Gym</a></li>
+                            <li><a href="{{ route('services.yoga') }}">Yoga</a></li>
+                            <li><a href="{{ route('services.swimming') }}">Swimming</a></li>
+                            <li><a href="{{ route('services.kickboxing') }}">Kick Boxing</a></li>
+                            <li><a href="{{ route('services.dance') }}">Dance</a></li>
+                        </ul>
                     </li>
                     <li class="{{ request()->is('donhang') ? 'active' : '' }}">
                         <a href="{{ URL::to('/donhang') }}" class="hover-a">Đăng ký tập thử</a>

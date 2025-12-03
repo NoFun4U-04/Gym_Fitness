@@ -40,6 +40,27 @@ Route::get('/viewAll', [HomeController::class, 'viewAll'])->name('viewAll');
 Route::get('/services', [HomeController::class, 'services'])->name('services');
 // Route::get('/donhang', [HomeController:: class, 'donhang'])->name('donhang');
 
+//Dichvu
+Route::get('/dich-vu/gym', function () {
+    return view('pages.dichvu1');   // resources/views/pages/dichvu1.blade.php
+})->name('services.gym');
+
+Route::get('/dich-vu/yoga', function () {
+    return view('pages.dichvu2');
+})->name('services.yoga');
+
+Route::get('/dich-vu/swimming', function () {
+    return view('pages.dichvu3');
+})->name('services.swimming');
+
+Route::get('/dich-vu/kick-boxing', function () {
+    return view('pages.dichvu4');
+})->name('services.kickboxing');
+
+Route::get('/dich-vu/dance', function () {
+    return view('pages.dichvu5');
+})->name('services.dance');
+
 //cart
 Route::get('cart', [CartController::class, 'cart'])->name('cart');
 Route::get('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add_to_cart');
