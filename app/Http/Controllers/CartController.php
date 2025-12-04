@@ -46,9 +46,15 @@ class CartController extends Controller
         ));
     }
 
-    public function addToCart($id)
+     public function addToCart(Request $request, $id)
     {
-        $product = Sanpham::findOrFail($id);
+        $product = Sanpham::with('images')->findOrFail($id);
+
+        // Lấy ảnh đầu tiên trong bảng images
+        $firstImage = $product->images->first();
+        $imagePath  = $firstImage
+            ? $firstImage->duong_dan
+            : 'frontend/upload/placeholder.jpg'; 
 
         $cart = session()->get('cart', []);
 
@@ -56,31 +62,37 @@ class CartController extends Controller
             $cart[$id]['quantity']++;
         } else {
             $cart[$id] = [
-                "id_sanpham" => $product->id_sanpham,
-                "tensp" => $product->tensp,
-                "anhsp" => $product->anhsp,
-                "giasp" => $product->giasp,
-                "giamgia" => $product->giamgia,
-                "giakhuyenmai" => $product->giakhuyenmai,
-                "quantity" => 1
+                "id_sanpham"    => $product->id_sanpham,
+                "tensp"         => $product->tensp,
+                "anhsp"         => $imagePath, 
+                "giasp"         => $product->giasp,
+                "giamgia"       => $product->giamgia,
+                "giakhuyenmai"  => $product->giakhuyenmai,
+                "quantity"      => 1
             ];
         }
 
         session()->put('cart', $cart);
+
         if ($request->ajax()) {
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'Đã thêm vào giỏ hàng thành công!',
-            'cart_count' => array_sum(array_column($cart, 'quantity')),
-        ]);
-    }
+            return response()->json([
+                'status'      => 'success',
+                'message'     => 'Đã thêm vào giỏ hàng thành công!',
+                'cart_count'  => array_sum(array_column($cart, 'quantity')),
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Thêm vào giỏ hàng thành công!');
     }
 
     public function addGoToCart($id)
     {
-        $product = Sanpham::findOrFail($id);
+        $product = Sanpham::with('images')->findOrFail($id);
+
+        $firstImage = $product->images->first();
+        $imagePath  = $firstImage
+            ? $firstImage->duong_dan
+            : 'frontend/upload/placeholder.jpg';
 
         $cart = session()->get('cart', []);
 
@@ -88,20 +100,19 @@ class CartController extends Controller
             $cart[$id]['quantity']++;
         } else {
             $cart[$id] = [
-                "id_sanpham" => $product->id_sanpham,
-                "tensp" => $product->tensp,
-                "anhsp" => $product->anhsp,
-                "giasp" => $product->giasp,
-                "giamgia" => $product->giamgia,
-                "giakhuyenmai" => $product->giakhuyenmai,
-                "quantity" => 1
+                "id_sanpham"    => $product->id_sanpham,
+                "tensp"         => $product->tensp,
+                "anhsp"         => $imagePath, // ảnh đầu tiên
+                "giasp"         => $product->giasp,
+                "giamgia"       => $product->giamgia,
+                "giakhuyenmai"  => $product->giakhuyenmai,
+                "quantity"      => 1
             ];
         }
 
         session()->put('cart', $cart);
         return redirect('/cart');
     }
-
     public function update(Request $request)
     {
         $id = $request->id;

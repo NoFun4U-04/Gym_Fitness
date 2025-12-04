@@ -559,7 +559,8 @@
                                     <tr class="cart-item" data-id="{{ $id }}">
                                         <td>
                                             <div class="cart-product-thumb">
-                                                <img src="{{ asset($details['anhsp']) }}" alt="{{ $details['tensp'] }}" class="img-responsive">
+                                               <img src="{{ asset($details['anhsp'] ?? 'frontend/upload/placeholder.jpg') }}"
+                                                        alt="{{ $details['tensp'] }}" class="img-responsive">
                                             </div>
                                         </td>
 
