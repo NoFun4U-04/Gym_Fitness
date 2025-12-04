@@ -1,8 +1,12 @@
 <?php
+
 namespace App\Repositories;
 
-interface IDanhmucRepository{
+interface IDanhmucRepository
+{
     public function allDanhmuc();
+    public function getDanhmucActive();
+    public function getAllDanhmuc();
     public function storeDanhmuc($data);
     public function findDanhmuc($id);
     public function updateDanhmuc($data, $id);

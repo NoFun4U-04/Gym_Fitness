@@ -2,140 +2,144 @@
 @section('admin_content')
 
 <style>
-/* ===================== TITLE ===================== */
-.promo-title {
-    font-size: 22px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #111;
-}
+    /* ===================== TITLE ===================== */
+    .promo-title {
+        font-size: 22px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #111;
+    }
 
-.promo-title i {
-    background: #f59e0b;
-    padding: 8px;
-    border-radius: 10px;
-    color: #fff;
-    font-size: 18px;
-}
+    .promo-title i {
+        background: #f59e0b;
+        padding: 8px;
+        border-radius: 10px;
+        color: #fff;
+        font-size: 18px;
+    }
 
-/* ===================== LABEL ===================== */
-.promo-label {
-    font-weight: 600;
-    font-size: 14px;
-    margin-bottom: 6px;
-    color: #374151;
-}
+    /* ===================== LABEL ===================== */
+    .promo-label {
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 6px;
+        color: #374151;
+    }
 
-/* ===================== INPUT ===================== */
-.promo-input,
-.promo-select {
-    border-radius: 12px;
-    padding: 10px 14px;
-    border: 1px solid #d1d5db;
-    background: #fff;
-    transition: 0.2s;
-}
+    /* ===================== INPUT ===================== */
+    .promo-input,
+    .promo-select {
+        border-radius: 12px;
+        padding: 10px 14px;
+        border: 1px solid #d1d5db;
+        background: #fff;
+        transition: 0.2s;
+    }
 
-.promo-input:focus,
-.promo-select:focus,
-.promo-textarea:focus {
-    border-color: #10b981;
-    box-shadow: 0 0 0 3px rgba(16,185,129,0.25);
-    outline: none;
-}
+    .promo-input:focus,
+    .promo-select:focus,
+    .promo-textarea:focus {
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+        outline: none;
+    }
 
-/* ===================== TEXTAREA ===================== */
-.promo-textarea {
-    border-radius: 12px;
-    padding: 12px;
-    height: 120px;
-    border: 1px solid #d1d5db;
-    resize: none;
-}
+    /* ===================== TEXTAREA ===================== */
+    .promo-textarea {
+        border-radius: 12px;
+        padding: 12px;
+        height: 120px;
+        border: 1px solid #d1d5db;
+        resize: none;
+    }
 
-/* ===================== GRID ===================== */
-.grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
+    /* ===================== GRID ===================== */
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
 
-@media (max-width: 768px) {
-    .grid-2 { grid-template-columns: 1fr; }
-}
+    @media (max-width: 768px) {
+        .grid-2 {
+            grid-template-columns: 1fr;
+        }
+    }
 
-.btn-footer-cancel {
-    background: #e5e7eb;
-    color: #374151;
-    font-weight: 600;
-    border-radius: 12px;
-    padding: 12px 28px;
-    transition: 0.2s;
-    border: none;
-}
+    .btn-footer-cancel {
+        background: #e5e7eb;
+        color: #374151;
+        font-weight: 600;
+        border-radius: 12px;
+        padding: 12px 28px;
+        transition: 0.2s;
+        border: none;
+    }
 
-.btn-footer-cancel:hover { background: #d1d5db; }
+    .btn-footer-cancel:hover {
+        background: #d1d5db;
+    }
 
-.btn-footer-submit {
-    background: linear-gradient(to right, #0284c7, #0ea5e9);
-    color: #fff;
-    font-weight: 600;
-    border-radius: 12px;
-    padding: 12px 28px;
-    border: none;
-    transition: 0.2s;
-}
+    .btn-footer-submit {
+        background: linear-gradient(to right, #0284c7, #0ea5e9);
+        color: #fff;
+        font-weight: 600;
+        border-radius: 12px;
+        padding: 12px 28px;
+        border: none;
+        transition: 0.2s;
+    }
 
-.btn-footer-submit:hover {
-    opacity: 0.85;
-    transform: translateY(-1px);
-}
+    .btn-footer-submit:hover {
+        opacity: 0.85;
+        transform: translateY(-1px);
+    }
 
-#preview-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 8px;
-}
+    #preview-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 8px;
+    }
 
-.preview-box {
-    position: relative;
-    display: inline-block;
-}
+    .preview-box {
+        position: relative;
+        display: inline-block;
+    }
 
-.preview-box img {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 12px;
-    border: 1px solid #d1d5db;
-}
+    .preview-box img {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 12px;
+        border: 1px solid #d1d5db;
+    }
 
-.preview-box .remove-btn {
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    background: #ef4444;
-    color: white;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    .preview-box .remove-btn {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        background: #ef4444;
+        color: white;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-.current-image-box img {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 12px;
-    border: 1px solid #d1d5db;
-}
+    .current-image-box img {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 12px;
+        border: 1px solid #d1d5db;
+    }
 </style>
 
 <div class="promo-title mb-3">
@@ -153,21 +157,21 @@
         <div>
             <label class="promo-label">Tên sản phẩm *</label>
             <input type="text" name="tensp" class="form-control promo-input"
-                   value="{{ old('tensp', $sp->tensp) }}" required>
+                value="{{ old('tensp', $sp->tensp) }}" required>
         </div>
 
         <!-- SKU -->
         <div>
             <label class="promo-label">Mã SKU</label>
             <input type="text" name="sku" class="form-control promo-input"
-                   value="{{ old('sku', $sp->sku) }}">
+                value="{{ old('sku', $sp->sku) }}">
         </div>
 
         <!-- Giá gốc -->
         <div>
             <label class="promo-label">Giá gốc (VNĐ) *</label>
             <input type="number" name="giasp" class="form-control promo-input"
-                   value="{{ old('giasp', $sp->giasp) }}" required>
+                value="{{ old('giasp', $sp->giasp) }}" required>
         </div>
 
         <div class="grid-2">
@@ -175,18 +179,18 @@
             <div>
                 <label class="promo-label">% Giảm giá</label>
                 <input type="number" min="0" max="100"
-                       name="giamgia"
-                       id="giam_pt"
-                       class="form-control promo-input"
-                       value="{{ old('giamgia', $sp->giamgia) }}">
+                    name="giamgia"
+                    id="giam_pt"
+                    class="form-control promo-input"
+                    value="{{ old('giamgia', $sp->giamgia) }}">
             </div>
 
             <div>
                 <label class="promo-label">Giá khuyến mãi (VNĐ)</label>
                 <input type="number" id="tien_giam"
-                       class="form-control promo-input"
-                       value="{{ old('gia_duoc_giam', $sp->gia_duoc_giam ?? 0) }}"
-                       readonly>
+                    class="form-control promo-input"
+                    value="{{ old('gia_duoc_giam', $sp->gia_duoc_giam ?? 0) }}"
+                    readonly>
             </div>
 
         </div>
@@ -194,10 +198,9 @@
         <div>
             <label class="promo-label">Giá bán (VNĐ) *</label>
             <input type="number" name="giakhuyenmai"
-                   class="form-control promo-input"
-                   value="{{ old('giakhuyenmai', $sp->giakhuyenmai) }}"
-                   readonly
-                   style="border-color:#ef4444; color:#dc2626; background:#fff5f5;">
+                class="form-control promo-input"
+                value="{{ old('giakhuyenmai', $sp->giakhuyenmai) }}"
+                readonly/>
         </div>
 
         <!-- Danh mục -->
@@ -205,10 +208,10 @@
             <label class="promo-label">Danh mục *</label>
             <select name="id_danhmuc" class="form-select promo-select" required>
                 @foreach($list_danhmucs as $dm)
-                    <option value="{{ $dm->id_danhmuc }}"
-                        {{ $sp->id_danhmuc == $dm->id_danhmuc ? 'selected' : '' }}>
-                        {{ $dm->ten_danhmuc }}
-                    </option>
+                <option value="{{ $dm->id_danhmuc }}"
+                    {{ $sp->id_danhmuc == $dm->id_danhmuc ? 'selected' : '' }}>
+                    {{ $dm->ten_danhmuc }}
+                </option>
                 @endforeach
             </select>
         </div>
@@ -216,30 +219,30 @@
         <div>
             <label class="promo-label">Ảnh sản phẩm (chọn thêm / thay thế)</label>
             <input type="file"
-                   name="anhsp[]"
-                   class="form-control promo-input"
-                   multiple
-                   onchange="previewImagesEdit(event)">
+                name="anhsp[]"
+                class="form-control promo-input"
+                multiple
+                onchange="previewImagesEdit(event)">
             <div id="preview-wrapper"></div>
 
             @if($sp->images && $sp->images->count())
-                <div class="mt-3">
-                    <label class="promo-label">Ảnh hiện tại</label>
-                    <div class="d-flex flex-wrap gap-2">
-                        @foreach($sp->images as $img)
-                            <div class="current-image-box">
-                                <img src="{{ asset($img->duong_dan) }}" alt="Ảnh hiện tại">
-                            </div>
-                        @endforeach
+            <div class="mt-3">
+                <label class="promo-label">Ảnh hiện tại</label>
+                <div class="d-flex flex-wrap gap-2">
+                    @foreach($sp->images as $img)
+                    <div class="current-image-box">
+                        <img src="{{ asset($img->duong_dan) }}" alt="Ảnh hiện tại">
                     </div>
+                    @endforeach
                 </div>
+            </div>
             @endif
         </div>
 
         <div>
             <label class="promo-label">Số lượng *</label>
             <input type="number" name="soluong" class="form-control promo-input"
-                   value="{{ old('soluong', $sp->soluong) }}" required>
+                value="{{ old('soluong', $sp->soluong) }}" required>
         </div>
 
         <div>
@@ -283,82 +286,82 @@
 <div class="alert alert-danger mt-2">
     <ul>
         @foreach($errors->all() as $err)
-            <li>{{ $err }}</li>
+        <li>{{ $err }}</li>
         @endforeach
     </ul>
 </div>
 @endif
 
 <script>
-let selectedFilesEdit = [];
+    let selectedFilesEdit = [];
 
-function previewImagesEdit(event) {
-    const files = Array.from(event.target.files);
-    selectedFilesEdit = files;
+    function previewImagesEdit(event) {
+        const files = Array.from(event.target.files);
+        selectedFilesEdit = files;
 
-    renderPreviewEdit();
-}
-
-function removeImageEdit(index) {
-    selectedFilesEdit.splice(index, 1);
-    renderPreviewEdit();
-}
-
-function renderPreviewEdit() {
-    const wrapper = document.getElementById('preview-wrapper');
-    wrapper.innerHTML = '';
-
-    selectedFilesEdit.forEach((file, index) => {
-        const box = document.createElement('div');
-        box.classList.add('preview-box');
-
-        const img = document.createElement('img');
-        img.src = URL.createObjectURL(file);
-
-        const removeBtn = document.createElement('div');
-        removeBtn.classList.add('remove-btn');
-        removeBtn.innerHTML = '&times;';
-        removeBtn.onclick = () => removeImageEdit(index);
-
-        box.appendChild(img);
-        box.appendChild(removeBtn);
-        wrapper.appendChild(box);
-    });
-
-    updateFileInputEdit();
-}
-
-function updateFileInputEdit() {
-    const input = document.querySelector('input[name="anhsp[]"]');
-    const dt = new DataTransfer();
-    selectedFilesEdit.forEach(file => dt.items.add(file));
-    input.files = dt.files;
-}
-
-/* ==== TÍNH GIÁ ==== */
-document.addEventListener("DOMContentLoaded", function () {
-
-    const giaGoc = document.querySelector("input[name='giasp']");
-    const giamPT = document.getElementById("giam_pt");
-    const tienGiam = document.getElementById("tien_giam");
-    const giaBan = document.querySelector("input[name='giakhuyenmai']");
-
-    function tinhGia() {
-        let goc = parseFloat(giaGoc.value) || 0;
-        let pt  = parseFloat(giamPT.value) || 0;
-
-        let tien_giam = Math.round(goc * pt / 100);
-        let ban = goc - tien_giam;
-
-        tienGiam.value = tien_giam;
-        giaBan.value = ban;
+        renderPreviewEdit();
     }
 
-    giaGoc.addEventListener("input", tinhGia);
-    giamPT.addEventListener("input", tinhGia);
+    function removeImageEdit(index) {
+        selectedFilesEdit.splice(index, 1);
+        renderPreviewEdit();
+    }
 
-    tinhGia();
-});
+    function renderPreviewEdit() {
+        const wrapper = document.getElementById('preview-wrapper');
+        wrapper.innerHTML = '';
+
+        selectedFilesEdit.forEach((file, index) => {
+            const box = document.createElement('div');
+            box.classList.add('preview-box');
+
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+
+            const removeBtn = document.createElement('div');
+            removeBtn.classList.add('remove-btn');
+            removeBtn.innerHTML = '&times;';
+            removeBtn.onclick = () => removeImageEdit(index);
+
+            box.appendChild(img);
+            box.appendChild(removeBtn);
+            wrapper.appendChild(box);
+        });
+
+        updateFileInputEdit();
+    }
+
+    function updateFileInputEdit() {
+        const input = document.querySelector('input[name="anhsp[]"]');
+        const dt = new DataTransfer();
+        selectedFilesEdit.forEach(file => dt.items.add(file));
+        input.files = dt.files;
+    }
+
+    /* ==== TÍNH GIÁ ==== */
+    document.addEventListener("DOMContentLoaded", function() {
+
+        const giaGoc = document.querySelector("input[name='giasp']");
+        const giamPT = document.getElementById("giam_pt");
+        const tienGiam = document.getElementById("tien_giam");
+        const giaBan = document.querySelector("input[name='giakhuyenmai']");
+
+        function tinhGia() {
+            let goc = parseFloat(giaGoc.value) || 0;
+            let pt = parseFloat(giamPT.value) || 0;
+
+            let tien_giam = Math.round(goc * pt / 100);
+            let ban = goc - tien_giam;
+
+            tienGiam.value = tien_giam;
+            giaBan.value = ban;
+        }
+
+        giaGoc.addEventListener("input", tinhGia);
+        giamPT.addEventListener("input", tinhGia);
+
+        tinhGia();
+    });
 </script>
 
 @endsection

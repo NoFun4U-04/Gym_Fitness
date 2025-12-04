@@ -198,7 +198,7 @@
 
         <div>
             <label class="promo-label">Giá bán (VNĐ) *</label>
-            <input type="number" name="giakhuyenmai" class="form-control promo-input" readonly style="border-color:#ef4444; color:#dc2626; background:#fff5f5;">
+            <input type="number" name="giakhuyenmai" class="form-control promo-input" readonly>
         </div>
 
         <!-- Danh mục -->

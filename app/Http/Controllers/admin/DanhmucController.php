@@ -33,7 +33,11 @@ class DanhmucController extends Controller
 
         return view('admin.danhmucs.index', compact('Danhmucs', 'status'));
     }
-
+    public function getDanhmucs()
+    {
+        $danhmucs = $this->DanhmucRepository->getAllDanhmuc();
+        return response()->json($danhmucs);
+    }
     // ==============================
     // TRANG THÊM DANH MỤC
     // ==============================
