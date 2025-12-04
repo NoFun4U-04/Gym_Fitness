@@ -28,11 +28,15 @@ class HomeController extends Controller
         ->take(8)
         ->get();
 
+        $vouchers = DB::table('khuyenmai')
+        ->where('trang_thai', 1)    // chỉ lấy KM đang hoạt động
+        ->get();
        
         return view('pages.home', compact(
             'alls',
             'sanphams',
-            'featured'
+            'featured',
+            'vouchers'
         ));
     }
 

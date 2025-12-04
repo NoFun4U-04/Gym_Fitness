@@ -4,183 +4,7 @@
 <link rel="stylesheet" href="{{ asset('frontend/css/home.css') }}">
 @endpush
 
-<style>
-    .top-sell-section {
-        padding: 40px 0 10px;
-    }
 
-    .top-sell-title {
-        font-size: 28px;
-        font-weight: 700;
-        margin-bottom: 25px;
-    }
-
-    .top-sell-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 22px;
-    }
-
-    .sell-card {
-        position: relative;
-        background: #fff;
-        border-radius: 12px;
-        padding: 18px;
-        border: 1px solid #eee;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        transition: 0.25s;
-    }
-
-    .sell-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-    }
-
-    .wishlist-btn {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        border: none;
-        background: transparent;
-        font-size: 20px;
-        cursor: pointer;
-    }
-
-    .sell-img img {
-        width: 100%;
-        height: 180px;
-        object-fit: contain;
-    }
-
-    .sell-name {
-        font-size: 16px;
-        font-weight: 700;
-        margin: 10px 0;
-        color: #222;
-    }
-
-    .sell-price-box {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .sell-new {
-        color: #e60000;
-        font-size: 18px;
-        font-weight: 700;
-    }
-
-    .sell-old {
-        color: #999;
-        text-decoration: line-through;
-    }
-
-    .sell-percent {
-        background: #ff4d4f;
-        color: #fff;
-        font-size: 12px;
-        padding: 2px 6px;
-        border-radius: 6px;
-    }
-
-    .sell-bonus {
-        margin-top: 12px;
-    }
-
-    .bonus-line {
-        font-size: 14px;
-        margin-top: 4px;
-        color: #444;
-    }
-
-    .bonus-line i {
-        color: #ff4d4f;
-        margin-right: 6px;
-    }
-
-    .add-cart-btn {
-        position: absolute;
-        right: 18px;
-        bottom: 18px;
-        background: #ff4d4f;
-        color: #fff;
-        width: 38px;
-        height: 38px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 8px;
-        transition: .2s;
-    }
-
-    .add-cart-btn:hover {
-        background: #d63031;
-    }
-
-    .view-more-container {
-        margin-top: 18px;
-        text-align: center;
-    }
-
-    .view-more-btn {
-        font-size: 16px;
-        font-weight: 600;
-        color: #34A4E0;
-        text-decoration: none;
-    }
-
-    .view-more-btn:hover {
-        text-decoration: underline;
-    }
-
-    .top-sell-title {
-    font-size: 28px;
-    font-weight: 700;
-    animation: flashColor 1s infinite alternate;
-}
-
-/* Hiệu ứng đổi màu đỏ ↔ vàng */
-@keyframes flashColor {
-    0% {
-        color: #ff0000; /* đỏ */
-        text-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
-    }
-    100% {
-        color: #ffd700; /* vàng */
-        text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
-    }
-}
-.sale-banner {
-    width: 100%;
-    margin: 40px 0;
-    display: flex;
-    justify-content: center;
-}
-
-.sale-banner-inner {
-    width: 100%;
-    max-width: 1400px; /* Cho banner không quá to trên màn lớn */
-    overflow: hidden;
-    border-radius: 14px;
-}
-
-.sale-banner-img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 14px;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-}
-
-/* Hiệu ứng hover nhẹ */
-.sale-banner-img:hover {
-    transform: scale(1.02);
-}
-
-
-</style>
 <!-- HERO BANNER -->
 <section class="hero-banner">
 
@@ -235,14 +59,67 @@
                 </div>
             </div>
             <div class="about-buttons">
-                <a href="#trial-signup" class="cta-button highlighted">Đăng ký ngay</a>
-                <a href="pages/about.html" class="cta-button">Xem thêm</a>
+                <a href="{{ route('dang-ky-tap-thu') }}" class="cta-button highlighted">Đăng ký ngay</a>
+                <a href="{{ URL::to('/services') }}" class="cta-button">Xem thêm</a>
             </div>
         </div>
     </div>
 </section>
 
-<img src="/frontend/img/sale-40-banner.webp" alt="Sale 40%" class="sale-banner-img">
+<section class="benefit-section" style='margin-bottom: 20px;'>
+    <div class="benefit-container">
+
+        <div class="benefit-item">
+            <div class="benefit-icon"><i class="fa-solid fa-rotate-right"></i></div>
+            <span>Trả hàng trong 30 ngày</span>
+        </div>
+
+        <div class="benefit-item">
+            <div class="benefit-icon"><i class="fa-solid fa-truck-fast"></i></div>
+            <span>Giao hàng miễn phí</span>
+        </div>
+
+        <div class="benefit-item">
+            <div class="benefit-icon"><i class="fa-solid fa-money-check-dollar"></i></div>
+            <span>Thanh toán linh hoạt</span>
+        </div>
+
+        <div class="benefit-item">
+            <div class="benefit-icon"><i class="fa-solid fa-phone"></i></div>
+            <span>Hotline: 18006750</span>
+        </div>
+
+    </div>
+</section>
+
+<section class="voucher-section">
+    <div class="voucher-container">
+
+        @foreach ($vouchers as $km)
+        <div class="voucher-card">
+            <div class="voucher-content">
+
+                <h3>Nhập mã: {{ $km->ma_code }}</h3>
+
+                <p>
+                    {{ $km->mo_ta ?? 'Ưu đãi hấp dẫn dành cho bạn!' }}
+                </p>
+
+                <button class="copy-btn" data-code="{{ $km->ma_code }}">
+                    Sao chép mã
+                </button>
+
+            </div>
+            <div class="voucher-barcode"></div>
+        </div>
+        @endforeach
+
+    </div>
+</section>
+
+
+
+<img src="/frontend/img/Gioi-thieu/section-image-1.webp" alt="Sale 40%" class="sale-banner-img">
 
 
 <section class="top-sell-section">
@@ -305,6 +182,9 @@
         </div>
     </div>
 </section>
+
+
+
 <section class="brand-section" id="brands">
     <div class="container">
 
@@ -339,6 +219,138 @@
 
     </div>
 </section>
+<section id="bmi">
+  <div class="bmi-container">
+    <div class="bmi-grid">
+      <div class="bmi-content">
+        <h2>Tính Chỉ Số BMI</h2>
+        <p>Kiểm tra chỉ số BMI của bạn để có cái nhìn tổng quan về tình trạng sức khỏe và nhận được lời khuyên từ chuyên gia.</p>
+        <form id="bmi-form">
+          <div class="form-group">
+            <label for="height">Chiều cao (cm)</label>
+            <input type="number" id="height" placeholder="Nhập chiều cao">
+          </div>
+          <div class="form-group">
+            <label for="weight">Cân nặng (kg)</label>
+            <input type="number" id="weight" placeholder="Nhập cân nặng">
+          </div>
+          <button type="submit">Tính BMI</button>
+        </form>
+        <div id="bmi-result" class="bmi-result hidden">
+          <div class="result-box">
+            <h3>Kết quả BMI của bạn</h3>
+            <div class="result-row">
+              <span>Chỉ số BMI:</span>
+              <span id="bmi-value">0</span>
+            </div>
+            <p id="bmi-message"></p>
+          </div>
+        </div>
+      </div>
+      <div class="bmi-image">
+        <img src="https://hoangphucphoto.com/wp-content/uploads/2025/04/anh-fitness-2.jpg" alt="BMI Visualization">
+        <div class="image-overlay">
+          <h3>Tại sao cần tính BMI?</h3>
+          <p>BMI giúp bạn đánh giá mức độ cân đối của cơ thể, từ đó có kế hoạch tập luyện và dinh dưỡng phù hợp.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="testimonial-section">
+    <div class="container">
+
+        <div class="testimonial-header">
+            <i class="fa-solid fa-comment-dots testimonial-icon"></i>
+            <h2>Phản hồi từ khách hàng</h2>
+            <p>Khách hàng nói gì về chúng tôi?</p>
+        </div>
+
+        <!-- NÚT MŨI TÊN -->
+        <div class="testimonial-arrow left-arrow"><i class="fa-solid fa-chevron-left"></i></div>
+        <div class="testimonial-arrow right-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+
+        <div class="testimonial-row">
+
+            <!-- ITEM 1 -->
+            <div class="testimonial-item">
+                <img src="/frontend/img/Gioi-thieu/danh-gia.webp" class="testimonial-avatar">
+                <h3 class="testimonial-name">Long Lê</h3>
+                <p class="testimonial-role">Designer</p>
+                <p class="testimonial-text">
+                    Được bạn bè giới thiệu qua Lofi Gym, thấy anh chủ tư vấn tận tình 
+                    về chế độ tập luyện. Giờ mình đã lên được 8kg. Cảm ơn shop nhiều nhé.
+                </p>
+                <div class="testimonial-quote">❞</div>
+            </div>
+
+            <!-- ITEM 2 -->
+            <div class="testimonial-item">
+                <img src="/frontend/img/Gioi-thieu/danh-gia-1.webp" class="testimonial-avatar">
+                <h3 class="testimonial-name">Thiên Phước</h3>
+                <p class="testimonial-role">Nhân viên kinh doanh</p>
+                <p class="testimonial-text">
+                    Đã dùng rất nhiều sản phẩm của Lofi Gym và đạt được kết quả khá tốt. 
+                    Giá hợp lý, sản phẩm chất lượng, ship nhanh.
+                </p>
+                <div class="testimonial-quote">❞</div>
+            </div>
+
+            <!-- ITEM 3 -->
+            <div class="testimonial-item">
+                <img src="/frontend/img/Gioi-thieu/danh-gia-3.webp" class="testimonial-avatar">
+                <h3 class="testimonial-name">Dương Dũng</h3>
+                <p class="testimonial-role">Hướng dẫn viên</p>
+                <p class="testimonial-text">
+                    Sản phẩm chất lượng, nhân viên tư vấn nhiệt tình. 
+                    Shop không tính phí ship nên khá bất ngờ. Sẽ quay lại ủng hộ!
+                </p>
+                <div class="testimonial-quote">❞</div>
+            </div>
+
+            <!-- ITEM 4 -->
+            <div class="testimonial-item">
+                <img src="/frontend/img/Gioi-thieu/danh-gia-1.webp" class="testimonial-avatar">
+                <h3 class="testimonial-name">Minh Trần</h3>
+                <p class="testimonial-role">Kỹ sư</p>
+                <p class="testimonial-text">
+                    Lần đầu mua thử nhưng chất lượng tốt hơn mong đợi. Hỗ trợ nhiệt tình,
+                    sẽ giới thiệu bạn bè đến mua.
+                </p>
+                <div class="testimonial-quote">❞</div>
+            </div>
+
+            <!-- ITEM 5 -->
+            <div class="testimonial-item">
+                <img src="/frontend/img/Gioi-thieu/danh-gia-1.webp" class="testimonial-avatar">
+                <h3 class="testimonial-name">Ngọc Anh</h3>
+                <p class="testimonial-role">Giáo viên</p>
+                <p class="testimonial-text">
+                    Ship cực nhanh, hàng đóng gói kỹ. Đã dùng 1 tuần và cảm thấy cơ thể
+                    khỏe hơn rất nhiều.
+                </p>
+                <div class="testimonial-quote">❞</div>
+            </div>
+
+            <!-- ITEM 6 -->
+            <div class="testimonial-item">
+                <img src="/frontend/img/Gioi-thieu/danh-gia-6.webp" class="testimonial-avatar">
+                <h3 class="testimonial-name">Hải Nam</h3>
+                <p class="testimonial-role">Nhân viên văn phòng</p>
+                <p class="testimonial-text">
+                    Combo tập luyện rất ok, giá tốt, tư vấn đầy đủ. Mình rất hài lòng 
+                    và sẽ tiếp tục ủng hộ shop!
+                </p>
+                <div class="testimonial-quote">❞</div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
 
 
 
@@ -390,7 +402,67 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 2000); // hiện 2s rồi tự ẩn
     }
 });
+
+
+// === Tính BMI ===
+    const bmiForm = document.getElementById('bmi-form');
+    if (bmiForm) {
+        bmiForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const height = parseFloat(document.getElementById('height').value) / 100;
+            const weight = parseFloat(document.getElementById('weight').value);
+            const bmiValue = document.getElementById('bmi-value');
+            const bmiMessage = document.getElementById('bmi-message');
+            const bmiResult = document.getElementById('bmi-result');
+
+            if (height > 0 && weight > 0) {
+                const bmi = weight / (height * height);
+                bmiValue.textContent = bmi.toFixed(1);
+
+                let message = '';
+                if (bmi < 18.5) {
+                    message = 'Bạn đang thiếu cân. Hãy đến với chúng tôi để có chế độ ăn uống và tập luyện hợp lý!';
+                } else if (bmi < 25) {
+                    message = 'Bạn đang có cân nặng bình thường. Tiếp tục duy trì lối sống lành mạnh!';
+                } else if (bmi < 30) {
+                    message = 'Bạn đang có dấu hiệu thừa cân. Hãy đến với chúng tôi để có kế hoạch tập luyện và dinh dưỡng phù hợp!';
+                } else {
+                    message = 'Bạn đang thừa cân. Hãy đến với chúng tôi để được tư vấn và hỗ trợ giảm cân hiệu quả!';
+                }
+
+                bmiMessage.textContent = message;
+                bmiResult.classList.remove('hidden');
+            } else {
+                alert('Vui lòng nhập chiều cao và cân nặng hợp lệ!');
+            }
+        });
+    }
 </script>
+<script>
+    const row = document.querySelector('.testimonial-row');
+    const left = document.querySelector('.left-arrow');
+    const right = document.querySelector('.right-arrow');
+
+    right.addEventListener('click', () => {
+        row.scrollBy({ left: 350, behavior: "smooth" });
+    });
+
+    left.addEventListener('click', () => {
+        row.scrollBy({ left: -350, behavior: "smooth" });
+    });
+</script>
+<script>
+document.querySelectorAll(".copy-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        let code = btn.getAttribute("data-code");
+        navigator.clipboard.writeText(code);
+        btn.innerText = "Đã sao chép!";
+        setTimeout(() => btn.innerText = "Sao chép mã", 1500);
+    });
+});
+</script>
+
 
 
 @endsection

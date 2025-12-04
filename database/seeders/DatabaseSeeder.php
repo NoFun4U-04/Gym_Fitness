@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
             NguoiDungSeeder::class,
             DanhMucSeeder::class,
             DangKyTapThuSeeder::class,
+            KhuyenMaiSeeder::class
             ]);
     }
 }

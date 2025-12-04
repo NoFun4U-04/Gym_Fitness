@@ -1290,3 +1290,650 @@
     transform: translateY(0);
     }
 
+    .top-sell-section {
+        padding: 40px 0 10px;
+    }
+
+    .top-sell-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 25px;
+    }
+
+    .top-sell-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 22px;
+    }
+
+    .sell-card {
+        position: relative;
+        background: #fff;
+        border-radius: 12px;
+        padding: 18px;
+        border: 1px solid #eee;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        transition: 0.25s;
+    }
+
+    .sell-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+    .wishlist-btn {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        border: none;
+        background: transparent;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .sell-img img {
+        width: 100%;
+        height: 180px;
+        object-fit: contain;
+    }
+
+    .sell-name {
+        font-size: 16px;
+        font-weight: 700;
+        margin: 10px 0;
+        color: #222;
+    }
+
+    .sell-price-box {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .sell-new {
+        color: #e60000;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .sell-old {
+        color: #999;
+        text-decoration: line-through;
+    }
+
+    .sell-percent {
+        background: #ff4d4f;
+        color: #fff;
+        font-size: 12px;
+        padding: 2px 6px;
+        border-radius: 6px;
+    }
+
+    .sell-bonus {
+        margin-top: 12px;
+    }
+
+    .bonus-line {
+        font-size: 14px;
+        margin-top: 4px;
+        color: #444;
+    }
+
+    .bonus-line i {
+        color: #ff4d4f;
+        margin-right: 6px;
+    }
+
+    .add-cart-btn {
+        position: absolute;
+        right: 18px;
+        bottom: 18px;
+        background: #ff4d4f;
+        color: #fff;
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        transition: .2s;
+    }
+
+    .add-cart-btn:hover {
+        background: #d63031;
+    }
+
+    .view-more-container {
+        margin-top: 18px;
+        text-align: center;
+    }
+
+    .view-more-btn {
+        font-size: 16px;
+        font-weight: 600;
+        color: #34A4E0;
+        text-decoration: none;
+    }
+
+    .view-more-btn:hover {
+        text-decoration: underline;
+    }
+
+    .top-sell-title {
+    font-size: 28px;
+    font-weight: 700;
+    animation: flashColor 1s infinite alternate;
+    }
+
+    /* Hiệu ứng đổi màu đỏ ↔ vàng */
+    @keyframes flashColor {
+        0% {
+            color: #ff0000; /* đỏ */
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+        }
+        100% {
+            color: #ffd700; /* vàng */
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+        }
+    }
+    .sale-banner {
+        width: 100%;
+        margin: 40px 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    .sale-banner-inner {
+        width: 100%;
+        max-width: 1400px; /* Cho banner không quá to trên màn lớn */
+        overflow: hidden;
+        border-radius: 14px;
+    }
+
+    .sale-banner-img {
+        width: 80%;
+        height: auto;
+        display: block;
+        margin: 0 auto;        /* 🔥 Canh giữa ảnh */
+        border-radius: 14px;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+
+
+/* * Section BMI Calculator - DARK MODE */ 
+#bmi {
+    padding: 80px 0;
+    background-color: #0b0b0b; /* nền đen */
+    color: #ffffff;
+}
+
+/* Container */
+#bmi .bmi-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* Grid layout */
+#bmi .bmi-grid {
+    display: grid;
+    gap: 48px;
+    align-items: center;
+}
+
+@media (min-width: 1024px) {
+    #bmi .bmi-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Title */
+#bmi .bmi-content h2 {
+    font-size: 30px;
+    line-height: 36px;
+    font-weight: 700;
+    color: #ffffff; /* chữ trắng */
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    #bmi .bmi-content h2 {
+        font-size: 36px;
+        line-height: 40px;
+    }
+}
+
+/* Subtitle */
+#bmi .bmi-content p {
+    font-size: 18px;
+    line-height: 28px;
+    color: #d1d5db; /* trắng mờ */
+    margin-bottom: 32px;
+}
+
+/* Form group */
+#bmi .form-group {
+    margin-bottom: 24px;
+}
+
+#bmi .form-group label {
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
+    color: #e5e7eb; /* nhạt hơn */
+    margin-bottom: 8px;
+}
+
+/* INPUT */
+#bmi .form-group input {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: #1a1a1a; /* nền input đen */
+    border: 1px solid #333; /* viền xám đậm */
+    border-radius: 6px;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+#bmi .form-group input::placeholder {
+    color: #7d7d7d;
+}
+
+/* Focus style */
+#bmi .form-group input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
+}
+
+/* BUTTON */
+#bmi #bmi-form button {
+    padding: 12px 24px;
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 200px;
+    margin: 0 auto;
+    display: block;
+    transition: 0.2s;
+}
+
+#bmi #bmi-form button:hover {
+    background-color: #1d4ed8;
+}
+
+/* RESULT BOX */
+#bmi .bmi-result {
+    margin-top: 32px;
+    font-family: 'Verdana', sans-serif;
+}
+
+#bmi .bmi-result.hidden {
+    display: none;
+}
+
+#bmi .result-box {
+    background-color: #111; /* nền đen */
+    padding: 24px;
+    border-radius: 8px;
+    border: 1px solid #2d2d2d;
+}
+
+#bmi .result-box h3 {
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 16px;
+}
+
+#bmi .result-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+#bmi .result-row span:first-child {
+    color: #d1d5db;
+    font-size: 16px;
+}
+
+#bmi #bmi-value {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 700;
+    color: #3b82f6;
+}
+
+#bmi #bmi-message {
+    color: #d1d5db;
+    font-size: 16px;
+}
+
+/* IMAGE SIDE */
+#bmi .bmi-image {
+    position: relative;
+}
+
+#bmi .bmi-image img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Overlay – Glassmorphism */
+#bmi .image-overlay {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    background-color: rgba(255, 255, 255, 0.08); 
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 16px;
+    border-radius: 8px;
+    backdrop-filter: blur(6px);
+}
+
+#bmi .image-overlay h3 {
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 6px;
+}
+
+#bmi .image-overlay p {
+    font-size: 16px;
+    color: #d1d5db;
+}
+
+
+/* SECTION Đánh giá - DARK MODE */
+.testimonial-section {
+    padding: 5px 0;
+    background: #0b0b0b;
+    color: #fff;
+    position: relative;
+}
+
+/* HEADER */
+.testimonial-header {
+    margin-bottom: 50px;
+    text-align: center;
+    width: 100%;
+}
+
+.testimonial-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.testimonial-header h2 {
+    font-size: 40px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.testimonial-header p {
+    color: #d1d5db;
+}
+
+/* ROW SLIDER */
+.testimonial-row {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px 5px 20px;
+    scrollbar-width: none;
+}
+
+.testimonial-row::-webkit-scrollbar {
+    display: none;
+}
+
+/* Arrow buttons */
+.testimonial-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 20;
+    transition: 0.2s;
+}
+
+.testimonial-arrow:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.left-arrow {
+    left: 20px;
+}
+
+.right-arrow {
+    right: 20px;
+}
+
+.testimonial-arrow i {
+    font-size: 16px;
+    color: #fff;
+}
+
+
+/* CARD ITEM */
+/* CARD ITEM */
+.testimonial-item {
+    min-width: 260px;       /* ⭐ Nhỏ lại đáng kể */
+    max-width: 260px;       /* ⭐ Không cho giãn ra */
+    background: #111;
+    padding: 20px;
+    border-radius: 14px;
+    border: 1px solid #222;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    flex-shrink: 0;         
+}
+
+
+/* Avatar */
+.testimonial-avatar {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 12px;
+    border: 2px solid #333;
+}
+
+/* Name + Role */
+.testimonial-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.testimonial-role {
+    font-size: 14px;
+    color: #bbb;
+    margin-bottom: 20px;
+}
+
+/* Text */
+.testimonial-text {
+    font-size: 16px;
+    line-height: 1.65;
+    color: #e5e5e5;
+    margin-bottom: 25px;
+}
+
+/* Quote */
+.testimonial-quote {
+    font-size: 28px;
+    color: #f2c94c;
+    font-weight: bold;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .testimonial-arrow {
+        display: none; /* Mobile vuốt ngang là đủ */
+    }
+    
+    .testimonial-item {
+        min-width: 85%;
+    }
+}
+
+/* SECTION */
+.benefit-section {
+    background: #000; /* nền đen */
+    padding: 25px 0;
+}
+
+/* CONTAINER */
+.benefit-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+/* ITEM */
+.benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #fff; /* chữ trắng */
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* ICON TRÒN */
+.benefit-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #fff; /* nền icon trắng */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.benefit-icon i {
+    color: #000; /* icon đen */
+    font-size: 20px;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .benefit-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+/* SECTION BACKGROUND */
+.voucher-section {
+     /* nền tối cho nổi bật */
+    padding: 20px 0;
+}
+
+/* CONTAINER */
+.voucher-container {
+    display: flex;
+    gap: 35px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* VOUCHER CARD */
+.voucher-card {
+    width: 280px;
+    background: linear-gradient(135deg, #3b82f6, #1e40af); /* 💙 gradient xanh dương */
+    color: #fff;
+    padding: 22px;
+    border-radius: 18px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+    transition: 0.2s ease;
+}
+
+/* Hover sang trọng */
+.voucher-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.45);
+}
+
+/* RĂNG CƯA 2 BÊN */
+.voucher-card::before,
+.voucher-card::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 22px;
+    height: 45px;
+    background: #fff; /* trùng màu nền */
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+.voucher-card::before { left: -11px; }
+.voucher-card::after { right: -11px; }
+
+/* TEXT */
+.voucher-content h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.voucher-content p {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 14px;
+}
+
+/* BUTTON */
+.copy-btn {
+    padding: 7px 14px;
+    background: #fff;
+    color: #1e40af;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.copy-btn:hover {
+    background: #dbe9ff;
+}
+
+/* BARCODE */
+.voucher-barcode {
+    width: 40px;
+    background: repeating-linear-gradient(
+        90deg,
+        #fff,
+        #fff 2px,
+        transparent 2px,
+        transparent 4px
+    );
+    border-left: 2px dashed rgba(255,255,255,0.7);
+}
