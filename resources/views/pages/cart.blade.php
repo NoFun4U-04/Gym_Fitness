@@ -42,7 +42,7 @@
     }
 
     .cart-breadcrumb a {
-        color: #00c896;
+        color: #34A4E0;
         text-decoration: none;
     }
 
@@ -184,7 +184,7 @@
         height: 32px;
         border-radius: 999px;
         border: none;
-        background-color: #00c896;
+        background-color: #34A4E0;
         color: #020617;
         font-weight: 700;
         display: flex;
@@ -231,7 +231,7 @@
 
     .cart-summary {
         flex: 0 0 380px;
-        background: radial-gradient(circle at top left, #00c896 0, #020617 42%, #020617 100%);
+        background: radial-gradient(circle at top left, #34A4E0 0, #020617 42%, #020617 100%);
         color: #e5e7eb;
         border-radius: 24px;
         padding: 22px 20px 20px;
@@ -309,9 +309,9 @@
     }
 
     .cart-btn-checkout {
-        background: #00c896;
+        background: #34A4E0;
         color: #020617;
-        box-shadow: 0 12px 30px rgba(16, 185, 129, 0.6);
+        box-shadow: 0 12px 30px rgba(37, 99, 235, 0.6);
     }
 
     .cart-btn-checkout:hover {
@@ -435,7 +435,7 @@
     }
 
     .btn-yes {
-        background: #00c896;
+        background: #34A4E0;
         color: #020617;
     }
 
@@ -654,7 +654,7 @@
                 <div class="cart-empty">
                     <h2>Giỏ hàng của bạn đang trống</h2>
                     <p>Tiếp tục mua sắm để thêm sản phẩm vào giỏ.</p>
-                    <a href="{{ url('/') }}" class="btn btn-success mt-3">
+                    <a href="{{ url('/') }}" class="btn btn-primary mt-3">
                         <i class="fa fa-arrow-left mr-1"></i> Về trang sản phẩm
                     </a>
                 </div>
