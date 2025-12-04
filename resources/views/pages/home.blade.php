@@ -4,7 +4,183 @@
 <link rel="stylesheet" href="{{ asset('frontend/css/home.css') }}">
 @endpush
 
+<style>
+    .top-sell-section {
+        padding: 40px 0 10px;
+    }
 
+    .top-sell-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 25px;
+    }
+
+    .top-sell-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 22px;
+    }
+
+    .sell-card {
+        position: relative;
+        background: #fff;
+        border-radius: 12px;
+        padding: 18px;
+        border: 1px solid #eee;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        transition: 0.25s;
+    }
+
+    .sell-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+    .wishlist-btn {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        border: none;
+        background: transparent;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .sell-img img {
+        width: 100%;
+        height: 180px;
+        object-fit: contain;
+    }
+
+    .sell-name {
+        font-size: 16px;
+        font-weight: 700;
+        margin: 10px 0;
+        color: #222;
+    }
+
+    .sell-price-box {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .sell-new {
+        color: #e60000;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .sell-old {
+        color: #999;
+        text-decoration: line-through;
+    }
+
+    .sell-percent {
+        background: #ff4d4f;
+        color: #fff;
+        font-size: 12px;
+        padding: 2px 6px;
+        border-radius: 6px;
+    }
+
+    .sell-bonus {
+        margin-top: 12px;
+    }
+
+    .bonus-line {
+        font-size: 14px;
+        margin-top: 4px;
+        color: #444;
+    }
+
+    .bonus-line i {
+        color: #ff4d4f;
+        margin-right: 6px;
+    }
+
+    .add-cart-btn {
+        position: absolute;
+        right: 18px;
+        bottom: 18px;
+        background: #ff4d4f;
+        color: #fff;
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        transition: .2s;
+    }
+
+    .add-cart-btn:hover {
+        background: #d63031;
+    }
+
+    .view-more-container {
+        margin-top: 18px;
+        text-align: center;
+    }
+
+    .view-more-btn {
+        font-size: 16px;
+        font-weight: 600;
+        color: #34A4E0;
+        text-decoration: none;
+    }
+
+    .view-more-btn:hover {
+        text-decoration: underline;
+    }
+
+    .top-sell-title {
+    font-size: 28px;
+    font-weight: 700;
+    animation: flashColor 1s infinite alternate;
+}
+
+/* Hiệu ứng đổi màu đỏ ↔ vàng */
+@keyframes flashColor {
+    0% {
+        color: #ff0000; /* đỏ */
+        text-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+    }
+    100% {
+        color: #ffd700; /* vàng */
+        text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+    }
+}
+.sale-banner {
+    width: 100%;
+    margin: 40px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.sale-banner-inner {
+    width: 100%;
+    max-width: 1400px; /* Cho banner không quá to trên màn lớn */
+    overflow: hidden;
+    border-radius: 14px;
+}
+
+.sale-banner-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 14px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+/* Hiệu ứng hover nhẹ */
+.sale-banner-img:hover {
+    transform: scale(1.02);
+}
+
+
+</style>
 <!-- HERO BANNER -->
 <section class="hero-banner">
 
@@ -66,67 +242,69 @@
     </div>
 </section>
 
-<!-- FEATURED PRODUCTS
-<section class="featured-section">
+<img src="/frontend/img/sale-40-banner.webp" alt="Sale 40%" class="sale-banner-img">
+
+
+<section class="top-sell-section">
     <div class="container">
-        <div class="section-title">
-            <h2>Sản phẩm nổi bật</h2>
+        <h2 class="top-sell-title">Top sản phẩm bán chạy!</h2>
+
+        <div class="top-sell-grid">
+            @foreach($featured as $sp)
+            <div class="sell-card">
+
+                <!-- Icon trái tim -->
+                <button class="wishlist-btn">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <a href="{{ route('detail', $sp->id_sanpham) }}" class="product-link">
+
+                    <!-- Ảnh -->
+                    <div class="sell-img">
+                        <img src="{{ asset($sp->anhsp) }}" alt="{{ $sp->tensp }}">
+                    </div>
+
+                    <!-- Tên -->
+                    <h3 class="sell-name">{{ $sp->tensp }}</h3>
+
+                    <!-- Giá -->
+                    <div class="sell-price-box">
+                        <span class="sell-new">{{ number_format($sp->giakhuyenmai) }}đ</span>
+
+                        @if($sp->giamgia)
+                        <span class="sell-old">{{ number_format($sp->giasp) }}đ</span>
+                        <span class="sell-percent">-{{ $sp->giamgia }}%</span>
+                        @endif
+                    </div>
+
+                    <!-- Hàng dưới: Ưu đãi -->
+                    <div class="sell-bonus">
+                        <div class="bonus-line">
+                            <i class="fa-solid fa-gift"></i> Giá tốt nhất thị trường
+                        </div>
+                        <div class="bonus-line">
+                            <i class="fa-solid fa-gift"></i> Quà tặng trị giá {{ rand(100,200) }}.000đ
+                        </div>
+                    </div>
+
+                </a>
+
+                <!-- Nút giỏ hàng -->
+                <a href="{{ route('add_to_cart', $sp->id_sanpham) }}"
+                   class="add-cart-btn js-add-to-cart" data-url="{{ route('add_to_cart', $sp->id_sanpham) }}">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+
+            </div>
+            @endforeach
         </div>
 
-        <div class="post-slider2">
-            <i class="fa fa-chevron-left prev2" aria-hidden="true"></i>
-            <i class="fa fa-chevron-right next2" aria-hidden="true"></i>
-            
-            <div class="post-wrapper2">
-                @foreach($alls->take(10) as $sanpham)
-                <div class="product-card">
-                    <a href="{{ route('detail', ['id' => $sanpham->id_sanpham]) }}">
-                        <div class="product-image">
-                            <img src="{{ asset($sanpham->anhsp) }}" alt="{{ $sanpham->tensp }}" onerror="this.src='{{ asset('frontend/upload/placeholder.jpg') }}'">
-                            
-                            <div class="product-badge">
-                                @if($sanpham->giamgia)
-                                    -{{ $sanpham->giamgia }}%
-                                @else
-                                    Mới
-                                @endif
-                            </div>
-
-                            <div class="product-actions">
-                                <a href="{{ route('add_to_cart', $sanpham->id_sanpham) }}" title="Thêm vào giỏ hàng" onclick="event.preventDefault(); event.stopPropagation();">
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                                </a>
-                                <a href="{{ route('detail', ['id' => $sanpham->id_sanpham]) }}" title="Xem chi tiết">
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="product-info">
-                            <div class="product-category">
-                                {{ $sanpham->danhmuc->ten_danhmuc }}
-                            </div>
-                            <div class="product-name">
-                                {{ $sanpham->tensp }}
-                            </div>
-                            <div class="product-price">
-                                <span class="price-old">
-                                    {{ number_format($sanpham->giasp, 0, ',', '.') }}₫
-                                </span>
-                                <span class="price-new">
-                                    {{ number_format($sanpham->giakhuyenmai, 0, ',', '.') }}₫
-                                </span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                @endforeach
-            </div>
+        <div class="view-more-container">
+            <a href="/viewAll" class="view-more-btn">Xem tất cả →</a>
         </div>
     </div>
-</section> -->
-
-<!-- BRAND SHOWCASE -->
+</section>
 <section class="brand-section" id="brands">
     <div class="container">
 
@@ -163,332 +341,13 @@
 </section>
 
 
-<!-- GUCCI COLLECTION -->
-<section class="home-collection home-collection--gucci" id="gucci-collection">
-    <div class="container">
-        <div class="home-collection-header">
-            <div class="home-collection-text">
-                <span class="home-pill home-pill--gucci">GUCCI</span>
-                <h2 class="home-collection-title">Túi Gucci</h2>
-                <p class="home-collection-subtitle">
-                    Những thiết kế mang đậm dấu ấn Ý với đường nét mạnh mẽ, hiện đại.
-                </p>
-            </div>
-            <a href="{{ route('viewAll', ['danhmuc_id' => 9]) }}" class="home-view-all">
-                Xem tất cả
-                <i class="fa-solid fa-arrow-right"></i>
-            </a>
-        </div>
 
-        <div class="home-collection-grid">
-            @foreach($gucciProducts as $product)
-            <article class="product-card product-card--collection">
-                <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}">
-                    <div class="product-image">
-                        <img src="{{ asset($product->anhsp) }}" onerror="this.src='{{ asset('frontend/upload/placeholder.jpg') }}'">
-
-                        <div class="product-actions">
-                            <button type="button"
-                                class="cart-inline js-add-to-cart"
-                                data-url="{{ route('add_to_cart', $product->id_sanpham) }}">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </button>
-                            <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}" title="Xem chi tiết">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="product-info">
-                        <div class="product-name">
-                            {{ $product->tensp }}
-                        </div>
-
-                        <div class="product-price-main">
-                            <span class="price-new">
-                                {{ number_format($product->giakhuyenmai, 0, ',', '.') }}₫
-                            </span>
-                        </div>
-
-                        @php
-                            $discount = 0;
-                            if (!empty($product->giamgia)) {
-                                $discount = $product->giamgia;
-                            } elseif (!empty($product->giasp) && !empty($product->giakhuyenmai) && $product->giakhuyenmai < $product->giasp) {
-                                $discount = round(100 - ($product->giakhuyenmai / $product->giasp * 100));
-                            }
-                        @endphp
-
-                        <div class="product-price-row">
-                            <span class="price-old">
-                                {{ number_format($product->giasp, 0, ',', '.') }}₫
-                            </span>
-
-                            @if($discount > 0)
-                                <span class="discount-inline">-{{ $discount }}%</span>
-                            @endif
-
-                            <a href="#"
-                               class="cart-inline js-add-to-cart"
-                               data-url="{{ route('add_to_cart', $product->id_sanpham) }}">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </a>
-                        </div>
-                    </div>
-                </a>
-            </article>
-            @endforeach
-        </div>
-
-    </div>
-</section>
-
-<!-- DIOR COLLECTION -->
-<section class="home-collection home-collection--dior" id="dior-collection">
-    <div class="container">
-        <div class="home-collection-header">
-            <div class="home-collection-text">
-                <span class="home-pill home-pill--dior">CHRISTIAN DIOR</span>
-                <h2 class="home-collection-title">Túi Christian Dior</h2>
-                <p class="home-collection-subtitle">
-                    Sự kết hợp hoàn hảo giữa tinh tế cổ điển và hơi thở hiện đại.
-                </p>
-            </div>
-            <a href="{{ route('viewAll', ['danhmuc_id' => 10]) }}" class="home-view-all">
-                Xem tất cả
-                <i class="fa-solid fa-arrow-right"></i>
-            </a>
-        </div>
-
-        <div class="home-collection-grid">
-            @foreach($diorProducts as $product)
-            <article class="product-card product-card--collection">
-                <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}">
-                    <div class="product-image">
-                        <img src="{{ asset($product->anhsp) }}" onerror="this.src='{{ asset('frontend/upload/placeholder.jpg') }}'">
-
-                        <div class="product-actions">
-                            <button type="button"
-                                class="cart-inline js-add-to-cart"
-                                data-url="{{ route('add_to_cart', $product->id_sanpham) }}">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </button>
-                            <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}" title="Xem chi tiết">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="product-info">
-                        <div class="product-name">
-                            {{ $product->tensp }}
-                        </div>
-
-                        <div class="product-price-main">
-                            <span class="price-new">
-                                {{ number_format($product->giakhuyenmai, 0, ',', '.') }}₫
-                            </span>
-                        </div>
-
-                        @php
-                            $discount = 0;
-                            if (!empty($product->giamgia)) {
-                                $discount = $product->giamgia;
-                            } elseif (!empty($product->giasp) && !empty($product->giakhuyenmai) && $product->giakhuyenmai < $product->giasp) {
-                                $discount = round(100 - ($product->giakhuyenmai / $product->giasp * 100));
-                            }
-                        @endphp
-
-                        <div class="product-price-row">
-                            <span class="price-old">
-                                {{ number_format($product->giasp, 0, ',', '.') }}₫
-                            </span>
-
-                            @if($discount > 0)
-                                <span class="discount-inline">-{{ $discount }}%</span>
-                            @endif
-
-                            <a href="{{ route('add_to_cart', $product->id_sanpham) }}"
-                               class="cart-inline"
-                               title="Thêm vào giỏ hàng"
-                               onclick="event.preventDefault(); event.stopPropagation(); window.location.href=this.href;">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </a>
-                        </div>
-                    </div>
-                </a>
-            </article>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-<!-- HERMÈS COLLECTION -->
-<section class="home-collection home-collection--hermes" id="hermes-collection">
-    <div class="container">
-        <div class="home-collection-header">
-            <div class="home-collection-text">
-                <span class="home-pill home-pill--hermes">HERMÈS</span>
-                <h2 class="home-collection-title">Túi Hermès</h2>
-                <p class="home-collection-subtitle">
-                    Biểu tượng của sự sang trọng vượt thời gian với chất liệu cao cấp.
-                </p>
-            </div>
-            <a href="{{ route('viewAll', ['danhmuc_id' => 11]) }}" class="home-view-all">
-                Xem tất cả
-                <i class="fa-solid fa-arrow-right"></i>
-            </a>
-        </div>
-
-        <div class="home-collection-grid">
-            @foreach($hermesProducts as $product)
-            <article class="product-card product-card--collection">
-                <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}">
-                    <div class="product-image">
-                        <img src="{{ asset($product->anhsp) }}" onerror="this.src='{{ asset('frontend/upload/placeholder.jpg') }}'">
-
-                        <div class="product-actions">
-                            <button type="button"
-                                class="cart-inline js-add-to-cart"
-                                data-url="{{ route('add_to_cart', $product->id_sanpham) }}">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </button>
-                            <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}" title="Xem chi tiết">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="product-info">
-                        <div class="product-name">
-                            {{ $product->tensp }}
-                        </div>
-
-                        <div class="product-price-main">
-                            <span class="price-new">
-                                {{ number_format($product->giakhuyenmai, 0, ',', '.') }}₫
-                            </span>
-                        </div>
-
-                        @php
-                            $discount = 0;
-                            if (!empty($product->giamgia)) {
-                                $discount = $product->giamgia;
-                            } elseif (!empty($product->giasp) && !empty($product->giakhuyenmai) && $product->giakhuyenmai < $product->giasp) {
-                                $discount = round(100 - ($product->giakhuyenmai / $product->giasp * 100));
-                            }
-                        @endphp
-
-                        <div class="product-price-row">
-                            <span class="price-old">
-                                {{ number_format($product->giasp, 0, ',', '.') }}₫
-                            </span>
-
-                            @if($discount > 0)
-                                <span class="discount-inline">-{{ $discount }}%</span>
-                            @endif
-
-                            <a href="{{ route('add_to_cart', $product->id_sanpham) }}"
-                               class="cart-inline"
-                               title="Thêm vào giỏ hàng"
-                               onclick="event.preventDefault(); event.stopPropagation(); window.location.href=this.href;">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </a>
-                        </div>
-                    </div>
-                </a>
-            </article>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-<!-- CHANEL COLLECTION -->
-<section class="home-collection home-collection--chanel" id="chanel-collection">
-    <div class="container">
-        <div class="home-collection-header">
-            <div class="home-collection-text">
-                <span class="home-pill home-pill--chanel">CHANEL</span>
-                <h2 class="home-collection-title">Túi Chanel</h2>
-                <p class="home-collection-subtitle">
-                    Những thiết kế mang vẻ đẹp cổ điển, sang trọng và đầy nữ tính.
-                </p>
-            </div>
-            <a href="{{ route('viewAll', ['danhmuc_id' => 12]) }}" class="home-view-all">
-                Xem tất cả
-                <i class="fa-solid fa-arrow-right"></i>
-            </a>
-        </div>
-
-        <div class="home-collection-grid">
-            @foreach($chanelProducts as $product)
-            <article class="product-card product-card--collection">
-                <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}">
-                    <div class="product-image">
-                        <img src="{{ asset($product->anhsp) }}" onerror="this.src='{{ asset('frontend/upload/placeholder.jpg') }}'">
-
-                        <div class="product-actions">
-                            <button type="button"
-                                class="cart-inline js-add-to-cart"
-                                data-url="{{ route('add_to_cart', $product->id_sanpham) }}">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </button>
-                            <a href="{{ route('detail', ['id' => $product->id_sanpham]) }}" title="Xem chi tiết">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="product-info">
-                        <div class="product-name">
-                            {{ $product->tensp }}
-                        </div>
-
-                        <div class="product-price-main">
-                            <span class="price-new">
-                                {{ number_format($product->giakhuyenmai, 0, ',', '.') }}₫
-                            </span>
-                        </div>
-
-                        @php
-                            $discount = 0;
-                            if (!empty($product->giamgia)) {
-                                $discount = $product->giamgia;
-                            } elseif (!empty($product->giasp) && !empty($product->giakhuyenmai) && $product->giakhuyenmai < $product->giasp) {
-                                $discount = round(100 - ($product->giakhuyenmai / $product->giasp * 100));
-                            }
-                        @endphp
-
-                        <div class="product-price-row">
-                            <span class="price-old">
-                                {{ number_format($product->giasp, 0, ',', '.') }}₫
-                            </span>
-
-                            @if($discount > 0)
-                                <span class="discount-inline">-{{ $discount }}%</span>
-                            @endif
-
-                            <a href="{{ route('add_to_cart', $product->id_sanpham) }}"
-                               class="cart-inline"
-                               title="Thêm vào giỏ hàng"
-                               onclick="event.preventDefault(); event.stopPropagation(); window.location.href=this.href;">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </a>
-                        </div>
-                    </div>
-                </a>
-            </article>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-@endsection
 <div id="cart-toast" class="cart-toast">
     <span class="cart-toast__text"></span>
 </div>
 @push('scripts')
 <script src="{{ asset('frontend/script/about.js') }}"></script>
+@endpush
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const buttons = document.querySelectorAll('.js-add-to-cart');
@@ -533,6 +392,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-@endpush
+
+@endsection
 
 

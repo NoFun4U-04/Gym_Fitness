@@ -17,10 +17,7 @@
     <link rel="stylesheet" href="/frontend/css/bsgrid.min.css" />
     <link rel="stylesheet" href="/frontend/css/style.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" />
-<<<<<<< HEAD
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-=======
->>>>>>> 97c8d5e14d4cd826226a3242ba1e5b184188d4c4
 
     <!-- header-footer -->
     <link rel="stylesheet" href="/frontend/css/main.css" />
@@ -101,9 +98,19 @@
                             <a href="{{ URL::to('/services') }}" class="hover-a">Giới thiệu </a>
                         </li>
                         <li class="dropdown {{ request()->is('viewAll*') ? 'active' : '' }}" id="sanpham-dropdown">
-                            <a href="{{ URL::to('/viewAll') }}" class="hover-a">Sản phẩm </a>
-                            <ul class="dropdown-menu" id="dropdown-danhmuc"></ul>
+                            <a href="javascript:void(0)" class="hover-a">Sản phẩm </a>
+                            <ul class="dropdown-menu" id="dropdown-danhmuc">
+                                @foreach($categories as $dm)
+                                    <li>
+                                        <a href="{{ url('/viewAll?category=' . $dm->id_danhmuc) }}" class="dropdown-item">
+                                            {{ $dm->ten_danhmuc }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+
                         </li>
+
                         <li class="dropdown {{ request()->is('dich-vu/*') ? 'active' : '' }}">
                             <a href="javascript:void(0)" class="hover-a">Dịch vụ </a>
                             <ul class="dropdown-menu dropdown-services">

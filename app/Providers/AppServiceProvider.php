@@ -29,6 +29,8 @@ use App\Repositories\DangkidichvuRepository;
 
 
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
+use App\Models\Danhmuc;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -50,10 +52,16 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
+
     public function boot(): void
     {
         if (env('APP_ENV') !== 'local') {
             URL::forceScheme('https');
         }
+
+        View::composer('*', function ($view) {
+            $view->with('categories', Danhmuc::all());
+        });
     }
+
 }

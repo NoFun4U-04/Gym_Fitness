@@ -22,18 +22,17 @@ class HomeController extends Controller
     {
         $alls           = $this->productRepository->allProduct();
         $sanphams       = $this->productRepository->featuredProducts();
-        $gucciProducts  = $this->productRepository->getProductsByCategory(9);
-        $diorProducts   = $this->productRepository->getProductsByCategory(10);
-        $hermesProducts = $this->productRepository->getProductsByCategory(11);
-        $chanelProducts = $this->productRepository->getProductsByCategory(12);
 
+        $featured = Sanpham::where('noi_bat', 1)
+        ->where('trang_thai', 1)   // nếu có trạng thái active
+        ->take(8)
+        ->get();
+
+       
         return view('pages.home', compact(
             'alls',
             'sanphams',
-            'gucciProducts',
-            'diorProducts',
-            'hermesProducts',
-            'chanelProducts'
+            'featured'
         ));
     }
 

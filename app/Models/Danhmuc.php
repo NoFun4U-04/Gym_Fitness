@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Danhmuc extends Model
 {
+    
     /**
      * The database table used by the model.
      *
@@ -82,6 +83,7 @@ class Danhmuc extends Model
     {
         return $this->belongsTo(Danhmuc::class, 'parent_category_id', 'id_danhmuc');
     }
+
 
 }
 
