@@ -178,7 +178,7 @@
 <table class="table table-hover product-table">
     <thead>
         <tr>
-            <th>ẢNH</th>
+            <!-- <th>ẢNH</th> -->
             <th>TÊN SẢN PHẨM</th>
             <th>GIÁ BÁN</th>
             <th>GIẢM GIÁ</th>
@@ -194,7 +194,7 @@
         @foreach($sanphams as $sp)
         <tr>
 
-            <td><img src="/{{ $sp->anhsp }}" class="product-img"></td>
+            <!-- <td><img src="/{{ $sp->anhsp }}" class="product-img"></td> -->
 
             <td class="fw-bold">{{ $sp->tensp }}</td>
 

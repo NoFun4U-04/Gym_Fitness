@@ -18,6 +18,12 @@ class DanhmucRepository implements IDanhmucRepository{
         return Danhmuc::where('status', 1)->get();
     }
 
+    public function getAllDanhmuc()
+    {
+        return Danhmuc::where('status', 1)
+                        ->orderBy('ten_danhmuc', 'ASC')
+                        ->get(['id_danhmuc', 'ten_danhmuc']);
+    }
     // THÊM DANH MỤC
     public function storeDanhmuc($data)
     {

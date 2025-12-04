@@ -153,6 +153,7 @@ Route::prefix('/')->middleware('admin.login')->group(function () {
     Route::put('/admin/danhmuc/update/{danhmuc}', [DanhmucController::class, 'update'])->name('danhmuc.update');
     Route::delete('/admin/danhmuc/{danhmuc}/destroy', [DanhmucController::class, 'destroy'])->name('danhmuc.destroy');
     Route::post('/admin/danhmuc/{id}/restore', [DanhmucController::class, 'restore'])->name('danhmuc.restore');
+    Route::get('/danhmuc', [DanhmucController::class, 'getDanhmucs']);
 
     Route::get('/admin/orders/pending',  [OrderController::class,'Pending'])->name('orders.pending');
     Route::get('/admin/orders/shipping', [OrderController::class,'Shipping'])->name('orders.shipping');

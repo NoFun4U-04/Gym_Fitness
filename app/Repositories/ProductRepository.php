@@ -49,19 +49,8 @@ class ProductRepository implements IProductRepository
 
     public function updateProduct($data, $id)
     {
-        $product = Sanpham::findOrFail($id);
+        unset($data['anhsp']);
 
-        if (isset($data['anhsp']) && $data['anhsp'] instanceof \Illuminate\Http\UploadedFile) {
-
-            $file = $data['anhsp'];
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move('frontend/upload', $filename);
-
-            $data['anhsp'] = 'frontend/upload/' . $filename;
-
-        } else {
-            $data['anhsp'] = $product->anhsp;
-        }
         return Sanpham::where('id_sanpham', $id)->update($data);
     }
 

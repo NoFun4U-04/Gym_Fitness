@@ -310,7 +310,6 @@
                 .then(response => response.json())
                 .then(data => {
                     const ul = document.getElementById('dropdown-danhmuc');
-                    // Quan trọng: Làm rỗng nội dung của UL trước khi thêm mới
                     ul.innerHTML = '';
                     data.forEach(dm => {
                         const li = document.createElement('li');

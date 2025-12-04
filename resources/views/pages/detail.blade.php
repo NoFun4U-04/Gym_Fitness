@@ -2,22 +2,29 @@
 @section('content')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
-    /* General & Reset */
     body {
-        font-family: 'Inter', sans-serif; /* A more modern, clean font */
-        background-color: #f0f2f5; /* Light grey background */
+        font-family: 'Inter', sans-serif;
+        background-color: #f0f2f5;
         color: #333;
         line-height: 1.6;
     }
 
-    h1, h2, h3, h4, h5, h6 {
-        font-family: 'Montserrat', sans-serif; /* A strong, modern heading font */
-        color: #2c3e50; /* Darker tone for headings */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Montserrat', sans-serif;
+        /* A strong, modern heading font */
+        color: #2c3e50;
+        /* Darker tone for headings */
     }
 
     a {
         text-decoration: none;
-        color: #3498db; /* A vibrant blue for links */
+        color: #3498db;
+        /* A vibrant blue for links */
         transition: color 0.3s ease;
     }
 
@@ -34,8 +41,10 @@
 
     /* Layout Container */
     .body-container {
-        padding-top: 80px; /* More space from top */
-        max-width: 1280px; /* Slightly wider container */
+        padding-top: 80px;
+        /* More space from top */
+        max-width: 1280px;
+        /* Slightly wider container */
         margin: 0 auto;
         padding-left: 20px;
         padding-right: 20px;
@@ -90,19 +99,23 @@
         border-radius: 12px;
         padding: 25px;
         box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.03);
-        overflow: hidden; /* Ensure image zoom stays within bounds */
+        overflow: hidden;
+        /* Ensure image zoom stays within bounds */
     }
 
     .product-image-area img {
         max-width: 100%;
         height: auto;
         border-radius: 10px;
-        transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out; /* Add opacity transition */
+        transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+        /* Add opacity transition */
     }
 
     .product-image-area img:hover {
-        transform: scale(1.15); /* More noticeable zoom effect on hover (from 1.05 to 1.15) */
-        opacity: 0.8; /* Slightly dim the image on hover */
+        transform: scale(1.15);
+        /* More noticeable zoom effect on hover (from 1.05 to 1.15) */
+        opacity: 0.8;
+        /* Slightly dim the image on hover */
     }
 
     .product-info-area {
@@ -120,7 +133,8 @@
 
     .product-short-description {
         font-size: 1.05rem;
-        color: #7f8c8d; /* Muted grey */
+        color: #7f8c8d;
+        /* Muted grey */
         line-height: 1.7;
         margin-bottom: 25px;
     }
@@ -132,15 +146,18 @@
 
     .old-price {
         font-size: 1.1rem;
-        color: #95a5a6; /* Lighter grey for old price */
+        color: #95a5a6;
+        /* Lighter grey for old price */
         text-decoration: line-through;
         margin-bottom: 8px;
         font-weight: 500;
     }
 
     .current-price {
-        font-size: 2.5rem; /* Much larger for impact */
-        color: #e74c3c; /* Striking red for current price */
+        font-size: 2.5rem;
+        /* Much larger for impact */
+        color: #e74c3c;
+        /* Striking red for current price */
         font-weight: 800;
         display: block;
     }
@@ -158,12 +175,14 @@
 
     .quantity-count {
         font-weight: 700;
-        color: #27ae60; /* Green for available stock */
+        color: #27ae60;
+        /* Green for available stock */
     }
 
     .product-action-buttons {
         display: flex;
-        gap: 20px; /* More space between buttons */
+        gap: 20px;
+        /* More space between buttons */
         margin-top: 30px;
     }
 
@@ -178,13 +197,16 @@
         text-align: center;
         flex: 1;
         font-size: 1.1rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for buttons */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        /* Subtle shadow for buttons */
         /* Make text contrast for better readability on hover */
-        color: #fff; /* Default text color */
+        color: #fff;
+        /* Default text color */
     }
 
     .add-to-cart-btn {
-        background-color: #3498db; /* Blue for add to cart */
+        background-color: #3498db;
+        /* Blue for add to cart */
         border: 2px solid #3498db;
     }
 
@@ -193,11 +215,13 @@
         border-color: #2980b9;
         transform: translateY(-3px);
         box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
-        color: #fff; /* Ensure text remains white for contrast */
+        color: #fff;
+        /* Ensure text remains white for contrast */
     }
 
     .buy-now-btn {
-        background-color: #2ecc71; /* Green for buy now */
+        background-color: #2ecc71;
+        /* Green for buy now */
         border: 2px solid #2ecc71;
     }
 
@@ -206,11 +230,13 @@
         border-color: #27ae60;
         transform: translateY(-3px);
         box-shadow: 0 8px 20px rgba(46, 204, 113, 0.4);
-        color: #fff; /* Ensure text remains white for contrast */
+        color: #fff;
+        /* Ensure text remains white for contrast */
     }
 
     .out-of-stock-message {
-        color: #e74c3c !important; /* Red for out of stock */
+        color: #e74c3c !important;
+        /* Red for out of stock */
         font-size: 1.2rem !important;
         margin-top: 20px;
         font-weight: 600;
@@ -238,7 +264,8 @@
         transform: translateX(-50%);
         width: 80px;
         height: 5px;
-        background-color: #3498db; /* Blue underline */
+        background-color: #3498db;
+        /* Blue underline */
         border-radius: 3px;
     }
 
@@ -277,11 +304,16 @@
         padding: 10px 0;
         font-size: 1rem;
         transition: color 0.3s ease, text-decoration 0.3s ease;
-        display: block; /* Ensure it takes full width for margin auto to work */
-        margin-top: 15px; /* Add some space above the button */
-        margin-left: auto; /* Center button */
-        margin-right: auto; /* Center button */
-        width: fit-content; /* Make button only as wide as its content for centering */
+        display: block;
+        /* Ensure it takes full width for margin auto to work */
+        margin-top: 15px;
+        /* Add some space above the button */
+        margin-left: auto;
+        /* Center button */
+        margin-right: auto;
+        /* Center button */
+        width: fit-content;
+        /* Make button only as wide as its content for centering */
     }
 
     .toggle-description-btn:hover {
@@ -382,16 +414,19 @@
     }
 
     .comment-entry:hover {
-        transform: translateY(-5px); /* More noticeable lift on hover */
+        transform: translateY(-5px);
+        /* More noticeable lift on hover */
     }
 
     .comment-avatar {
-        width: 60px; /* Larger avatar */
+        width: 60px;
+        /* Larger avatar */
         height: 60px;
         border-radius: 50%;
         margin-right: 20px;
         object-fit: cover;
-        border: 3px solid #ecf0f1; /* Light border */
+        border: 3px solid #ecf0f1;
+        /* Light border */
         flex-shrink: 0;
     }
 
@@ -403,7 +438,8 @@
         display: flex;
         align-items: center;
         margin-bottom: 10px;
-        gap: 12px; /* Space between username and time */
+        gap: 12px;
+        /* Space between username and time */
     }
 
     .comment-username {
@@ -422,7 +458,8 @@
         color: #495057;
         line-height: 1.7;
         margin-bottom: 15px;
-        word-wrap: break-word; /* Ensure long words break */
+        word-wrap: break-word;
+        /* Ensure long words break */
     }
 
     .comment-action-buttons {
@@ -441,9 +478,12 @@
         padding: 5px 0;
         transition: color 0.3s ease, text-decoration 0.3s ease;
     }
+
     .comment-action-buttons button.btn-delete {
-        color: #e74c3c; /* Red for delete button */
+        color: #e74c3c;
+        /* Red for delete button */
     }
+
     .comment-action-buttons button.btn-delete:hover {
         color: #c0392b;
     }
@@ -584,7 +624,8 @@
             font-size: 1.6rem;
         }
 
-        .add-to-cart-btn, .buy-now-btn {
+        .add-to-cart-btn,
+        .buy-now-btn {
             font-size: 1rem;
             padding: 12px 20px;
         }
@@ -616,6 +657,7 @@
             font-size: 0.95rem;
         }
     }
+
     .product-image-area {
         position: relative;
         background-color: #fdfdfd;
@@ -626,13 +668,13 @@
     }
 
     .product-image-area {
-        flex: 1.2; 
+        flex: 1.2;
     }
 
     .product-image-area .product-slider {
         position: relative;
         width: 100%;
-        height: 500px;        
+        height: 500px;
         overflow: hidden;
         border-radius: 10px;
     }
@@ -642,8 +684,8 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: 100%;        
-        object-fit: cover;     
+        height: 100%;
+        object-fit: cover;
         opacity: 0;
         transition: opacity 0.5s ease, transform 0.4s ease, filter 0.4s ease;
     }
@@ -679,6 +721,70 @@
         cursor: pointer;
     }
 
+    .preview-modal {
+        display: none;
+        position: fixed;
+        z-index: 99999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(4px);
+    }
+
+    .preview-modal img {
+        width: 80%;
+        max-height: 80vh;
+        object-fit: contain;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .preview-slide {
+        display: none;
+    }
+
+    .preview-slide.active {
+        display: block;
+    }
+
+    .close-preview {
+        position: absolute;
+        top: 30px;
+        right: 40px;
+        color: #fff;
+        font-size: 40px;
+        cursor: pointer;
+    }
+
+    .prev-btn,
+    .next-btn {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        color: #fff;
+        font-size: 50px;
+        font-weight: bold;
+        padding: 10px;
+        user-select: none;
+    }
+
+    .prev-btn {
+        left: 30px;
+    }
+
+    .next-btn {
+        right: 30px;
+    }
+
+    .prev-btn:hover,
+    .next-btn:hover,
+    .close-preview:hover {
+        color: #ff4757;
+    }
 </style>
 
 <div class="body-container">
@@ -690,35 +796,47 @@
         <div class="product-image-area mr-2">
             <div class="product-slider">
                 @php
-                    $images = $sanpham->images ?? collect();
+                $images = $sanpham->images ?? collect();
                 @endphp
 
                 @if($images->isNotEmpty())
-                    @foreach($images as $index => $img)
-                        <img
-                            class="slide {{ $index === 0 ? 'active' : '' }}"
-                            src="{{ asset($img->duong_dan) }}"
-                            alt="{{ $sanpham->tensp }}"
-                        >
-                    @endforeach
+                @foreach($images as $index => $img)
+                <img
+                    class="slide {{ $index === 0 ? 'active' : '' }}"
+                    src="{{ asset($img->duong_dan) }}"
+                    alt="{{ $sanpham->tensp }}">
+                @endforeach
                 @else
-                    {{-- fallback nếu chưa có hình trong bảng images --}}
-                    <img
-                        class="slide active"
-                        src="{{ asset('frontend/upload/placeholder.jpg') }}"
-                        alt="{{ $sanpham->tensp }}">
+                {{-- fallback nếu chưa có hình trong bảng images --}}
+                <img
+                    class="slide active"
+                    src="{{ asset('frontend/upload/placeholder.jpg') }}"
+                    alt="{{ $sanpham->tensp }}">
                 @endif
 
                 <div class="product-slider-dots">
                     @php $total = max($images->count(), 1); @endphp
                     @for($i = 0; $i < $total; $i++)
                         <span
-                            class="product-slider-dot {{ $i === 0 ? 'active' : '' }}"
-                            data-index="{{ $i }}">
+                        class="product-slider-dot {{ $i === 0 ? 'active' : '' }}"
+                        data-index="{{ $i }}">
                         </span>
-                    @endfor
+                        @endfor
                 </div>
             </div>
+        </div>
+        <div id="imagePreviewModal" class="preview-modal">
+            <span class="close-preview">&times;</span>
+
+            <div class="preview-slider">
+                @foreach($images as $index => $img)
+                <img class="preview-slide {{ $index === 0 ? 'active' : '' }}"
+                    src="{{ asset($img->duong_dan) }}">
+                @endforeach
+            </div>
+
+            <a class="prev-btn">&#10094;</a>
+            <a class="next-btn">&#10095;</a>
         </div>
         <div class="product-info-area">
             <h3>{{ $sanpham->tensp }}</h3>
@@ -731,23 +849,23 @@
 
             <div class="product-price-display">
                 @if ($sanpham->giakhuyenmai < $sanpham->giasp && $sanpham->giakhuyenmai > 0)
-                <div class="old-price">
-                    <span class="Price">
-                        <bdi>{{ number_format($sanpham->giasp, 0, ',', '.') }} VNĐ</bdi>
-                    </span>
-                </div>
-                <div class="current-price">
-                    <span class="Price">
-                        <bdi>{{ number_format($sanpham->giakhuyenmai, 0, ',', '.') }} VNĐ</bdi>
-                    </span>
-                </div>
-                @else
-                <div class="current-price"> {{-- Removed inline style, let CSS handle it --}}
-                    <span class="Price">
-                        <bdi>{{ number_format($sanpham->giasp, 0, ',', '.') }} VNĐ</bdi>
-                    </span>
-                </div>
-                @endif
+                    <div class="old-price">
+                        <span class="Price">
+                            <bdi>{{ number_format($sanpham->giasp, 0, ',', '.') }} VNĐ</bdi>
+                        </span>
+                    </div>
+                    <div class="current-price">
+                        <span class="Price">
+                            <bdi>{{ number_format($sanpham->giakhuyenmai, 0, ',', '.') }} VNĐ</bdi>
+                        </span>
+                    </div>
+                    @else
+                    <div class="current-price"> {{-- Removed inline style, let CSS handle it --}}
+                        <span class="Price">
+                            <bdi>{{ number_format($sanpham->giasp, 0, ',', '.') }} VNĐ</bdi>
+                        </span>
+                    </div>
+                    @endif
             </div>
 
             <form action="" method="POST">
@@ -844,29 +962,27 @@
             const recaptchaDiv = document.querySelector('.g-recaptcha');
             let hasViewedComments = false;
 
-            // --- Description "Xem thêm" button logic ---
             const motaTextarea = document.getElementById("mota");
             const toggleMotaBtn = document.getElementById("toggleMotaBtn");
-            let expandedDescription = false; // Add this variable back
+            let expandedDescription = false; 
 
             function adjustMotaTextarea() {
-                motaTextarea.style.height = 'auto'; // Reset height
+                motaTextarea.style.height = 'auto'; t
                 const lineHeight = parseFloat(getComputedStyle(motaTextarea).lineHeight);
                 const naturalHeight = motaTextarea.scrollHeight;
 
-                // Set a max height for initial display (e.g., 4 lines)
                 const initialMaxHeight = lineHeight * 4;
 
                 if (naturalHeight > initialMaxHeight) {
-                    toggleMotaBtn.style.display = "block"; /* Changed to block for centering with margin auto */
-                    toggleMotaBtn.style.width = "fit-content"; /* Allow button to shrink to content width */
-                    motaTextarea.style.height = initialMaxHeight + 'px'; // Collapse to 4 lines
+                    toggleMotaBtn.style.display = "block"; 
+                    toggleMotaBtn.style.width = "fit-content"; 
+                    motaTextarea.style.height = initialMaxHeight + 'px'; 
                     motaTextarea.style.overflowY = 'hidden';
                     toggleMotaBtn.textContent = "Xem thêm";
                     expandedDescription = false;
                 } else {
                     toggleMotaBtn.style.display = "none";
-                    motaTextarea.style.height = naturalHeight + 'px'; // Adjust to fit content
+                    motaTextarea.style.height = naturalHeight + 'px'; 
                     motaTextarea.style.overflowY = 'hidden';
                 }
             }
@@ -894,7 +1010,9 @@
                     hasViewedComments = true;
                     observer.disconnect(); // Stop observing once viewed
                 }
-            }, { threshold: 0.1 });
+            }, {
+                threshold: 0.1
+            });
             observer.observe(commentsList);
 
             let commentTimes = []; // Store timestamps of comments sent
@@ -1129,10 +1247,9 @@
                         target.classList.remove('btn-save');
                         target.classList.add('btn-edit');
                         cancelBtn.remove();
-                        target.onclick = originalTargetOnClick; // Restore original handler
+                        target.onclick = originalTargetOnClick; 
                     });
 
-                    // Set the new click handler for 'Save'
                     target.onclick = function() {
                         const newContent = textarea.value.trim();
                         if (!newContent) {
@@ -1169,7 +1286,7 @@
                                     target.classList.remove('btn-save');
                                     target.classList.add('btn-edit');
                                     cancelBtn.remove();
-                                    target.onclick = originalTargetOnClick; // Restore original handler
+                                    target.onclick = originalTargetOnClick;
                                     Swal.fire({
                                         icon: 'success',
                                         title: 'Thành công',
@@ -1209,7 +1326,7 @@
 
         sliders.forEach((slider) => {
             const slides = slider.querySelectorAll('img.slide');
-            const dots   = slider.querySelectorAll('.product-slider-dot');
+            const dots = slider.querySelectorAll('.product-slider-dot');
 
             if (slides.length === 0) return;
 
@@ -1255,6 +1372,50 @@
                 });
             }
         });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        const modal = document.getElementById("imagePreviewModal");
+        const closeBtn = document.querySelector(".close-preview");
+        const previewSlides = document.querySelectorAll(".preview-slide");
+        const prevBtn = document.querySelector(".prev-btn");
+        const nextBtn = document.querySelector(".next-btn");
+        const productSlides = document.querySelectorAll(".product-slider img.slide");
+
+        let currentIndex = 0;
+
+        productSlides.forEach((img, index) => {
+            img.addEventListener("click", () => {
+                currentIndex = index;
+                modal.style.display = "block";
+                showPreviewSlide(index);
+            });
+        });
+
+        function showPreviewSlide(i) {
+            previewSlides.forEach((s, idx) => {
+                s.classList.toggle("active", idx === i);
+            });
+        }
+
+        prevBtn.addEventListener("click", () => {
+            currentIndex = (currentIndex - 1 + previewSlides.length) % previewSlides.length;
+            showPreviewSlide(currentIndex);
+        });
+
+        nextBtn.addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % previewSlides.length;
+            showPreviewSlide(currentIndex);
+        });
+
+        closeBtn.addEventListener("click", () => modal.style.display = "none");
+
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) modal.style.display = "none";
+        });
+
     });
 </script>
 @if(session('success'))
