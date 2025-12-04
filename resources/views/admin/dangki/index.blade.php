@@ -102,7 +102,9 @@
     text-align: center;
     white-space: nowrap;
 }
-
+.promo-table tbody td:nth-child(2) {
+    text-align: left !important;
+}
 /* Cột Tên căn trái */
 .promo-table tbody td:first-child {
     text-align: left !important;

@@ -31,7 +31,10 @@
     padding: 14px 10px;
     vertical-align: middle;
 }
-
+.user-table tbody td:nth-child(2),
+.user-table tbody td:nth-child(1) {
+    text-align: left !important;
+}
 /* ===================== ROLE BADGE ===================== */
 .role-badge {
     padding: 6px 14px;
@@ -54,7 +57,6 @@
 .status-active { background:#d1fae5; color:#0f766e; }
 .status-out    { background:#fecaca; color:#b91c1c; }
 
-/* ===================== ACTION BUTTON (GIỐNG SẢN PHẨM) ===================== */
 .btn-action {
     padding: 7px 12px;
     border-radius: 8px;
