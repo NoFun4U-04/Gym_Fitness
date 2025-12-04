@@ -8,7 +8,7 @@
             border-radius: 12px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             text-align: center;
-            border-left: 5px solid #0d9488;
+            border-left: 5px solid #0ea5e9;
         }
         .km-card h2 {
             font-size: 28px;
@@ -197,7 +197,7 @@
     </div>
 
     <div class="col-md-2 text-end">
-        <a href="{{ route('khuyenmai.create') }}" class="btn btn-success px-4 py-2">
+        <a href="{{ route('khuyenmai.create') }}" class="btn btn-success px-4 py-2" style='background-color: #0ea5e9;'>
           Thêm khuyến mãi
         </a>
     </div>

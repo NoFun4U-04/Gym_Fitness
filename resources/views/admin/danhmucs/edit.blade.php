@@ -1,60 +1,172 @@
 @extends('admin_layout')
 @section('admin_content')
 
-<h1 class="h3 mb-3"><strong>Sửa danh mục</strong></h1>
+<style>
+/* ===================== FORM STYLE (CHUẨN KHUYẾN MÃI) ===================== */
 
-<div class="err">
-    @if($errors->any())
-    <ul>
-        @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-    @endif
+/* TITLE */
+.form-title {
+    font-size: 22px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #111;
+}
+
+.form-title i {
+    background: #0ea5e9;
+    padding: 8px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 18px;
+}
+
+/* LABEL */
+.form-label-custom {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #374151;
+}
+
+/* INPUT + SELECT */
+.form-input,
+.form-select-custom {
+    border-radius: 12px;
+    padding: 10px 14px;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    transition: .2s;
+}
+
+.form-input:focus,
+.form-select-custom:focus,
+.form-textarea:focus {
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 3px rgba(14,165,233,0.25);
+    outline: none;
+}
+
+/* TEXTAREA */
+.form-textarea {
+    border-radius: 12px;
+    padding: 12px;
+    height: 120px;
+    border: 1px solid #d1d5db;
+    resize: none;
+}
+
+/* GRID */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .grid-2 { grid-template-columns: 1fr; }
+}
+
+/* BUTTONS */
+.btn-cancel {
+    background: #e5e7eb;
+    color: #374151;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 12px 28px;
+    transition: .2s;
+    border: none;
+    text-decoration: none;
+}
+.btn-cancel:hover { background: #d1d5db;text-decoration: none; }
+
+.btn-submit {
+    background: linear-gradient(to right, #0284c7, #0ea5e9);
+    color: #fff;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 12px 28px;
+    border: none;
+    transition: .2s;
+}
+.btn-submit:hover {
+    opacity: .85;
+    transform: translateY(-1px);
+}
+</style>
+
+{{-- ======================== TITLE ======================== --}}
+<div class="form-title mb-3">
+    <i class="bi bi-folder-check"></i>
+    Chỉnh sửa danh mục
 </div>
 
+{{-- VALIDATION ERROR --}}
+@if($errors->any())
+<div class="alert alert-danger">
+    <ul class="mb-0">
+        @foreach($errors->all() as $err)
+            <li>{{ $err }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
+
+
+{{-- ======================== FORM EDIT ======================== --}}
 <form method="POST" action="{{ route('danhmuc.update', $danhmuc->id_danhmuc) }}">
     @csrf
     @method('PUT')
 
-    {{-- Tên danh mục --}}
-    <div class="mb-3">
-        <label class="form-label">Tên danh mục:</label>
-        <input type="text"
-               class="form-control"
-               name="ten_danhmuc"
-               value="{{ old('ten_danhmuc', $danhmuc->ten_danhmuc) }}"
-               required>
+    <div class="grid-2">
+
+        {{-- TÊN DANH MỤC --}}
+        <div>
+            <label class="form-label-custom">
+                Tên danh mục <span class="text-danger">*</span>
+            </label>
+            <input type="text" 
+                   name="ten_danhmuc"
+                   class="form-input form-control"
+                   value="{{ old('ten_danhmuc', $danhmuc->ten_danhmuc) }}"
+                   required>
+        </div>
+
+        {{-- DANH MỤC CHA --}}
+        <div>
+            <label class="form-label-custom">Danh mục cha</label>
+            <select name="danh_muc_cha" class="form-select-custom form-select">
+                <option value="">— Không chọn —</option>
+                @foreach($list_danhmucs as $dm)
+                    {{-- Nếu không muốn cho chọn chính nó làm cha thì bỏ qua --}}
+                    @if($dm->id_danhmuc != $danhmuc->id_danhmuc)
+                        <option value="{{ $dm->id_danhmuc }}"
+                            {{ old('danh_muc_cha', $danhmuc->parent_category_id) == $dm->id_danhmuc ? 'selected' : '' }}>
+                            {{ $dm->ten_danhmuc }}
+                        </option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
+
     </div>
 
-    {{-- Danh mục cha --}}
-    <div class="mb-3">
-        <label class="form-label">Danh mục cha:</label>
-        <select name="danh_muc_cha" class="form-select">
-            <option value="">Không có</option>
-
-            @foreach($list_danhmucs as $dm)
-                {{-- Không cho chọn chính nó --}}
-                @if($dm->id_danhmuc != $danhmuc->id_danhmuc)
-                    <option value="{{ $dm->id_danhmuc }}"
-                        {{ $dm->id_danhmuc == $danhmuc->parent_category_id ? 'selected' : '' }}>
-                        {{ $dm->ten_danhmuc }}
-                    </option>
-                @endif
-            @endforeach
-        </select>
+    {{-- MÔ TẢ --}}
+    <div class="mt-3">
+        <label class="form-label-custom">Mô tả</label>
+        <textarea name="mo_ta_danh_muc"
+                  class="form-textarea form-control">{{ old('mo_ta_danh_muc', $danhmuc->mo_ta_danh_muc) }}</textarea>
     </div>
 
-    {{-- Mô tả danh mục --}}
-    <div class="mb-3">
-        <label class="form-label">Mô tả:</label>
-        <textarea class="form-control" name="mo_ta_danh_muc" rows="3">{{ old('mo_ta_danh_muc', $danhmuc->description) }}</textarea>
+    {{-- BUTTONS --}}
+    <div class="d-flex justify-content-between mt-4">
+        <a href="{{ route('danhmuc.index') }}" class="btn-cancel">Hủy bỏ</a>
+        <button type="submit" class="btn-submit">Cập nhật</button>
     </div>
+    <input type="hidden" name="redirect" value="{{ request('redirect') }}">
 
-    <div>
-        <button type="submit" class="btn btn-primary">Cập nhật</button>
-        <a class="btn btn-secondary" href="{{ URL::to('/admin/danhmuc') }}">Hủy</a>
-    </div>
+
 </form>
 
 @endsection

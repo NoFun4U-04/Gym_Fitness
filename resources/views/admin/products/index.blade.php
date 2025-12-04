@@ -9,7 +9,7 @@
         border-radius: 12px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         text-align: center;
-        border-left: 5px solid #0d9488;
+        border-left: 5px solid #0ea5e9;
     }
     .sp-card h2 {
         font-size: 28px;
@@ -124,7 +124,7 @@
 
     <div class="col-md-4 text-end">
         <a href="{{ route('product.create') }}"
-           class="btn btn-success px-4 py-2">
+           class="btn btn-success px-4 py-2"style='background-color: #0ea5e9;'>
            Thêm sản phẩm
         </a>
     </div>

@@ -32,11 +32,11 @@ class ProductRepository implements IProductRepository
             ->get();
     }
 
-    public function findProduct($id)
+   public function findProduct($id)
     {
-        return Sanpham::findOrFail($id);
+        return Sanpham::with(['images', 'danhmuc'])->findOrFail($id);
     }
-
+    
     public function findByName($name)
     {
         return Sanpham::where('tensp', $name)->first();
@@ -51,7 +51,6 @@ class ProductRepository implements IProductRepository
     {
         $product = Sanpham::findOrFail($id);
 
-        // Nếu có upload ảnh mới
         if (isset($data['anhsp']) && $data['anhsp'] instanceof \Illuminate\Http\UploadedFile) {
 
             $file = $data['anhsp'];
@@ -61,7 +60,6 @@ class ProductRepository implements IProductRepository
             $data['anhsp'] = 'frontend/upload/' . $filename;
 
         } else {
-            // Không upload → giữ ảnh cũ
             $data['anhsp'] = $product->anhsp;
         }
         return Sanpham::where('id_sanpham', $id)->update($data);
@@ -85,10 +83,11 @@ class ProductRepository implements IProductRepository
 
     public function getAllByDanhMuc($request)
     {
-        $query = Sanpham::query()->where('trang_thai', 1);
+        $query = Sanpham::with(['images', 'danhmuc'])
+            ->where('trang_thai', 1);
 
-        if ($request->filled('danhmuc')) {
-            $query->where('id_danhmuc', $request->danhmuc);
+        if ($request->filled('danhmuc_id')) {
+            $query->where('id_danhmuc', $request->danhmuc_id);
         }
 
         return $query->paginate(12);

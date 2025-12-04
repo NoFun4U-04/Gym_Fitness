@@ -1,6 +1,14 @@
 @extends('layout')
 @section('content')
-
+<style>
+    .table-condensed img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 16px;
+        box-shadow: 0 6px 14px rgba(15, 23, 42, 0.25);
+    }
+</style>
 <form class="body" action="{{route('dathang')}}" method="POST" id="checkout" enctype="multipart/form-data">
     @csrf
     @foreach ($showusers as $key => $showuser)

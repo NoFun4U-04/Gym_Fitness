@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\admin\{AdminController, ProductController, DanhmucController, OrderController, KhuyenmaiController, UserController};
+use App\Http\Controllers\admin\{AdminController, ProductController, DanhmucController, OrderController, KhuyenmaiController, UserController, DangkidichvuController};
 
 use App\Http\Controllers\{
     HomeController,
@@ -12,7 +12,8 @@ use App\Http\Controllers\{
     ForgotPasswordController,
     ProfileController
 };
-
+use App\Repositories\DangkidichvuRepository;;
+use App\Http\Controllers\MailController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -109,6 +110,8 @@ Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'
 
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('forgot.send');
 
+Route::post('/mail', [MailController::class, 'subscribe'])
+        ->name('mail.subscribe');
 
 
 
@@ -141,9 +144,12 @@ Route::prefix('/')->middleware('admin.login')->group(function () {
     Route::delete('/admin/danhmuc/{danhmuc}/destroy', [DanhmucController::class, 'destroy'])->name('danhmuc.destroy');
     Route::post('/admin/danhmuc/{id}/restore', [DanhmucController::class, 'restore'])->name('danhmuc.restore');
 
-    Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('/admin/orders/edit/{orders}', [OrderController::class, 'edit'])->name('orders.edit');
-    Route::put('/admin/orders/update/{orders}', [OrderController::class, 'update'])->name('orders.update');
+    Route::get('/admin/orders/pending',  [OrderController::class,'Pending'])->name('orders.pending');
+    Route::get('/admin/orders/shipping', [OrderController::class,'Shipping'])->name('orders.shipping');
+    Route::get('/admin/orders/done',     [OrderController::class,'Done'])->name('orders.done');
+    Route::get('admin/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+    Route::put('admin/orders/update/{id}', [OrderController::class, 'update'])->name('orders.update');
+    Route::get('/admin/orders/{id}',      [OrderController::class,'show'])->name('orders.show');
 
     Route::get('/admin/khuyenmai', [KhuyenmaiController::class, 'index'])->name('khuyenmai.index');
     Route::get('/admin/khuyenmai/create', [KhuyenmaiController::class, 'create'])->name('khuyenmai.create');
@@ -154,5 +160,8 @@ Route::prefix('/')->middleware('admin.login')->group(function () {
     Route::post('/admin/khuyenmai/{id}/restore', [KhuyenmaiController::class, 'restore'])->name('khuyenmai.restore');
 
     Route::resource('/admin/users', UserController::class);
-    Route::post('/admin/users/{id}/restore', [DanhmucController::class, 'restore'])->name('users.restore');
+    Route::post('/admin/users/{id}/restore', [UserController::class, 'restore'])
+    ->name('users.restore');
+
+    Route::resource('/admin/dangki', DangkidichvuController::class);
 });

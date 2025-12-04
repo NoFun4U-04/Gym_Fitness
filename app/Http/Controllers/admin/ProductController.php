@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\Danhmuc;
 use App\Http\Controllers\Controller;
 use App\Repositories\IProductRepository;
+use App\Models\Image;
 
 class ProductController extends Controller
 {
     private $productRepository;
-
+    private const IMAGE_MAX_WIDTH  = 600;
+    private const IMAGE_MAX_HEIGHT = 600;
     public function __construct(IProductRepository $productRepository)
     {
         $this->productRepository = $productRepository;
@@ -117,46 +119,52 @@ class ProductController extends Controller
     /* ==================== STORE ==================== */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'tensp'           => 'required',
-            'sku'             => 'nullable|string',
-            'anhsp'           => 'required|image',
-            'giasp'           => 'required|numeric',
-            'giakhuyenmai'    => 'nullable|numeric',
-            'giamgia'         => 'nullable|numeric',
-            'gia_duoc_giam'   =>'nullable|numeric',
-            'mota'            => 'nullable',
-            'mota_ngan'       => 'nullable|string',
-            'soluong'         => 'required|numeric',
-            'id_danhmuc'      => 'required',
-            'noi_bat'          => 'numeric'
-        ]);
+    $validatedData = $request->validate([
+        'tensp'           => 'required',
+        'sku'             => 'nullable|string',
+        'anhsp'           => 'required',
+        'anhsp.*'         => 'image',
+        'giasp'           => 'required|numeric',
+        'giakhuyenmai'    => 'nullable|numeric',
+        'giamgia'         => 'nullable|numeric',
+        'gia_duoc_giam'   => 'nullable|numeric',
+        'mota'            => 'nullable',
+        'mota_ngan'       => 'nullable|string',
+        'soluong'         => 'required|numeric',
+        'id_danhmuc'      => 'required',
+        'noi_bat'         => 'numeric'
+    ]);
 
-        // Kiểm tra trùng tên
-        if ($this->productRepository->findByName($validatedData['tensp'])) {
-            return back()->withInput()->withErrors(['tensp' => 'Tên sản phẩm đã tồn tại']);
-        }
+    $files = $request->file('anhsp');
 
-        /* ----- XỬ LÝ UPLOAD + RESIZE ẢNH ----- */
-        $image = $request->file('anhsp');
-        $imageName = time() . '.' . $image->getClientOriginalExtension();
+    unset($validatedData['anhsp']);
+
+    $sanpham = $this->productRepository->storeProduct($validatedData);
+
+    if ($files) {
         $destination = public_path('frontend/upload');
-
         if (!file_exists($destination)) {
             mkdir($destination, 0755, true);
         }
 
-        $sourcePath = $image->getRealPath();
-        $destPath   = $destination . '/' . $imageName;
+        foreach ($files as $file) {
+            if (!$file) continue;
 
-        $this->resizeImageKeepRatio($sourcePath, $destPath);
+            $imageName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $sourcePath = $file->getRealPath();
+            $destPath   = $destination . '/' . $imageName;
 
-        $validatedData['anhsp'] = "frontend/upload/" . $imageName;
-        /* LƯU */
-        $this->productRepository->storeProduct($validatedData);
+            $this->resizeImageKeepRatio($sourcePath, $destPath, self::IMAGE_MAX_WIDTH, self::IMAGE_MAX_HEIGHT);
 
-        return redirect()->route('product.index')->with('success', 'Thêm sản phẩm thành công!');
+            \App\Models\Image::create([
+                'id_sanpham' => $sanpham->id_sanpham, 
+                'duong_dan'  => 'frontend/upload/' . $imageName,
+            ]);
+        }
     }
+
+    return redirect()->route('product.index')->with('success', 'Thêm sản phẩm thành công!');
+}
 
     /* ==================== EDIT ==================== */
     public function edit($id)
@@ -171,14 +179,15 @@ class ProductController extends Controller
     /* ==================== UPDATE ==================== */
     public function update($id, Request $request)
     {
-         $validatedData = $request->validate([
+        $validatedData = $request->validate([
             'tensp'           => 'required',
             'sku'             => 'nullable|string',
-            'anhsp'           => 'image',
+            'anhsp'           => 'nullable',     
+            'anhsp.*'         => 'image',     
             'giasp'           => 'required|numeric',
             'giakhuyenmai'    => 'nullable|numeric',
             'giamgia'         => 'nullable|numeric',
-            'gia_duoc_giam'   =>'nullable|numeric',
+            'gia_duoc_giam'   => 'nullable|numeric',
             'mota'            => 'nullable',
             'mota_ngan'       => 'nullable|string',
             'soluong'         => 'required|numeric',
@@ -187,26 +196,32 @@ class ProductController extends Controller
             'trang_thai'      => 'numeric'
         ]);
 
-        /* ----- ẢNH ----- */
-        if ($request->file('anhsp')) {
-            $image = $request->file('anhsp');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $files = $request->file('anhsp');
+        unset($validatedData['anhsp']);
 
-            $destination = public_path('frontend/upload');
-            if (!file_exists($destination)) mkdir($destination, 0755, true);
-
-            $source = $image->getRealPath();
-            $dest = $destination . '/' . $imageName;
-
-            $this->resizeImageKeepRatio($source, $dest);
-            $validatedData['anhsp'] = "frontend/upload/" . $imageName;
-        } else {
-            $validatedData['anhsp'] = $request->anhsp1; // giữ ảnh cũ
-        }
-
-
-        /* CẬP NHẬT */
         $this->productRepository->updateProduct($validatedData, $id);
+
+        if ($files) {
+            $destination = public_path('frontend/upload');
+            if (!file_exists($destination)) {
+                mkdir($destination, 0755, true);
+            }
+
+            foreach ($files as $file) {
+                if (!$file) continue;
+
+                $imageName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $sourcePath = $file->getRealPath();
+                $destPath   = $destination . '/' . $imageName;
+
+            $this->resizeImageKeepRatio($sourcePath, $destPath, self::IMAGE_MAX_WIDTH, self::IMAGE_MAX_HEIGHT);
+
+                Image::create([
+                    'id_sanpham' => $id,
+                    'duong_dan'  => 'frontend/upload/' . $imageName,
+                ]);
+            }
+        }
 
         return redirect()->route('product.index')->with('success', 'Cập nhật thành công!');
     }

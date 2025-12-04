@@ -16,13 +16,14 @@ return new class extends Migration
         Schema::create('sanpham', function (Blueprint $table) {
             $table->increments('id_sanpham');
             $table->string('tensp', 100)->nullable();
-            $table->string('anhsp')->nullable();
-            $table->integer('giasp')->nullable();
+            $table->decimal('giasp', 15, 2)->nullable();          
+            $table->decimal('gia_duoc_giam', 15, 2)->nullable();  
             $table->text('mota')->nullable();
-            $table->integer('giamgia')->nullable();
-            $table->integer('giakhuyenmai')->nullable();
+            $table->integer('giamgia')->nullable();               
+            $table->decimal('giakhuyenmai', 15, 2)->nullable();   
             $table->integer('soluong')->nullable();
             $table->integer('id_danhmuc')->index('fk_customer');
+            $table->timestamps();
         });
     }
 

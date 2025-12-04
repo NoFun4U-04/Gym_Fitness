@@ -1,540 +1,329 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta
-      name="description"
-      content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5"
-    />
-    <meta name="author" content="Admin Dashboard" />
-    <meta
-      name="keywords"
-      content="Admin Dashboard, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web"
-    />
-
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link rel="shortcut icon" type="image/png" href="/frontend/img/LOGO.png" />
-
-    <link rel="canonical" href="https://demo-basic.Admin Dashboard.io/" />
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <title>Admin Dashboard</title>
+    <link rel="shortcut icon" type="image/png" href="/frontend/img/LOGO.png" />
 
+    {{-- Bootstrap --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <link href="{{ asset('backend/css/app.css')}}" rel="stylesheet" />
-    <link href="{{ asset('backend/css/style.css')}}" rel="stylesheet" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <body>
-    <div class="wrapper">
-      <nav id="sidebar" class="sidebar js-sidebar">
+
+    {{-- Bootstrap Icons --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    {{-- App CSS --}}
+    <link href="{{ asset('backend/css/app.css')}}" rel="stylesheet"/>
+    <link href="{{ asset('backend/css/style.css')}}" rel="stylesheet"/>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {{-- Custom Font --}}
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet"/>
+</head>
+
+<body>
+<div class="wrapper">
+
+    {{-- =================== SIDEBAR =================== --}}
+    <nav id="sidebar" class="sidebar js-sidebar">
         <div class="sidebar-content js-simplebar">
-          <a class="sidebar-brand" href="{{URL::to('/dashboard')}}">
-            <span class="align-middle">SACHA</span>
-          </a>
 
-          <ul class="sidebar-nav">
-            <li class="sidebar-header">Pages</li>
-        
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{URL::to('/dashboard')}}">
-                    <i class="align-middle" data-feather="sliders"></i>
-                    <span class="align-middle">Dashboard</span>
-                </a>
-            </li>
+            {{-- Logo --}}
+            <a class="sidebar-brand d-flex align-items-center gap-2" href="{{ url('/dashboard') }}">
+                <span class="sidebar-logo-circle">
+                    <img src="/frontend/img/LOGO.png" alt="Logo">
+                </span>
+                <span class="fw-bold sidebar-logo-text">RISE </span>
+                <span class="fw-bold" style="color:#fff;">FITNESS</span>
+            </a>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{URL::to('/admin/orders')}}">
-                    <i class="align-middle me-2" data-feather="package"></i>
-                    <span class="align-middle">Đơn hàng</span>
-                </a>
-            </li>
+            <ul class="sidebar-nav mt-3">
+
+                <li class="sidebar-header text-uppercase small text-muted">
+                    <span style="color: #fff;">Quản trị hệ thống</span>
+                </li>
+
+                {{-- DASHBOARD --}}
+                <li class="sidebar-item {{ request()->is('dashboard') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{ url('/dashboard') }}">
+                        <i class="bi bi-house-door me-2"></i> Dashboard
+                    </a>
+                </li>
+
+                {{-- ĐƠN HÀNG --}}
+                <li class="sidebar-item {{ request()->routeIs('orders.*') ? 'active' : '' }}">
+                    <a class="sidebar-link d-flex align-items-center"
+                    data-bs-toggle="collapse"
+                    href="#orderMenu"
+                    role="button">
+                        <i class="bi bi-cart3 me-2"></i> Đơn hàng
+                    </a>
+
+                    <ul id="orderMenu"
+                        class="collapse list-unstyled ms-4 {{ request()->routeIs('orders.*') ? 'show' : '' }}">
+
+                        <li>
+                            <a class="sidebar-link submenu-link {{ request()->routeIs('orders.pending') ? 'active-sub' : '' }}"
+                            href="{{ route('orders.pending') }}">
+                                Đơn chờ xử lý
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="sidebar-link submenu-link {{ request()->routeIs('orders.shipping') ? 'active-sub' : '' }}"
+                            href="{{ route('orders.shipping') }}">
+                                Đơn đang giao
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="sidebar-link submenu-link {{ request()->routeIs('orders.done') ? 'active-sub' : '' }}"
+                            href="{{ route('orders.done') }}">
+                                Đơn đã hoàn thành
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{-- ĐĂNG KÝ --}}
+                <li class="sidebar-item {{ request()->is('admin/dangki*') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{ url('/admin/dangki') }}">
+                        <i class="bi bi-journal-text me-2"></i> Danh sách đăng ký
+                    </a>
+                </li>
+
+                {{-- KHUYẾN MÃI --}}
+                <li class="sidebar-item {{ request()->is('admin/khuyenmai*') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{ url('/admin/khuyenmai') }}">
+                        <i class="bi bi-percent me-2"></i> Khuyến mãi
+                    </a>
+                </li>
+
+                {{-- SẢN PHẨM --}}
+                <li class="sidebar-item {{ request()->is('admin/product*') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{ url('/admin/product') }}">
+                        <i class="bi bi-box-seam me-2"></i> Sản phẩm
+                    </a>
+                </li>
+
+                {{-- DANH MỤC --}}
+                <li class="sidebar-item {{ request()->is('admin/danhmuc*') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{ url('/admin/danhmuc') }}">
+                        <i class="bi bi-list-ul me-2"></i> Danh mục sản phẩm
+                    </a>
+                </li>
+
+                {{-- NGƯỜI DÙNG --}}
+                <li class="sidebar-item {{ request()->is('admin/users*') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{ url('/admin/users') }}">
+                        <i class="bi bi-people me-2"></i> Người dùng
+                    </a>
+                </li>
 
 
-            
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{URL::to('/admin/khuyenmai')}}">
-                    <i class="align-middle" data-feather="percent"></i>
-                    <span class="align-middle">Khuyến mãi</span>
-                </a>
-            </li>
-        
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{URL::to('/admin/product')}}">
-                    <i class="align-middle" data-feather="box"></i>
-                    <span class="align-middle">Sản phẩm</span>
-                </a>
-            </li>
-        
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{ URL::to('/admin/users') }}">
-                    <i class="align-middle" data-feather="users"></i>
-                    <span class="align-middle">Người dùng</span>
-                </a>
-            </li>
 
+            </ul>
 
-            
-        
-            
-        
-            
-        </ul>
-        
 
         </div>
-      </nav>
+    </nav>
 
-      <div class="main">
-        <nav class="navbar navbar-expand navbar-light navbar-bg">
-          <a class="sidebar-toggle js-sidebar-toggle">
-            <i class="hamburger align-self-center"></i>
-          </a>
+    {{-- =================== MAIN =================== --}}
+    <div class="main">
 
-          <div class="navbar-collapse collapse">
-            <ul class="navbar-nav navbar-align">
+        {{-- =================== NAVBAR =================== --}}
+        <nav class="navbar navbar-expand navbar-light navbar-bg custom-navbar">
+            <div class="container-fluid d-flex justify-content-between align-items-center">
 
-              <li class="nav-item dropdown">
 
-                <a
-                  class="nav-link dropdown-toggle d-none d-sm-inline-block"
-                  href="#"
-                  data-bs-toggle="dropdown"
-                >
-                  <img
-                    src="{{ asset('backend/img/avatars/avatar.jpg')}}"
-                    class="avatar img-fluid rounded-circle me-1"
-                    alt="Admin img"
-                  />
-                  <span class="text-dark">
-                    {{Auth::user()->hoten}}
-                  </span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-end">
-                
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{{ URL::to('/admin_logout')}}"><i class="align-middle me-2" data-feather="log-out"></i> <span class="align-middle">log-out</span></a>
-                </div>
-              </li>
-            </ul>
-          </div>
+                {{-- USER DROPDOWN --}}
+                <ul class="navbar-nav ms-auto align-items-center">
+
+                    <li class="nav-item dropdown">
+
+                        <a class="nav-link dropdown-toggle user-toggle d-flex align-items-center gap-2"
+                           href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+
+                            <img src="{{ asset('backend/img/avatars/avatar.jpg') }}"
+                                 class="avatar-img" alt="User">
+
+                            <span class="username text-uppercase fw-bold">
+                                {{ Auth::user()->hoten }}
+                            </span>
+
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end shadow user-menu"
+                            aria-labelledby="userDropdown">
+
+                            <li>
+                                <a class="dropdown-item" href="{{ url('/admin_logout') }}">
+                                    <i class="bi bi-box-arrow-right me-2"></i> Đăng xuất
+                                </a>
+                            </li>
+                        </ul>
+
+                    </li>
+
+                </ul>
+
+            </div>
         </nav>
 
+        {{-- =================== CONTENT =================== --}}
         <main class="content">
-            <!--Noi dung-->
             @yield('admin_content')
-            
         </main>
 
         <footer class="footer">
-          <div class="container-fluid">
-            <div class="row text-muted">
-              <div class="col-6 text-start">
-                
-              </div>
-             
+            <div class="container-fluid">
+                <div class="row text-muted">
+                    <div class="col-6 text-start"></div>
+                </div>
             </div>
-          </div>
         </footer>
-      </div>
+
     </div>
+</div>
 
-    <script src="{{ asset('backend/js/app.js')}}"></script>
+{{-- =================== CUSTOM CSS =================== --}}
+<style>
+/* ================== THEME COLORS ================== */
+:root {
+    --gym-primary: #34A4E0;
+    --gym-primary-soft: rgba(52,164,224,0.18);
 
-    <style>
-      .dropdown-menu.show {
-          display: block;
-      }
-    </style>
+    --sidebar-text: #e5e7eb;
+}
 
-  <script>
+/* ================== SIDEBAR ================== */
 
-  // Lấy phần tử dropdown-menu-end
-  const drop = document.querySelector('.nav-link.dropdown-toggle');
-  const dropdownMenu = document.querySelector('.dropdown-menu-end');
+/* Logo */
+.sidebar-logo-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(52,164,224,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-  // Thêm sự kiện click
-  drop.addEventListener('click', function(event) {
-      // Ngăn chặn hành vi mặc định của sự kiện click
-      event.preventDefault();
-      // Toggle hiển thị/ẩn thẻ có class là .dropdown-menu.dropdown-menu-end.show
-      dropdownMenu.classList.toggle('show');
-      // Thêm thuộc tính data-bs-popper với giá trị "static"
-      dropdownMenu.setAttribute('data-bs-popper', 'static');
-  });
+.sidebar-logo-circle img {
+    width: 80%;
+}
 
-// Get current URL
-var currentUrl = window.location.href;
+.sidebar-logo-text {
+    color: var(--gym-primary);
+}
 
-// Select all sidebar links
-var sidebarLinks = document.querySelectorAll('.sidebar-link');
+/* Menu item (cấp 1) */
+.sidebar-link {
+    padding: 10px 14px;
+    color: var(--sidebar-text);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    transition: 0.2s;
+}
 
-// Loop through each link
-sidebarLinks.forEach(function(link) {
-    // Check if the link's href matches the current URL
-    if (link.href === currentUrl) {
-        // Add 'active' class to parent sidebar-item
-        link.closest('.sidebar-item').classList.add('active');
-    }
+.sidebar-link i {
+    color: #cbd5e1;
+}
 
-    // Add event listener to each link
-    link.addEventListener('click', function() {
-        // Remove 'active' class from all sidebar-items
-        document.querySelectorAll('.sidebar-item').forEach(function(item) {
-            item.classList.remove('active');
-        });
-        // Add 'active' class to clicked sidebar-item
-        link.closest('.sidebar-item').classList.add('active');
+/* =============== ACTIVE MENU CHA (cấp 1) ================= */
+.sidebar-item.active > .sidebar-link {
+    background: var(--gym-primary-soft) !important;
+    color: var(--gym-primary) !important;
+    transform: translateX(3px);
+}
+
+.sidebar-item.active > .sidebar-link i {
+    color: var(--gym-primary) !important;
+}
+
+/* Hover menu cấp 1 */
+.sidebar-nav > .sidebar-item > .sidebar-link:hover {
+    background: var(--gym-primary-soft);
+    color: var(--gym-primary);
+    transform: translateX(3px);
+}
+
+/* =============== SUBMENU ================= */
+.submenu-link {
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #ffffff !important; /* trắng */
+    opacity: 0.75;
+    transition: 0.15s;
+    background: transparent !important;
+    display: block;
+}
+
+/* Hover submenu */
+.submenu-link:hover {
+    opacity: 1;
+    background: transparent !important;
+}
+
+/* Active submenu -> chỉ đổi chữ thành xanh */
+.active-sub {
+    color: var(--gym-primary) !important;
+    font-weight: 600;
+    opacity: 1;
+}
+
+/* ================= NAVBAR ================= */
+.custom-navbar {
+    padding: 14px 20px;
+}
+
+.navbar-toggle-icon {
+    font-size: 28px;
+    color: var(--gym-primary);
+}
+
+/* Avatar */
+.avatar-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--gym-primary);
+    object-fit: cover;
+}
+
+/* User dropdown */
+.user-menu {
+    border-radius: 10px;
+}
+
+.dropdown-item:hover {
+    background: rgba(52,164,224,0.15);
+    color: var(--gym-primary);
+}
+</style>
+
+
+
+
+@if(session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Thành công',
+        text: "{{ session('success') }}",
+        timer: 2000,
+        showConfirmButton: false
     });
-});
+</script>
 
 
+@endif
 
-  </script>
-
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			// Line chart
-			new Chart(document.getElementById("chartjs-line"), {
-				type: "line",
-				data: {
-					labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-					datasets: [{
-						label: "Sales ($)",
-						fill: true,
-						backgroundColor: "transparent",
-						borderColor: window.theme.primary,
-						data: [2115, 1562, 1584, 1892, 1487, 2223, 2966, 2448, 2905, 3838, 2917, 3327]
-					}, {
-						label: "Orders",
-						fill: true,
-						backgroundColor: "transparent",
-						borderColor: "#adb5bd",
-						borderDash: [4, 4],
-						data: [958, 724, 629, 883, 915, 1214, 1476, 1212, 1554, 2128, 1466, 1827]
-					}]
-				},
-				options: {
-					maintainAspectRatio: false,
-					legend: {
-						display: false
-					},
-					tooltips: {
-						intersect: false
-					},
-					hover: {
-						intersect: true
-					},
-					plugins: {
-						filler: {
-							propagate: false
-						}
-					},
-					scales: {
-						xAxes: [{
-							reverse: true,
-							gridLines: {
-								color: "rgba(0,0,0,0.05)"
-							}
-						}],
-						yAxes: [{
-							ticks: {
-								stepSize: 500
-							},
-							display: true,
-							borderDash: [5, 5],
-							gridLines: {
-								color: "rgba(0,0,0,0)",
-								fontColor: "#fff"
-							}
-						}]
-					}
-				}
-			});
-		});
-	</script>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var ctx = document
-          .getElementById("chartjs-dashboard-line")
-          .getContext("2d");
-        var gradient = ctx.createLinearGradient(0, 0, 0, 225);
-        gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
-        gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
-        // Line chart
-        new Chart(document.getElementById("chartjs-dashboard-line"), {
-          type: "line",
-          data: {
-            labels: [
-              "Jan",
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec",
-            ],
-            datasets: [
-              {
-                label: "Sales ($)",
-                fill: true,
-                backgroundColor: gradient,
-                borderColor: window.theme.primary,
-                data: [
-                  2115, 1562, 1584, 1892, 1587, 1923, 2566, 2448, 2805, 3438,
-                  2917, 3327,
-                ],
-              },
-            ],
-          },
-          options: {
-            maintainAspectRatio: false,
-            legend: {
-              display: false,
-            },
-            tooltips: {
-              intersect: false,
-            },
-            hover: {
-              intersect: true,
-            },
-            plugins: {
-              filler: {
-                propagate: false,
-              },
-            },
-            scales: {
-              xAxes: [
-                {
-                  reverse: true,
-                  gridLines: {
-                    color: "rgba(0,0,0,0.0)",
-                  },
-                },
-              ],
-              yAxes: [
-                {
-                  ticks: {
-                    stepSize: 1000,
-                  },
-                  display: true,
-                  borderDash: [3, 3],
-                  gridLines: {
-                    color: "rgba(0,0,0,0.0)",
-                  },
-                },
-              ],
-            },
-          },
-        });
-      });
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Pie chart
-        new Chart(document.getElementById("chartjs-dashboard-pie"), {
-          type: "pie",
-          data: {
-            labels: ["Chrome", "Firefox", "IE"],
-            datasets: [
-              {
-                data: [4306, 3801, 1689],
-                backgroundColor: [
-                  window.theme.primary,
-                  window.theme.warning,
-                  window.theme.danger,
-                ],
-                borderWidth: 5,
-              },
-            ],
-          },
-          options: {
-            responsive: !window.MSInputMethodContext,
-            maintainAspectRatio: false,
-            legend: {
-              display: false,
-            },
-            cutoutPercentage: 75,
-          },
-        });
-      });
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Bar chart
-        new Chart(document.getElementById("chartjs-dashboard-bar"), {
-          type: "bar",
-          data: {
-            labels: [
-              "Jan",
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec",
-            ],
-            datasets: [
-              {
-                label: "This year",
-                backgroundColor: window.theme.primary,
-                borderColor: window.theme.primary,
-                hoverBackgroundColor: window.theme.primary,
-                hoverBorderColor: window.theme.primary,
-                data: [54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79],
-                barPercentage: 0.75,
-                categoryPercentage: 0.5,
-              },
-            ],
-          },
-          options: {
-            maintainAspectRatio: false,
-            legend: {
-              display: false,
-            },
-            scales: {
-              yAxes: [
-                {
-                  gridLines: {
-                    display: false,
-                  },
-                  stacked: false,
-                  ticks: {
-                    stepSize: 20,
-                  },
-                },
-              ],
-              xAxes: [
-                {
-                  stacked: false,
-                  gridLines: {
-                    color: "transparent",
-                  },
-                },
-              ],
-            },
-          },
-        });
-      });
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var markers = [
-          {
-            coords: [31.230391, 121.473701],
-            name: "Shanghai",
-          },
-          {
-            coords: [28.70406, 77.102493],
-            name: "Delhi",
-          },
-          {
-            coords: [6.524379, 3.379206],
-            name: "Lagos",
-          },
-          {
-            coords: [35.689487, 139.691711],
-            name: "Tokyo",
-          },
-          {
-            coords: [23.12911, 113.264381],
-            name: "Guangzhou",
-          },
-          {
-            coords: [40.7127837, -74.0059413],
-            name: "New York",
-          },
-          {
-            coords: [34.052235, -118.243683],
-            name: "Los Angeles",
-          },
-          {
-            coords: [41.878113, -87.629799],
-            name: "Chicago",
-          },
-          {
-            coords: [51.507351, -0.127758],
-            name: "London",
-          },
-          {
-            coords: [40.416775, -3.70379],
-            name: "Madrid ",
-          },
-        ];
-        var map = new jsVectorMap({
-          map: "world",
-          selector: "#world_map",
-          zoomButtons: true,
-          markers: markers,
-          markerStyle: {
-            initial: {
-              r: 9,
-              strokeWidth: 7,
-              stokeOpacity: 0.4,
-              fill: window.theme.primary,
-            },
-            hover: {
-              fill: window.theme.primary,
-              stroke: window.theme.primary,
-            },
-          },
-          zoomOnScroll: false,
-        });
-        window.addEventListener("resize", () => {
-          map.updateSize();
-        });
-      });
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var date = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);
-        var defaultDate =
-          date.getUTCFullYear() +
-          "-" +
-          (date.getUTCMonth() + 1) +
-          "-" +
-          date.getUTCDate();
-        document.getElementById("datetimepicker-dashboard").flatpickr({
-          inline: true,
-          prevArrow: '<span title="Previous month">&laquo;</span>',
-          nextArrow: '<span title="Next month">&raquo;</span>',
-          defaultDate: defaultDate,
-        });
-      });
-    </script>
-    @if(session('success'))
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-      <script>
-          Swal.fire({
-              icon: 'success',
-              title: 'Thành công',
-              text: "{{ session('success') }}",
-              timer: 2000,
-              showConfirmButton: false
-          });
-      </script>
-      
-  @endif
-  </body>
+</body>
 </html>

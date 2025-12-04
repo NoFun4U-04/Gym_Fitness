@@ -38,6 +38,17 @@ class UserRepository implements IUserRepository
 
     public function delete($id)
     {
-        return Nguoidung::destroy($id);
+
+        return Nguoidung::where('id_nd', $id)->update([
+            'trang_thai' => 0
+        ]);
     }
+
+    public function restore($id)
+    {
+        return Nguoidung::where('id_nd', $id)->update([
+            'trang_thai' => 1
+        ]);
+    }
+
 }
