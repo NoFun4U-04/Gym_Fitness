@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -50,7 +50,6 @@ class CartController extends Controller
     {
         $product = Sanpham::with('images')->findOrFail($id);
 
-        // Lấy ảnh đầu tiên trong bảng images
         $firstImage = $product->images->first();
         $imagePath  = $firstImage
             ? $firstImage->duong_dan
