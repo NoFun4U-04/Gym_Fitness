@@ -27,7 +27,6 @@ return new class extends Migration
                 ->default(0)
                 ->after('tiengiam');
 
-            $table->dropColumn('trangthai');
             $table->enum('trangthai', [
                 'Chờ xác nhận',
                 'Chờ giao hàng',
