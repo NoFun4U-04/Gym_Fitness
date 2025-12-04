@@ -193,10 +193,9 @@
                 @endif
             </td>
 
-            {{-- TRẠNG THÁI --}}
-            <!-- <td>
-                @if($danhmuc->status == 1)
-                    <span class="badge bg-success">Hoạt động</span>
+            <td>
+                @if($dm->status == 1)
+                    <span class="status-badge active">Hoạt động</span>
                 @else
                     <span class="status-badge inactive">Không hoạt động</span>
                 @endif

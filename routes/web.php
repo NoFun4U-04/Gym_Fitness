@@ -12,8 +12,8 @@ use App\Http\Controllers\{
     ForgotPasswordController,
     ProfileController
 };
-use App\Repositories\DangkidichvuRepository;
-
+use App\Repositories\DangkidichvuRepository;;
+use App\Http\Controllers\MailController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -109,6 +109,8 @@ Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'
 
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('forgot.send');
 
+Route::post('/mail', [MailController::class, 'subscribe'])
+        ->name('mail.subscribe');
 
 
 
