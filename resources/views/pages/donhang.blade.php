@@ -43,7 +43,7 @@
 }
 
 .orders-breadcrumb a {
-    color: #00c896;
+    color: #34A4E0;
     text-decoration: none;
 }
 
@@ -288,7 +288,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="orders-empty-row">
+                            <td colspan="7" class="text-center text-white">
                                 Bạn chưa có đơn hàng nào.
                             </td>
                         </tr>
