@@ -47,41 +47,12 @@
                     <span style="color: #fff;">Quản trị hệ thống</span>
                 </li>
 
-<<<<<<< HEAD
                 {{-- DASHBOARD --}}
                 <li class="sidebar-item {{ request()->is('dashboard') ? 'active' : '' }}">
                     <a class="sidebar-link" href="{{ url('/dashboard') }}">
                         <i class="bi bi-house-door me-2"></i> Dashboard
                     </a>
                 </li>
-=======
-            
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{URL::to('/admin/khuyenmai')}}">
-                    <i class="align-middle" data-feather="percent"></i>
-                    <span class="align-middle">Khuyến mãi</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{URL::to('/admin/danhmuc')}}">
-                    <i class="align-middle" data-feather="box"></i>
-                    <span class="align-middle">Danh mục</span>
-                </a>
-            </li>   
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{URL::to('/admin/product')}}">
-                    <i class="align-middle" data-feather="box"></i>
-                    <span class="align-middle">Sản phẩm</span>
-                </a>
-            </li>
-        
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{ URL::to('/admin/users') }}">
-                    <i class="align-middle" data-feather="users"></i>
-                    <span class="align-middle">Người dùng</span>
-                </a>
-            </li>
->>>>>>> 467efdd3c81a748a93b996b9678024efa6c6fbb5
 
                 {{-- ĐƠN HÀNG --}}
                 <li class="sidebar-item {{ request()->routeIs('orders.*') ? 'active' : '' }}">
@@ -118,6 +89,13 @@
                     </ul>
                 </li>
 
+                {{-- ĐĂNG KÝ --}}
+                <li class="sidebar-item {{ request()->is('admin/dangki*') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{ url('/admin/dangki') }}">
+                        <i class="bi bi-journal-text me-2"></i> Danh sách đăng ký
+                    </a>
+                </li>
+
                 {{-- KHUYẾN MÃI --}}
                 <li class="sidebar-item {{ request()->is('admin/khuyenmai*') ? 'active' : '' }}">
                     <a class="sidebar-link" href="{{ url('/admin/khuyenmai') }}">
@@ -145,6 +123,8 @@
                         <i class="bi bi-people me-2"></i> Người dùng
                     </a>
                 </li>
+
+
 
             </ul>
 

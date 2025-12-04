@@ -175,7 +175,7 @@
         <tr>
             <th width="35%">TÊN DANH MỤC</th>
             <th width="20%">DANH MỤC CHA</th>
-            <!-- <th width="15%">TRẠNG THÁI</th> -->
+            <th width="15%">TRẠNG THÁI</th>
             <th width="30%" class="text-center">HÀNH ĐỘNG</th>
         </tr>
     </thead>
