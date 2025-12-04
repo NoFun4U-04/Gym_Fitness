@@ -33,7 +33,6 @@ return new class extends Migration
                     ->default(0)
                     ->comment('0: Mới đăng ký, 1: Đã xác nhận, 3: Hoàn thành');
 
-                // KHỚP KIỂU DỮ LIỆU: id_nd = INT(10) UNSIGNED
                 $table->unsignedInteger('id_nguoidung')->nullable();
 
                 $table->timestamps();

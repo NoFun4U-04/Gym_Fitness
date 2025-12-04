@@ -30,7 +30,7 @@
 
 /* Slider wrapper + track */
 .rf-packages-slider-wrapper {
-    overflow: hidden;
+    position: relative;
 }
 
 .rf-packages-track {
@@ -156,30 +156,52 @@
 
 /* Arrow buttons */
 .rf-packages-arrows {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
     display: flex;
-    justify-content: center;
-    gap: 0.75rem;
-    margin-top: 2rem;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 8px;          /* đẩy vào 1 chút cho khỏi sát mép */
+    pointer-events: none;    /* để click được vào slide phía sau */
+    z-index: 5;
 }
 
+/* nút arrow trái/phải – style giống gym */
 .rf-packages-arrow {
-    width: 40px;
-    height: 40px;
+    pointer-events: auto;               /* bật lại click cho chính nút */
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
-    border: 1px solid #000000;
-    background-color: #ffffff;
-    color: #000000;
-    display: inline-flex;
+    background: transparent;;
+    border: none;                       /* bỏ viền cứng */
+    color: #34A4E0;
+    display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 1.1rem;
-    transition: all 0.2s ease;
+    padding: 0;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
-.rf-packages-arrow:hover {
-    background-color: #000000;
-    color: #ffffff;
+/* icon mũi tên (dùng chung với gym) */
+.gym-arrow-icon {
+    font-size: 4rem;      /* 👈 to theo yêu cầu */
+    line-height: 2;
+    font-weight: 700;
+    transition: transform 0.15s ease, text-shadow 0.15s ease;
+}
+
+.rf-packages-arrow:hover {        
+    color: #108fd4;
+    transform: translateY(-2px) scale(1.08);     /* nhô + phóng to nhẹ */
+    text-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Responsive */

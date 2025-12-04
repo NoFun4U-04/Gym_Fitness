@@ -94,6 +94,12 @@ class HomeController extends Controller
         return view('pages.services', compact('danhmucs'));
     }
 
+    public function dichvu1()
+    {
+        return view('pages.dichvu1');   // đúng folder bạn đang có
+    }
+
+
     /** ===================== ĐĂNG KÝ TẬP THỬ ===================== */
     public function dangKyTapThu()
     {

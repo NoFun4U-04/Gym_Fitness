@@ -1,333 +1,262 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
+    <title>Admin - Đăng nhập</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gym Admin | Đăng nhập</title>
+    {{-- Favicon / Logo --}}
+    <link rel="shortcut icon" type="image/png" href="{{ asset('frontend/img/LOGO.png') }}" />
 
-    <link rel="shortcut icon" type="image/png" href="/frontend/img/LOGO.png" />
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="{{ asset('backend/css/app.css') }}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    {{-- Bootstrap 5 --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    {{-- Bootstrap Icons (icon user, khóa…) --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
-        :root {
-            --gym-bg: #020617;
-            --gym-bg-soft: #0b1120;
-            --gym-green: #22c55e;
-            --gym-green-soft: rgba(34, 197, 94, 0.18);
-            --gym-border: #22c55e33;
-            --gym-muted: #9ca3af;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
+        /* ===== NỀN TOÀN TRANG (ẢNH) ===== */
         body {
             min-height: 100vh;
             margin: 0;
-            font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            color: #e5e7eb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background:
-                radial-gradient(circle at 0% 0%, rgba(34, 197, 94, 0.12) 0, transparent 55%),
-                radial-gradient(circle at 100% 0%, rgba(34, 197, 94, 0.14) 0, transparent 60%),
-                linear-gradient(135deg, #020617 0%, #020617 40%, #020617 100%);
-            background-color: var(--gym-bg);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Microgramma Extended", sans-serif;
+            background: url('{{ asset('frontend/img/banneradmin.jpg') }}') center center / cover no-repeat fixed;
         }
 
-        .gym-auth-wrapper {
-            width: 100%;
+        /* overlay làm tối nhẹ cho dễ đọc chữ */
+        .bg-overlay {
+            min-height: 100vh;
+        }
+
+        /* ===== BOX LOGIN GLASS MỜ ===== */
+        .login-card {
             max-width: 430px;
-            padding: 1.5rem;
+            width: 100%;
+            padding: 2px 30px 26px;
+            border-radius: 26px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            color: #fff;
         }
 
-        .gym-card {
-            position: relative;
-            background:
-                radial-gradient(circle at top left, rgba(34, 197, 94, 0.08) 0, transparent 55%),
-                radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.7) 0, transparent 55%),
-                #020617;
-            border-radius: 1.5rem;
-            padding: 2.25rem 2.25rem 2.5rem;
-            border: 1px solid var(--gym-border);
-            box-shadow:
-                0 22px 60px rgba(0, 0, 0, 0.9),
-                0 0 0 1px rgba(15, 23, 42, 0.9);
-            overflow: hidden;
-        }
-
-        .gym-card::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background-image: linear-gradient(120deg,
-                    rgba(31, 41, 55, 0.3) 0,
-                    transparent 25%,
-                    rgba(15, 23, 42, 0.6) 50%,
-                    transparent 75%,
-                    rgba(31, 41, 55, 0.3) 100%);
-            opacity: 0.15;
-            pointer-events: none;
-        }
-
-        .gym-card-inner {
-            position: relative;
-            z-index: 1;
-        }
-
-        .gym-logo-ring {
-            width: 70px;
-            height: 70px;
-            border-radius: 999px;
-            background: radial-gradient(circle at 30% 30%, #22c55e, #16a34a 40%, #052e16 70%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.1rem;
-            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.16),
-                0 16px 35px rgba(0, 0, 0, 0.85);
-        }
-
-        .gym-logo-ring img {
-            width: 46px;
-            height: 46px;
-            border-radius: 999px;
+        .login-logo {
+            margin-top: -75px;
+            width: 250px;
+            height: auto;
             object-fit: contain;
-            background: #020617;
-            padding: 6px;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.6));
         }
 
-        .gym-title {
-			color: #4ade80;
-            text-align: center;
-            margin-bottom: 0.35rem;
-        }
-
-        .gym-title h1 {
-			color: #e5e7eb;
-            font-size: 1.65rem;
-            font-weight: 700;
-            letter-spacing: 0.04em;
+        .login-title {
+            font-size: 1.1rem;
             text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: -60px;
+            color: #fff
         }
 
-        .gym-title span {
+        /* ===== INPUT + ICON ===== */
+        .login-label {
             font-size: 0.8rem;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            color: var(--gym-green);
+            letter-spacing: 0.05em;
+            text-transform: none;
+            opacity: 0.9;
         }
 
-        .gym-subtitle {
-            text-align: center;
-            font-size: 0.9rem;
-            color: var(--gym-muted);
-            margin-bottom: 1.8rem;
-        }
-
-        .gym-subtitle strong {
-            color: #e5e7eb;
-            font-weight: 500;
-        }
-
-        .form-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: var(--gym-muted);
-            margin-bottom: 0.35rem;
-        }
-
-        .form-control {
+        .form-control,
+        .input-group-text {
+            background-color: rgba(0, 0, 0, 0.18);
             border-radius: 999px;
-            background-color: #020617;
-            border: 1px solid #1f2937;
-            color: #e5e7eb;
-            font-size: 0.9rem;
-            padding: 0.65rem 0.95rem;
-            box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            color: #fff;
+        }
+
+        /* viền đỏ khi lỗi */
+        .form-control.is-invalid {
+            border-color: #ff6b6b !important;
+            box-shadow: 0 0 0 1px rgba(255, 107, 107, 0.6);
+        }
+
+        /* chữ cảnh báo màu đỏ dưới ô input */
+        .invalid-feedback-custom {
+            color: #000;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-top: 0.25rem;
+            margin-left: 0.4rem;
         }
 
         .form-control::placeholder {
-            color: #6b7280;
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .form-control:focus {
-            outline: none;
-            border-color: var(--gym-green);
-            box-shadow:
-                0 0 0 1px rgba(34, 197, 94, 0.7),
-                0 0 0 6px rgba(34, 197, 94, 0.18);
-            background-color: #020617;
+            border-color: #fff;
+            box-shadow: 0 0 0 0.15rem rgba(255, 255, 255, 0.4);
+            background-color: rgba(0, 0, 0, 0.18);
         }
 
-        .form-check-input {
-            background-color: #020617;
-            border-radius: 0.4rem;
-            border: 1px solid #374151;
+        .input-group .form-control {
+            border-right: none;
         }
 
-        .form-check-input:checked {
-            background-color: var(--gym-green);
-            border-color: var(--gym-green);
+        .input-group-text {
+            border-left: none;
         }
 
+        .input-group .bi {
+            font-size: 1.1rem;
+        }
+
+        /* ===== CHECKBOX + BUTTON ===== */
         .form-check-label {
-            font-size: 0.8rem;
-            color: var(--gym-muted);
-        }
-
-        .gym-btn-primary {
-            border-radius: 999px;
-            border: none;
-            padding: 0.7rem 1rem;
-            font-size: 0.95rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            background-image: linear-gradient(135deg, #22c55e, #4ade80);
-            color: #022c22;
-            box-shadow:
-                0 12px 30px rgba(34, 197, 94, 0.35),
-                0 0 0 1px rgba(22, 163, 74, 0.25);
-            transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, filter 0.12s ease-out;
-        }
-
-        .gym-btn-primary:hover {
-            filter: brightness(1.05);
-            transform: translateY(-1px);
-            box-shadow:
-                0 18px 45px rgba(34, 197, 94, 0.40),
-                0 0 0 1px rgba(22, 163, 74, 0.4);
-        }
-
-        .gym-btn-primary:active {
-            transform: translateY(1px) scale(0.99);
-            box-shadow:
-                0 8px 20px rgba(34, 197, 94, 0.35),
-                0 0 0 1px rgba(22, 163, 74, 0.4);
-        }
-
-        .gym-footnote {
-            margin-top: 1.6rem;
-            text-align: center;
-            font-size: 0.78rem;
-            color: #6b7280;
-        }
-
-        .gym-footnote span {
-            color: var(--gym-green);
-            font-weight: 500;
-        }
-
-        .gym-alert {
-            margin-bottom: 0.9rem;
             font-size: 0.85rem;
-            color: #fca5a5;
-            background: linear-gradient(to right, rgba(248, 113, 113, 0.08), transparent);
-            border-radius: 999px;
-            padding: 0.45rem 0.9rem;
-            border: 1px solid rgba(248, 113, 113, 0.35);
-            text-align: center;
         }
 
-        @media (max-width: 576px) {
-            .gym-card {
-                padding: 1.75rem 1.4rem 2.1rem;
-                border-radius: 1.25rem;
-            }
+        .btn-login {
+            width: 100%;
+            border-radius: 999px;
+            padding: 0.6rem 1rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            background: #333;
+            color: #ffffff;
+            border: none;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+        }
 
-            .gym-title h1 {
-                font-size: 1.45rem;
-            }
+        .btn-login:hover {
+            color: #333;
+            transform: translateY(-1px);
+            background: #fff;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55);
+        }
+
+        .btn-login:active {
+            transform: translateY(1px) scale(0.99);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.55);
+        }
+
+        /* ===== ALERT LỖI ===== */
+        .login-alert {
+            background: rgba(220, 53, 69, 0.15);
+            border-color: rgba(220, 53, 69, 0.8);
+            color: #ffe9ec;
+            font-size: 0.85rem;
+        }
+
+        .login-alert ul {
+            margin-bottom: 0;
+            padding-left: 1.25rem;
         }
     </style>
 </head>
-
 <body>
-    <div class="gym-auth-wrapper">
-        <div class="gym-card">
-            <div class="gym-card-inner">
-                <div class="gym-logo-ring">
-                    <img src="/frontend/img/LOGO.png" alt="Gym Admin">
-                </div>
+<div class="bg-overlay d-flex align-items-center justify-content-center">
+    <div class="login-card">
 
-                <div class="gym-title">
-                    <span>Rise Fitness</span>
-                    <h1>Admin Panel</h1>
-                </div>
-
-                <p class="gym-subtitle">
-                    <strong>Đăng nhập</strong> để quản lý hệ thống phòng gym, khách hàng và đơn hàng.
-                </p>
-
-                {{-- Thông báo lỗi nếu có --}}
-                @php
-                    $thongbao = Session::get('thongbao');
-                @endphp
-
-                @if ($thongbao)
-                    <div class="gym-alert">
-                        {{ $thongbao }}
-                        @php Session::put('thongbao', null); @endphp
-                    </div>
-                @endif
-
-                <form action="{{ URL::to('/signinDashboard') }}" method="post" autocomplete="off">
-                    {{ csrf_field() }}
-
-                    <div class="mb-3">
-                        <label class="form-label" for="email">Email</label>
-                        <input
-                            id="email"
-                            class="form-control form-control-lg"
-                            type="text"
-                            name="email"
-                            placeholder="Nhập email admin">
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label" for="password">Mật khẩu</label>
-                        <input
-                            id="password"
-                            class="form-control form-control-lg"
-                            type="password"
-                            name="password"
-                            placeholder="Nhập mật khẩu">
-                    </div>
-
-                    <div class="d-flex align-items-center justify-content-between mb-2">
-                        <div class="form-check align-items-center">
-                            <input id="remember" type="checkbox" class="form-check-input" value="remember-me"
-                                name="remember-me">
-                            <label class="form-check-label" for="remember">
-                                Ghi nhớ đăng nhập
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="d-grid gap-2 mt-3">
-                        <button type="submit" class="gym-btn-primary">
-                            Đăng nhập
-                        </button>
-                    </div>
-                </form>
-
-                <div class="gym-footnote">
-                    &copy; {{ date('Y') }} <span>Gym Fitness</span> &mdash; Admin Dashboard
-                </div>
-            </div>
+        {{-- LOGO + TIÊU ĐỀ --}}
+        <div class="text-center mb-2">
+            <img src="{{ asset('frontend/img/LOGO.png') }}" alt="Logo doanh nghiệp" class="login-logo mb-1">
+            <h2 class="login-title mb-0">ADMIN - ĐĂNG NHẬP</h2>
         </div>
+
+        {{-- FORM ĐĂNG NHẬP --}}
+        <form action="{{ URL::to('/signinDashboard') }}" method="POST" autocomplete="off">
+            @csrf
+
+            {{-- Email --}}
+            <div class="mb-3">
+                <label class="login-label mb-1" for="email">Email</label>
+                <div class="input-group">
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="form-control @error('email') is-invalid @enderror"
+                        placeholder="Nhập email"
+                        value="{{ old('email') }}"
+                        required
+                        autofocus
+                    >
+                    <span class="input-group-text">
+                        <i class="bi bi-person"></i>
+                    </span>
+                </div>
+
+                {{-- lỗi riêng cho email --}}
+                @error('email')
+                    <div class="invalid-feedback-custom">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            {{-- Mật khẩu --}}
+            <div class="mb-3">
+                <label class="login-label mb-1" for="password">Mật khẩu</label>
+                <div class="input-group">
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="form-control
+                            @error('password') is-invalid @enderror
+                            @if (session('thongbao')) is-invalid @endif"
+                        placeholder="Nhập mật khẩu"
+                        required
+                    >
+                    <span class="input-group-text">
+                        <i class="bi bi-lock"></i>
+                    </span>
+                </div>
+
+                {{-- lỗi validate mật khẩu (bắt buộc, min,...) --}}
+                @error('password')
+                    <div class="invalid-feedback-custom">
+                        {{ $message }}
+                    </div>
+                @enderror
+
+                {{-- lỗi sai tài khoản / mật khẩu (thongbao hiện dưới password) --}}
+                @if (session('thongbao'))
+                    <div class="invalid-feedback-custom">
+                        {{ session('thongbao') }}
+                    </div>
+                    @php Session::put('thongbao', null); @endphp
+                @endif
+            </div>
+
+            {{-- Ghi nhớ tôi --}}
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="form-check">
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="remember"
+                        name="remember-me"
+                        value="1"
+                    >
+                    <label class="form-check-label" for="remember">
+                        Ghi nhớ tôi
+                    </label>
+                </div>
+                {{-- bỏ forgot password, để 1 span invisible cho cân layout --}}
+                <span class="small opacity-0">hidden</span>
+            </div>
+
+            {{-- NÚT ĐĂNG NHẬP --}}
+            <button type="submit" class="btn btn-login">
+                Đăng nhập
+            </button>
+        </form>
     </div>
+</div>
 
-    <script src="{{ asset('backend/js/app.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

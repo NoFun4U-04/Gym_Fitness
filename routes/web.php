@@ -12,8 +12,8 @@ use App\Http\Controllers\{
     ForgotPasswordController,
     ProfileController
 };
-use App\Repositories\DangkidichvuRepository;
-
+use App\Repositories\DangkidichvuRepository;;
+use App\Http\Controllers\MailController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,6 +52,7 @@ Route::post('/dang-ky-tap-thu', [DangkidichvuController::class, 'store'])
 // Route::get('/donhang', [HomeController:: class, 'donhang'])->name('donhang');
 
 //Dichvu
+Route::get('/dich-vu', [HomeController::class, 'dichvu1'])->name('services.main');
 Route::get('/dich-vu/gym', function () {
     return view('pages.dichvu1');   // resources/views/pages/dichvu1.blade.php
 })->name('services.gym');
@@ -119,6 +120,8 @@ Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'
 
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('forgot.send');
 
+Route::post('/mail', [MailController::class, 'subscribe'])
+        ->name('mail.subscribe');
 
 
 

@@ -269,37 +269,37 @@
 }
 
 /* nút mũi tên trái – phải */
+/* nút mũi tên trái – phải */
 .gym-slider-arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: 1px solid #ffffff;
-    background-color: rgba(0, 0, 0, 0.6);
+    background: transparent;   /* bỏ nền */
+    border: none;              /* bỏ viền */
     color: #ffffff;
     cursor: pointer;
-    transition: all 0.25s ease;
+    padding: 0;
     z-index: 5;
 }
 
 .gym-slider-prev {
-    left: -10px;
+    left: -12px;
 }
 
 .gym-slider-next {
-    right: -10px;
+    right: -12px;
 }
 
+/* icon mũi tên */
 .gym-arrow-icon {
-    font-size: 1.2rem;
-    line-height: 1;
+    font-size: 2.9rem;  /* to hơn */
+    line-height: 1.5;
+    font-weight: 2000;
 }
 
-.gym-slider-arrow:hover {
-    background-color: #34a4e0;
-    border-color: #34a4e0;
+/* hover: nền xanh dương, nhìn nổi hơn */
+.gym-slider-arrow:hover .gym-arrow-icon {
+    color: #34a4e0;
 }
 
 /* RESPONSIVE */
@@ -617,7 +617,7 @@
 .rf-testi-mini:hover {
     border-radius: 18px;
     transform: translateY(-6px);
-    box-shadow: 0 24px 70px rgba(52, 164, 224, 0.65);
+    box-shadow: 0 24px 8px rgba(52, 164, 224, 0.65);
 }
 
 .rf-testi-big-card img {
