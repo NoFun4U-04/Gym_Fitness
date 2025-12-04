@@ -2,12 +2,9 @@
 @section('content')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
-    /* General & Reset */
     body {
         font-family: 'Inter', sans-serif;
-        /* A more modern, clean font */
         background-color: #f0f2f5;
-        /* Light grey background */
         color: #333;
         line-height: 1.6;
     }
@@ -965,29 +962,27 @@
             const recaptchaDiv = document.querySelector('.g-recaptcha');
             let hasViewedComments = false;
 
-            // --- Description "Xem thêm" button logic ---
             const motaTextarea = document.getElementById("mota");
             const toggleMotaBtn = document.getElementById("toggleMotaBtn");
-            let expandedDescription = false; // Add this variable back
+            let expandedDescription = false; 
 
             function adjustMotaTextarea() {
-                motaTextarea.style.height = 'auto'; // Reset height
+                motaTextarea.style.height = 'auto'; t
                 const lineHeight = parseFloat(getComputedStyle(motaTextarea).lineHeight);
                 const naturalHeight = motaTextarea.scrollHeight;
 
-                // Set a max height for initial display (e.g., 4 lines)
                 const initialMaxHeight = lineHeight * 4;
 
                 if (naturalHeight > initialMaxHeight) {
-                    toggleMotaBtn.style.display = "block"; /* Changed to block for centering with margin auto */
-                    toggleMotaBtn.style.width = "fit-content"; /* Allow button to shrink to content width */
-                    motaTextarea.style.height = initialMaxHeight + 'px'; // Collapse to 4 lines
+                    toggleMotaBtn.style.display = "block"; 
+                    toggleMotaBtn.style.width = "fit-content"; 
+                    motaTextarea.style.height = initialMaxHeight + 'px'; 
                     motaTextarea.style.overflowY = 'hidden';
                     toggleMotaBtn.textContent = "Xem thêm";
                     expandedDescription = false;
                 } else {
                     toggleMotaBtn.style.display = "none";
-                    motaTextarea.style.height = naturalHeight + 'px'; // Adjust to fit content
+                    motaTextarea.style.height = naturalHeight + 'px'; 
                     motaTextarea.style.overflowY = 'hidden';
                 }
             }
@@ -1252,10 +1247,9 @@
                         target.classList.remove('btn-save');
                         target.classList.add('btn-edit');
                         cancelBtn.remove();
-                        target.onclick = originalTargetOnClick; // Restore original handler
+                        target.onclick = originalTargetOnClick; 
                     });
 
-                    // Set the new click handler for 'Save'
                     target.onclick = function() {
                         const newContent = textarea.value.trim();
                         if (!newContent) {
@@ -1292,7 +1286,7 @@
                                     target.classList.remove('btn-save');
                                     target.classList.add('btn-edit');
                                     cancelBtn.remove();
-                                    target.onclick = originalTargetOnClick; // Restore original handler
+                                    target.onclick = originalTargetOnClick;
                                     Swal.fire({
                                         icon: 'success',
                                         title: 'Thành công',
