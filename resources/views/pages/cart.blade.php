@@ -192,7 +192,7 @@
         justify-content: center;
         cursor: pointer;
         transition: all 0.2s ease;
-        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+        
     }
 
     .quantity-btn:hover {
@@ -271,7 +271,7 @@
     .cart-summary-total span:last-child {
         font-size: 22px;
         font-weight: 700;
-        color: #22c55e;
+        color: #34A4E0;
     }
 
     .cart-actions {
@@ -453,7 +453,7 @@
 
     .cart-hero {
         width: 100%;
-        height: 200px;
+        height: 300px;
         background-image: url('/frontend/img/giohang.jpg');
         background-size: cover;
         background-position: center;
@@ -480,7 +480,7 @@
     }
 
     .cart-hero-breadcrumb a {
-        color: #22c55e;
+        color: #199ef0ff;
         text-decoration: none;
     }
 
@@ -508,15 +508,60 @@
     .btn-delete { 
         align-self: flex-start; 
     }
+    /* page-header */
+.page-header {
+    height: 300px;
+    background-image: url('/frontend/img/kick-offer-2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;   /* 🔥 giữ ảnh đứng yên khi scroll */
+    overflow: hidden;
+    position: relative;
+}
+
+.header-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.header-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+
+    text-shadow:
+        0 2px 6px rgba(0,0,0,0.45),
+        0 0 12px rgba(255,255,255,0.15);
+
+    z-index: 3;
+
+    /* 🔥 Animation trượt từ dưới lên */
+    animation: slideUp 0.9s ease-out forwards;
+}
+
+/* 🎬 Animation chạy từ dưới → lên */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -20%); /* thấp hơn */
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%); /* vị trí chuẩn */
+    }
+}
 </style>
 
-<div class="cart-hero">
-    <div class="cart-hero-title">
-        <h1></h1>
-        <div class="cart-hero-breadcrumb">
-        </div>
+<section class="page-header">
+    <div class="header-overlay"></div>
+    <div class="header-content">
+        <h1>ĐƠN HÀNG</h1>
     </div>
-</div>
+</section>
 
 <div class="cart-page">
     <div class="cart-wrapper">
@@ -529,9 +574,6 @@
 
         <div class="cart-card">
             <div class="cart-heading">
-                <div class="cart-breadcrumb">
-                    <a href="{{ url('/') }}">Trang chủ</a> <span>/ Giỏ hàng</span>
-                </div>
                 <h1 class="cart-title">Giỏ hàng</h1>
             </div>
 
@@ -573,7 +615,7 @@
                                         </td>
 
                                         <td class="cart-price-original" data-th="Price">
-                                            {{ number_format($details['giasp'], 0, ',', '.') }}vnđ
+                                            {{ number_format($details['giasp'], 0, ',', '.') }} VND
                                         </td>
 
                                         <td class="cart-price-discount" data-th="Price">
@@ -581,12 +623,12 @@
                                         </td>
 
                                         <td class="cart-price-promo text-center" data-th="Subtotal">
-                                            {{ number_format($details['giakhuyenmai'], 0, ',', '.') }}vnđ
+                                            {{ number_format($details['giakhuyenmai'], 0, ',', '.') }} VND
                                         </td>
 
                                         <td class="cart-quantity" data-th="Quantity">
                                             <div class="quantity-input">
-                                                <button class="quantity-btn decreaseValue">-</button>
+                                                <button class="quantity-btn decreaseValue" style='color:#fff;'>-</button>
 
                                                 <input
                                                     class="quantity-field quantity cart_update"
@@ -602,12 +644,12 @@
                                                     </div>
                                                 @endif
 
-                                                <button class="quantity-btn increaseValue">+</button>
+                                                <button class="quantity-btn increaseValue" style='color:#fff;'>+</button>
                                             </div>
                                         </td>
 
                                         <td class="cart-line-total text-right product-total" data-th="Total">
-                                            {{ number_format($details['giakhuyenmai'] * $details['quantity'], 0, ',', '.') }}vnđ
+                                            {{ number_format($details['giakhuyenmai'] * $details['quantity'], 0, ',', '.') }} VND
                                         </td>
                                     </tr>
                                 @endforeach

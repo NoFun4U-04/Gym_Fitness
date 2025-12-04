@@ -40,6 +40,13 @@ Route::get('/search', [HomeController::class, 'search'])->name('search');
 Route::get('/viewAll', [HomeController::class, 'viewAll'])->name('viewAll');
 Route::get('/services', [HomeController::class, 'services'])->name('services');
 Route::get('/dang-ky-tap-thu', [HomeController::class, 'dangKyTapThu'])->name('dang-ky-tap-thu');
+// Hiển thị form
+Route::get('/dang-ky-tap-thu', [DangkidichvuController::class, 'showForm'])
+    ->name('dang-ky-tap-thu');
+
+// Lưu form
+Route::post('/dang-ky-tap-thu', [DangkidichvuController::class, 'store'])
+    ->name('dang-ky-tap-thu.store');
 
 
 // Route::get('/donhang', [HomeController:: class, 'donhang'])->name('donhang');
@@ -74,6 +81,7 @@ Route::get('/remove-from-cart/{id}', [CartController::class, 'remove'])->name('c
 Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
 Route::post('/capnhat-thongtin', [OrderViewController::class, 'capnhatThongTin'])->name('donhang.update');
 
+Route::post('/apply-promo', [CartController::class, 'applyPromo'])->name('promo.apply');
 Route::post('/dathang', [CartController::class, 'dathang'])->name('dathang');
 Route::post('/vnpay', [CartController::class, 'vnpay'])->name('vnpay');
 Route::get('/thongbaodathang', [CartController::class, 'thongbaodathang'])->name('thongbaodathang');
@@ -88,6 +96,8 @@ Route::get('/donhang', [OrderViewController::class, 'donhang']);
 Route::prefix('/')->middleware('orderview')->group(function () {
     Route::get('/donhang/edit/{id}', [OrderViewController::class, 'edit'])->name('donhang.edit');
 });
+Route::post('/donhang/cancel/{id}', [OrderViewController::class, 'cancel'])->name('donhang.cancel');
+
 
 Route::get('/login', [AuthController::class, 'index']);
 Route::post('/login', [AuthController::class, 'loginPost'])->name('login');
@@ -161,4 +171,6 @@ Route::prefix('/')->middleware('admin.login')->group(function () {
     ->name('users.restore');
 
     Route::resource('/admin/dangki', DangkidichvuController::class);
+    
+
 });

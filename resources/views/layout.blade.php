@@ -122,9 +122,7 @@
         </div>
 
         <div class="footer-newsletter__center">
-            <form action="#" method="POST" class="footer-newsletter__form">
-                @csrf
-                <input type="email" name="email" placeholder="Nhập email của bạn ..." required>
+            <form action="{{ URL::to('/dang-ky-tap-thu') }}" method="GET" class="footer-newsletter__form">
                 <button type="submit">Đăng ký ngay</button>
             </form>
         </div>
@@ -156,8 +154,8 @@
                 <h3>Khám phá</h3>
                 <div class="site-footer__links-grid">
                     <ul>
-                        <li><a href="{{ URL::to('/services') }}">Giới thiệu</a></li>
-                        <li><a href="{{ URL::to('/test') }}">Dịch vụ</a></li>
+                        <li><a href="{{ route('services') }}">Giới thiệu</a></li>
+                        <li><a href="{{ route('services.gym') }}">Dịch vụ</a></li>
                         <li><a href="{{ URL::to('/donhang') }}">Đơn hàng</a></li>
                         <li><a href="{{ URL::to('/viewAll') }}">Sản phẩm</a></li>
                     </ul>

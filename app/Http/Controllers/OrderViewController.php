@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Repositories\IOrderRepository;
 use DB;
 use App\Models\Dathang;
+use App\Models\Khuyenmai;
 use App\Models\ChitietDonhang;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,6 +44,21 @@ class OrderViewController extends Controller
             'orderdetails' => $orderdetails,
         ]);
     }
+    public function cancel($id)
+    {
+        $order = Dathang::findOrFail($id);
+
+        // Chỉ cho hủy nếu ở trạng thái Chờ xác nhận
+        if ($order->trangthai !== 'Chờ xác nhận') {
+            return back()->with('error', 'Không thể hủy đơn hàng này!');
+        }
+
+        $order->trangthai = 'Bị hủy';
+        $order->save();
+
+        return back()->with('success', 'Đơn hàng đã được hủy thành công.');
+    }
+
 
     public function capnhatThongTin(Request $request)
     {
@@ -64,4 +80,6 @@ class OrderViewController extends Controller
             ]);
         return redirect()->back()->with('success', 'Cập nhật thông tin thành công!');
     }
+
+
 }

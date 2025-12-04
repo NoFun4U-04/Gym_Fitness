@@ -1,127 +1,320 @@
 @extends('layout')
 @section('content')
 
-<form class="body" action="{{route('dathang')}}" method="POST" id="checkout" enctype="multipart/form-data">
-    @csrf
-    @foreach ($showusers as $key => $showuser)
-    @if ($key == 0)
-    <div class="mb-3 bg-light p-3 my-3" style="border-radius: 20px;">
-        <h4>Thông tin khách hàng</h4>
-        <div class="d-flex">
-            <div class="mr-4">
-                <div style="font-size: 18px;"><strong>Khách hàng:</strong> <span id="display_hoten">{{$showuser->hoten}}</span></div>
-                <div style="font-size: 18px;"><strong>Email:</strong> <span id="display_email">{{$showuser->email}}</span></div>
-            </div>
-            <div class="">
-                <div style="font-size: 18px;"><strong>Số điện thoại:</strong> <span id="display_sdt">0{{$showuser->sdt}}</span></div>
-                <div style="font-size: 18px;"><strong>Địa chỉ:</strong> <span id="display_diachigiaohang">{{$showuser->diachi}}</span></div>
+<style>
+    .order-co {
+    background-image: url('/frontend/img/boxing-slide-1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;  /* đứng yên */
+    }
+
+.checkout-card {
+    background: #fff;
+    padding: 25px 28px;
+    border-radius: 18px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+    border: 1px solid #e5e7eb;
+}
+
+.section-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 15px;
+}
+
+.info-label {
+    color: #6B7280;
+    font-weight: 600;
+}
+
+.info-value {
+    color: #111827;
+    font-weight: 600;
+}
+
+.table-cart thead th {
+    background: #34A4E0 !important;
+    color: #fff;
+    padding: 12px;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.table-cart tbody td {
+    vertical-align: middle;
+    font-size: 16px;
+    color: #111;
+}
+
+.btn-main {
+    background: #34A4E0;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 22px;
+    border-radius: 10px;
+    transition: .25s;
+}
+
+.btn-main:hover {
+    background: #1B8AC3;
+    color: #fff;
+}
+
+.btn-outline-main {
+    border: 2px solid #34A4E0;
+    color: #34A4E0;
+    font-weight: 600;
+    padding: 10px 22px;
+    border-radius: 10px;
+    background: transparent;
+    transition: .25s;
+}
+
+.btn-outline-main:hover {
+    background: #34A4E0;
+    color: #fff;
+}
+
+.total-price {
+    font-size: 42px;
+    font-weight: 800;
+    color: #34A4E0;
+}
+
+.payment-option input {
+    transform: scale(1.4);
+}
+
+.modal-content {
+    border-radius: 16px;
+    border: none;
+}
+.promo-group {
+    display: flex;
+    width: 100%;
+}
+
+.promo-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid #d1d5db;
+    border-right: none; /* ❌ bỏ viền phải để dính nút */
+    border-radius: 8px 0 0 8px;
+    font-size: 16px;
+}
+
+.promo-btn {
+    background: #34A4E0;
+    color: #fff;
+    padding: 0 26px;
+    border: 1px solid #34A4E0;
+    border-radius: 0 8px 8px 0;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.promo-btn:hover {
+    background: #1B8AC3;
+}
+.checkout-summary-box {
+    background: #fff;
+    padding: 20px 24px;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    max-width: 380px;
+    margin-left: auto;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.summary-label {
+    color: #6B7280;
+    font-weight: 600;
+}
+
+.summary-value {
+    font-weight: 700;
+    color: #111827;
+}
+
+.summary-row.total-row {
+    margin-top: 10px;
+}
+
+.summary-total {
+    font-size: 28px;
+    font-weight: 800;
+    color: #34A4E0; /* Màu chủ đạo RISE FITNESS */
+}
+
+</style>
+<div class="order-co" >
+<div class="container checkout-section">
+<form action="{{route('dathang')}}" method="POST" id="checkout">
+@csrf
+
+{{-- ==================== THÔNG TIN KHÁCH HÀNG ==================== --}}
+<div class="checkout-card">
+    <div class="section-title"><i class="bi bi-person-circle"></i> Thông tin khách hàng</div>
+
+    @foreach ($showusers as $key => $u)
+        @if($key == 0)
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div><span class="info-label">Khách hàng:</span> <span class="info-value" id="display_hoten">{{ $u->hoten }}</span></div>
+                <div><span class="info-label">Email:</span> <span class="info-value" id="display_email">{{ $u->email }}</span></div>
             </div>
 
-            <input type="hidden" name="id_nd" value="{{$showuser->id_nd}}">
-            <input type="hidden" id="input_hoten" name="display_hoten" value="{{$showuser->hoten}}">
-            <input type="hidden" id="input__email" name="display_email" value="{{$showuser->email}}">
-            <input type="hidden" id="input_sdt" name="display_sdt" value="{{$showuser->sdt}}">
-            <input type="hidden" id="input_diachigiaohang" name="display_diachigiaohang" value="{{$showuser->diachi}}">
-            <input type="hidden" id="input_ngaydathang" name="ngaydathang" value="">
+            <div class="col-md-6">
+                <div><span class="info-label">Số điện thoại:</span> <span class="info-value" id="display_sdt">0{{ $u->sdt }}</span></div>
+                <div><span class="info-label">Địa chỉ:</span> <span class="info-value" id="display_diachigiaohang">{{ $u->diachi }}</span></div>
+            </div>
         </div>
-        <button style="margin-top: 10px;" type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#updateInfoModal">
-            <i class="fa fa-edit mr-1"></i> Cập nhật thông tin
+
+        <button type="button" class="btn btn-outline-main btn-sm" data-toggle="modal" data-target="#updateInfoModal">
+            <i class="fa fa-edit"></i> Cập nhật thông tin
         </button>
-    </div>
 
-    @endif
+        {{-- Hidden Inputs --}}
+        <input type="hidden" name="id_nd" value="{{ $u->id_nd }}">
+        <input type="hidden" id="input_hoten" name="display_hoten" value="{{ $u->hoten }}">
+        <input type="hidden" id="input_email" name="display_email" value="{{ $u->email }}">
+        <input type="hidden" id="input_sdt" name="display_sdt" value="{{ $u->sdt }}">
+        <input type="hidden" id="input_diachigiaohang" name="display_diachigiaohang" value="{{ $u->diachi }}">
+
+        @endif
     @endforeach
+</div>
 
-    <table id="cart" class="table table-hover table-condensed">
+
+{{-- ==================== GIỎ HÀNG ==================== --}}
+<div class="checkout-card">
+    <div class="section-title"><i class="bi bi-cart-check"></i> Giỏ hàng</div>
+
+    <table class="table table-cart table-hover">
         <thead>
             <tr>
-                <th>Ảnh sp</th>
-                <th>Tên sp</th>
+                <th>Ảnh</th>
+                <th>Sản phẩm</th>
                 <th>Giá gốc</th>
-                <th>Giảm giá</th>
-                <th>Giá khuyến mại</th>
+                <th>Giảm</th>
+                <th>Giá KM</th>
                 <th>Số lượng</th>
-                <th>Tổng tiền</th>
+                <th>Thành tiền</th>
             </tr>
         </thead>
+
         <tbody>
-            @php $total = 0 @endphp
-            @if(session('cart'))
-            @foreach(session('cart') as $id => $details)
-            @php $total += $details['giakhuyenmai'] * $details['quantity'] @endphp
+            @php $total = 0; @endphp
+            @foreach(session('cart') as $id => $item)
+                @php $line = $item['giakhuyenmai'] * $item['quantity']; @endphp
+                @php $total += $line; @endphp
 
-            <tr data-id="{{ $id }}">
-                <td><img src="{{ asset($details['anhsp']) }}" width="100" height="100" class="img-responsive" /></td>
-                <td>
-                    <div>{{ $details['tensp'] }}</div>
-                </td>
-                <td data-th="Price">{{ $details['giasp'] }}</td>
-                <td data-th="Price">{{ $details['giamgia'] }}%</td>
-                <td data-th="Subtotal" class="text-center">{{ $details['giakhuyenmai']}}đ</td>
+                <tr>
+                    <td><img src="{{ asset($item['anhsp']) }}" width="90"></td>
+                    <td>{{ $item['tensp'] }}</td>
+                    <td>{{ number_format($item['giasp']) }} VND</td>
+                    <td>{{ $item['giamgia'] }} %</td>
+                    <td>{{ number_format($item['giakhuyenmai']) }} VND</td>
+                    <td>{{ $item['quantity'] }}</td>
+                    <td><strong>{{ number_format($line) }} VND</strong></td>
+                </tr>
 
-                <td data-th="Quantity" class="quantity-input">
-                    {{$details['quantity']}}
-                </td>
-
-                <td data-th="" class="text-center">{{ $details['giakhuyenmai'] * $details['quantity'] }}đ</td>
-            </tr>
-
-            <input type="hidden" name="id_sanpham" value="{{$details['id_sanpham']}}">
-            <input type="hidden" name="tensp" value="{{ $details['tensp'] }}">
-            <input type="hidden" name="giatien" value="{{$details['giasp']}}">
-            <input type="hidden" name="giamgia" value="{{$details['giamgia']}}">
-            <input type="hidden" name="giakhuyenmai" value="{{$details['giakhuyenmai']}}">
-            <input type="hidden" name="soluong" value="{{$details['quantity']}}">
-
+                <input type="hidden" name="id_sanpham[]" value="{{ $item['id_sanpham'] }}">
+                <input type="hidden" name="soluong[]" value="{{ $item['quantity'] }}">
+                <input type="hidden" name="giakhuyenmai[]" value="{{ $item['giakhuyenmai'] }}">
             @endforeach
-            @endif
         </tbody>
-
-        <tfoot>
-
-            <tr>
-                <td colspan="7" class="bg-light">
-                    <div class="d-flex justify-content-between">
-                        <h4 class="pttt">Phương thức thanh toán</h4>
-                        <div>
-                            <div class="d-flex align-items-center p-2">
-                                <input type="radio" id="cod" name="redirect" value="COD" checked>
-                                <label for="cod" style="margin-bottom: 1px; margin-left: 5px; font-size: 20px;" class="paymentContent font-weight-bold text-xl p">
-                                    Trả tiền khi nhận hàng (COD)
-                                </label>
-                            </div>
-
-                            <div class="d-flex align-items-center p-2">
-                                <input type="radio" id="vnpay" name="redirect" value="VNPAY">
-                                <label for="vnpay" style="margin-bottom: 1px; margin-left: 5px; font-size: 20px;" class="paymentContent font-weight-bold text-xl p">
-                                    Thanh toán online (VNPAY)
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="7" class="text-right">
-                    <h3 class="d-flex justify-content-end align-items-center">
-                        Tổng thanh toán &nbsp;<div class="text-danger" style="font-size: 40px;">{{ number_format($total, 0, ',', '.') }}đ</div>
-                        <input type="hidden" name="tongtien" value="{{$total}}">
-                    </h3>
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="7" class="text-right">
-                    <a href="{{ url('/cart') }}" class="btn btn-danger"> <i class="fa fa-arrow-left"></i> Quay lại giỏ hàng</a>
-                    <button type="submit" class="btn btn-success text-white">Đặt hàng</button>
-                </td>
-            </tr>
-
-        </tfoot>
     </table>
+</div>
+
+<div class="checkout-card">
+    <div class="section-title"><i class="bi bi-ticket-perforated"></i> Mã khuyến mãi</div>
+
+    <div class="promo-group">
+    <input type="text" id="promo_code" class="promo-input" placeholder="Nhập mã khuyến mãi...">
+    <button type="button" id="apply_promo" class="promo-btn">Áp dụng</button>
+    </div>
+
+
+
+    <p id="promo_message" style="margin-top:10px; font-weight:600;"></p>
+
+    <input type="hidden" name="id_khuyenmai" id="id_khuyenmai">
+    <input type="hidden" name="tiengiam" id="tiengiam">
+    <input type="hidden" name="tienphaitra" id="tienphaitra">
+
+
+
+{{-- ==================== THANH TOÁN ==================== --}}
+
+    <div class="section-title"><i class="bi bi-credit-card-2-back"></i> Phương thức thanh toán</div>
+
+    <div class="payment-option mb-3">
+
+        <label class="d-flex align-items-center mb-3">
+            <input type="radio" name="redirect" id="cod" value="COD" checked>
+            <span class="ml-3 info-value">Thanh toán khi nhận hàng (COD)</span>
+        </label>
+
+        <label class="d-flex align-items-center">
+            <input type="radio" name="redirect" id="vnpay" value="VNPAY">
+            <span class="ml-3 info-value">Thanh toán online (VNPay)</span>
+        </label>
+    </div>
+</div>
+<div class="checkout-summary-box">
+    <div class="summary-row">
+        <span class="summary-label">Tạm tính:</span>
+        <span class="summary-value">{{ number_format($total) }}đ</span>
+    </div>
+
+    <div class="summary-row">
+        <span class="summary-label">Giảm giá:</span>
+        <span class="summary-value text-danger" id="discount_amount">
+            @if(session('promo'))
+                -{{ number_format(session('promo.discount')) }}đ
+            @else
+                0đ
+            @endif
+        </span>
+    </div>
+
+    <hr>
+
+    <div class="summary-row total-row">
+        <span class="summary-label">Tổng thanh toán:</span>
+        <span class="summary-total" id="total_amount">
+            @if(session('promo'))
+                {{ number_format(session('promo.new_total')) }}đ
+            @else
+                {{ number_format($total) }}đ
+            @endif
+        </span>
+    </div>
+</div>
+
+
+<input type="hidden" name="tongtien" value="{{ $total }}">
+
+<div class="d-flex justify-content-between mt-4" >
+    <a href="/cart" class="btn btn-outline-main" style='margin-bottom: 10px;'><i class="fa fa-arrow-left" style='margin-bottom: 10px;'></i> Quay lại</a>
+    <button type="submit" class="btn btn-main" style='margin-bottom: 10px;'>Đặt hàng</button>
+</div>
 </form>
+</div>
 @csrf
 
 @foreach ($showusers as $key => $showuser)
@@ -166,8 +359,10 @@
         </form>
     </div>
 </div>
+
 @endif
 @endforeach
+</div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @if(session('error'))
 <script>
@@ -222,6 +417,28 @@
         $('#checkout').attr('action', "{{route('vnpay')}}");
 
     });
-</script>
 
+
+
+</script>
+<script>
+    $('#apply_promo').click(function () {
+    let code = $('#promo_code').val();
+
+    $.post("{{ route('promo.apply') }}", {
+        promo_code: code,
+        _token: '{{ csrf_token() }}'
+    }, function (res) {
+        if (res.success) {
+            Swal.fire("Thành công!", res.message, "success");
+
+            $('#discount_amount').text(res.discount.toLocaleString() + "đ");
+            $('#total_amount').text(res.new_total.toLocaleString() + "đ");
+        } else {
+            Swal.fire("Thất bại", res.message, "error");
+        }
+    });
+});
+
+</script>
 @endsection

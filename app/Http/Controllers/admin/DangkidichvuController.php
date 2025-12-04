@@ -59,6 +59,49 @@ class DangkidichvuController extends Controller
         return view('admin.dangki.index', compact('data', 'stats'));
     }
 
+    public function store(Request $request)
+    {
+        $request->validate([
+            'ho_ten' => 'required',
+            'so_dien_thoai' => 'required',
+            'ngay_mong_muon' => 'required|date',
+            'gio_mong_muon' => 'required',
+            'mon_ua_thich' => 'required',
+            'co_so_tap'=> 'required'
+
+        ]);
+
+        $data = [
+            'ho_ten' => $request->ho_ten,
+            'email' => $request->email,
+            'so_dien_thoai' => $request->so_dien_thoai,
+            'mon_ua_thich' => $request->mon_ua_thich,
+            'co_so_tap' => $request->co_so_tap,
+            'gio_mong_muon' => $request->gio_mong_muon,
+            'ngay_mong_muon' => $request->ngay_mong_muon,
+            'trangthai' => 0,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
+
+        $this->DangkiRepository->store($data);
+
+        return redirect()->back()->with('success', 'Đăng ký thành công! Chúng tôi sẽ liên hệ sớm.');
+    }
+
+    public function showForm()
+    {
+        $mon_ua_thich = $this->DangkiRepository->getMonUaThich();
+        $co_so_tap    = $this->DangkiRepository->getCoSoTap();
+        $gio_mong_muon = $this->DangkiRepository->getGioMongMuon();
+
+        return view('pages.dangkitapthu', compact(
+            'mon_ua_thich',
+            'co_so_tap',
+            'gio_mong_muon'
+        ));
+    }
+
 
     public function edit($id)
     {

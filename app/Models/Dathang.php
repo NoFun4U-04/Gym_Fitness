@@ -41,4 +41,9 @@ class Dathang extends Model
         'ngaydathang',
         'ngaygiaohang',
     ];
+    public function khuyenmai()
+    {
+        return $this->belongsTo(Khuyenmai::class, 'id_khuyenmai', 'id_khuyenmai');
+    }
+
 }
