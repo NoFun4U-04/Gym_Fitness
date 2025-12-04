@@ -122,20 +122,21 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {{-- Arrow buttons --}}
-            <div class="rf-packages-arrows">
-                <button type="button"
-                        class="rf-packages-arrow rf-packages-arrow-prev"
-                        aria-label="Gói trước">
-                    &lt;
-                </button>
-                <button type="button"
-                        class="rf-packages-arrow rf-packages-arrow-next"
-                        aria-label="Gói tiếp theo">
-                    &gt;
-                </button>
+                {{-- Arrow buttons --}}
+                <div class="rf-packages-arrows">
+                    <button type="button"
+                            class="rf-packages-arrow rf-packages-arrow-prev d-flex align-items-center justify-content-center"
+                            aria-label="Gói trước">
+                        <i class="bi bi-chevron-left gym-arrow-icon"></i>
+                    </button>
+
+                    <button type="button"
+                            class="rf-packages-arrow rf-packages-arrow-next d-flex align-items-center justify-content-center"
+                            aria-label="Gói tiếp theo">
+                        <i class="bi bi-chevron-right gym-arrow-icon"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </section>

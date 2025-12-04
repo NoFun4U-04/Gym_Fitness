@@ -148,12 +148,12 @@
             {{-- Nút điều hướng --}}
             <button type="button"
                     class="gym-slider-arrow gym-slider-prev d-flex align-items-center justify-content-center">
-                <span class="gym-arrow-icon">&lt;</span>
+                <i class="bi bi-chevron-left gym-arrow-icon"></i>
             </button>
 
             <button type="button"
                     class="gym-slider-arrow gym-slider-next d-flex align-items-center justify-content-center">
-                <span class="gym-arrow-icon">&gt;</span>
+                <i class="bi bi-chevron-right gym-arrow-icon"></i>
             </button>
 
         </div>
@@ -222,7 +222,7 @@
 
                         {{-- 1. Không gian tập luyện hiện đại, rộng rãi --}}
                         <div class="rf-why-item">
-                            <button type="button" class="rf-why-item-header">
+                            <button type="button" class="rf-why-item-header" onclick="toggleWhyItem(this)">
                                 <span class="rf-why-item-title">Không gian tập luyện hiện đại, rộng rãi</span>
                                 <span class="rf-why-arrow">
                                     <i class="fas fa-chevron-down"></i>
@@ -236,7 +236,7 @@
 
                         {{-- 2. Trang thiết bị đa dạng, chuẩn phòng tập chuyên nghiệp --}}
                         <div class="rf-why-item">
-                            <button type="button" class="rf-why-item-header">
+                            <button type="button" class="rf-why-item-header" onclick="toggleWhyItem(this)">
                                 <span class="rf-why-item-title">Trang thiết bị đa dạng, chuẩn phòng tập chuyên nghiệp</span>
                                 <span class="rf-why-arrow">
                                     <i class="fas fa-chevron-down"></i>
@@ -250,7 +250,7 @@
 
                         {{-- 3. Đội ngũ nhân sự chuyên nghiệp --}}
                         <div class="rf-why-item">
-                            <button type="button" class="rf-why-item-header">
+                            <button type="button" class="rf-why-item-header" onclick="toggleWhyItem(this)">
                                 <span class="rf-why-item-title">Đội ngũ nhân sự chuyên nghiệp</span>
                                 <span class="rf-why-arrow">
                                     <i class="fas fa-chevron-down"></i>
@@ -264,7 +264,7 @@
 
                         {{-- 4. Môi trường năng động, truyền cảm hứng --}}
                         <div class="rf-why-item">
-                            <button type="button" class="rf-why-item-header">
+                            <button type="button" class="rf-why-item-header" onclick="toggleWhyItem(this)">
                                 <span class="rf-why-item-title">Môi trường năng động, truyền cảm hứng</span>
                                 <span class="rf-why-arrow">
                                     <i class="fas fa-chevron-down"></i>
@@ -278,7 +278,7 @@
 
                         {{-- 5. Tiện ích & dịch vụ hỗ trợ đồng bộ --}}
                         <div class="rf-why-item">
-                            <button type="button" class="rf-why-item-header">
+                            <button type="button" class="rf-why-item-header" onclick="toggleWhyItem(this)">
                                 <span class="rf-why-item-title">Tiện ích & dịch vụ hỗ trợ đồng bộ</span>
                                 <span class="rf-why-arrow">
                                     <i class="fas fa-chevron-down"></i>
@@ -641,28 +641,23 @@
 </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const items = document.querySelectorAll('.rf-why-item');
+    function toggleWhyItem(button) {
+        const item  = button.closest('.rf-why-item');          // item hiện tại
+        const list  = document.querySelectorAll('.rf-why-item');
+        const isActive = item.classList.contains('active');
 
-        items.forEach(function (item) {
-            const header = item.querySelector('.rf-why-item-header');
-
-            header.addEventListener('click', function () {
-                const isActive = item.classList.contains('active');
-
-                // Đóng tất cả item
-                items.forEach(function (i) {
-                    i.classList.remove('active');
-                });
-
-                // Nếu item này đang đóng thì mở nó
-                if (!isActive) {
-                    item.classList.add('active');
-                }
-            });
+        // Đóng tất cả
+        list.forEach(function (i) {
+            i.classList.remove('active');
         });
-    });
+
+        // Nếu item này đang đóng thì mở
+        if (!isActive) {
+            item.classList.add('active');
+        }
+    }
 </script>
+
 @endpush
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use Illuminate\Http\Request;
 use App\Repositories\IAdminRepository;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
@@ -38,6 +39,14 @@ class AdminController extends Controller
         return view('admin.products.search')->with('searchs', $searchs)->with('tukhoa', $request->input('tukhoa'));
     }
     public function signin_dashboard(Request $request){
+        $request->validate([
+        'email'    => 'required|email',
+        'password' => 'required',
+    ], [
+        'email.required'    => 'Email là bắt buộc.',
+        'email.email'       => 'Email không đúng định dạng.',
+        'password.required' => 'Mật khẩu là bắt buộc.',
+    ]);
         return $this->AdminRepository->signIn($request);
     }
     public function admin_logout(){

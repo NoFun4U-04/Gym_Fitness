@@ -44,6 +44,7 @@ Route::get('/dang-ky-tap-thu', [HomeController::class, 'dangKyTapThu'])->name('d
 // Route::get('/donhang', [HomeController:: class, 'donhang'])->name('donhang');
 
 //Dichvu
+Route::get('/dich-vu', [HomeController::class, 'dichvu1'])->name('services.main');
 Route::get('/dich-vu/gym', function () {
     return view('pages.dichvu1');   // resources/views/pages/dichvu1.blade.php
 })->name('services.gym');
