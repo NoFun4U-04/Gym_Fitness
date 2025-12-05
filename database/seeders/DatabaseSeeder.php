@@ -14,9 +14,8 @@ class DatabaseSeeder extends Seeder
             DanhMucSeeder::class,
             DangKyTapThuSeeder::class,
             KhuyenMaiSeeder::class,
-            ImageSeeder::class,
             SanphamSeeder::class,
-            ]);
-
+            ImageSeeder::class,
+        ]);
     }
 }
