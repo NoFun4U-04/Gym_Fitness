@@ -43,6 +43,9 @@ class ProductController extends Controller
             case IMAGETYPE_GIF:
                 $image = imagecreatefromgif($sourcePath);
                 break;
+             case IMAGETYPE_WEBP:
+                $image = imagecreatefromwebp($sourcePath);
+                break;
             default:
                 return false;
         }
@@ -76,6 +79,9 @@ class ProductController extends Controller
             case IMAGETYPE_GIF:
                 imagegif($newImage, $destPath);
                 break;
+            case IMAGETYPE_WEBP:
+                imagewebp($newImage, $destPath, 90);
+            
         }
 
         imagedestroy($image);
@@ -123,7 +129,7 @@ class ProductController extends Controller
         'tensp'           => 'required',
         'sku'             => 'nullable|string',
         'anhsp'           => 'required',
-        'anhsp.*'         => 'image',
+        'anhsp.*'       => 'mimes:jpeg,png,jpg,gif,webp|max:5120',
         'giasp'           => 'required|numeric',
         'giakhuyenmai'    => 'nullable|numeric',
         'giamgia'         => 'nullable|numeric',
@@ -183,7 +189,7 @@ class ProductController extends Controller
             'tensp'           => 'required',
             'sku'             => 'nullable|string',
             'anhsp'           => 'nullable',     
-            'anhsp.*'         => 'image',     
+            'anhsp.*'         => 'mimes:jpeg,png,jpg,gif,webp|max:5120',    
             'giasp'           => 'required|numeric',
             'giakhuyenmai'    => 'nullable|numeric',
             'giamgia'         => 'nullable|numeric',

@@ -131,7 +131,7 @@
                    required>
         </div>
 
-        {{-- DANH MỤC CHA --}}
+        <!-- {{-- DANH MỤC CHA --}}
         <div>
             <label class="form-label-custom">Danh mục cha</label>
             <select name="danh_muc_cha" class="form-select-custom form-select">
@@ -140,7 +140,7 @@
                     <option value="{{ $dm->id_danhmuc }}">{{ $dm->ten_danhmuc }}</option>
                 @endforeach
             </select>
-        </div>
+        </div> -->
 
     </div>
 

@@ -11,9 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table('sanpham')->truncate();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        $driver = Schema::getConnection()->getDriverName();
+
+        if ($driver === 'mysql') {
+            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            DB::table('sanpham')->truncate();
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        } else { // PostgreSQL
+            DB::statement('TRUNCATE TABLE sanpham RESTART IDENTITY CASCADE;');
+        }
     }
 
     /**

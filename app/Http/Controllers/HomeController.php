@@ -20,18 +20,19 @@ class HomeController extends Controller
     /** ===================== HOME PAGE ===================== */
     public function index()
     {
-        $alls           = $this->productRepository->allProduct();
-        $sanphams       = $this->productRepository->featuredProducts();
+        $alls      = $this->productRepository->allProduct();
+        $sanphams  = $this->productRepository->featuredProducts();
 
-        $featured = Sanpham::where('noi_bat', 1)
-        ->where('trang_thai', 1)   // nếu có trạng thái active
-        ->take(8)
-        ->get();
+        $featured = Sanpham::with('images')
+            ->where('noi_bat', 1)
+            ->where('trang_thai', 1)
+            ->take(8)
+            ->get();
 
         $vouchers = DB::table('khuyenmai')
-        ->where('trang_thai', 1)    // chỉ lấy KM đang hoạt động
-        ->get();
-       
+            ->where('trang_thai', 1)
+            ->get();
+
         return view('pages.home', compact(
             'alls',
             'sanphams',

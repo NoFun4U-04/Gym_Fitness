@@ -188,15 +188,25 @@ class CartController extends Controller
     public function checkout()
     {
         $user = Auth::user();
-        if ($user) {
-            $showusers = DB::table('nguoidung')
-                ->select('nguoidung.*')
-                ->where('nguoidung.id_nd', $user->id_nd)
-                ->get();
-            return view('pages.checkout', ['showusers' => $showusers]);
-        } else {
+        if (!$user) {
             return redirect('/login')->with('needLogin', true);
         }
+
+        $showusers = DB::table('nguoidung')
+            ->select('nguoidung.*')
+            ->where('nguoidung.id_nd', $user->id_nd)
+            ->get();
+
+        $cart = session()->get('cart', []);
+
+        $total = 0;
+        foreach ($cart as $item) {
+            $qty          = $item['quantity'] ?? 0;
+            $giaKM        = $item['giakhuyenmai'] ?? ($item['giasp'] ?? 0);
+            $total       += $giaKM * $qty;
+        }
+
+        return view('pages.checkout', compact('showusers', 'cart', 'total'));
     }
 
 // Đặt hàng

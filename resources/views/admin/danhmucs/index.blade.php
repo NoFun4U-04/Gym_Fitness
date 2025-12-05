@@ -174,7 +174,7 @@
     <thead>
         <tr>
             <th width="35%">TÊN DANH MỤC</th>
-            <th width="20%">DANH MỤC CHA</th>
+            <!-- <th width="20%">DANH MỤC CHA</th> -->
             <th width="15%">TRẠNG THÁI</th>
             <th width="30%" class="text-center">HÀNH ĐỘNG</th>
         </tr>
@@ -185,13 +185,13 @@
         <tr>
             <td class="fw-bold">{{ $dm->ten_danhmuc }}</td>
 
-            <td>
+            <!-- <td>
                 @if($dm->parent_category_id)
                     {{ optional($dm->parent)->ten_danhmuc }}
                 @else
                     <span class="text-muted">—</span>
                 @endif
-            </td>
+            </td> -->
 
             <td>
                 @if($dm->status == 1)
