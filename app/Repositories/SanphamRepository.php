@@ -62,20 +62,19 @@ class SanphamRepository
         return $query->orderByDesc('id_sanpham')->paginate(12);
     }
 
-    public function getAllByDanhMuc(Request $request)
+    public function getAllByDanhMuc($request)
     {
-        $query = SanPham::with('danhMuc')->orderByDesc('id_sanpham');
+        $query = Sanpham::with(['images', 'danhmuc'])
+            ->where('trang_thai', 1);
 
-        if (Schema::hasColumn('sanpham', 'trang_thai')) {
-            $query->where('trang_thai', 1);
-        }
-
-        if ($request->filled('danhmuc_id')) {
-            $query->where('id_danhmuc', $request->input('danhmuc_id'));
+        // sửa ở đây: dùng đúng 'category'
+        if ($request->filled('category')) {
+            $query->where('id_danhmuc', $request->category);
         }
 
         return $query->paginate(12);
     }
+
 
     public function getProductsByCategory($categoryId)
     {

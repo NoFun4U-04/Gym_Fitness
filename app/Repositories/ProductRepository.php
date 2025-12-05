@@ -75,12 +75,14 @@ class ProductRepository implements IProductRepository
         $query = Sanpham::with(['images', 'danhmuc'])
             ->where('trang_thai', 1);
 
-        if ($request->filled('danhmuc_id')) {
-            $query->where('id_danhmuc', $request->danhmuc_id);
+        // sửa ở đây: dùng đúng 'category'
+        if ($request->filled('category')) {
+            $query->where('id_danhmuc', $request->category);
         }
 
         return $query->paginate(12);
     }
+
 
     public function filterProducts($request)
     {

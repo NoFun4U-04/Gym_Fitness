@@ -1937,6 +1937,17 @@
     );
     border-left: 2px dashed rgba(255,255,255,0.7);
 }
+.section-badge {
+    display: inline-block;
+    padding: 10px 22px;
+    background: linear-gradient(135deg, #3b82f6, #1e40af);;
+    color: white;
+    font-size: 22px;
+    font-weight: 700;
+    border-radius: 12px;
+    letter-spacing: 1px;
+}
+
 
 /* =========================================================
    SALE SECTION – Layout tổng
@@ -1971,7 +1982,7 @@
 }
 
 .time-box {
-    background: #ff1a1a;
+    background: #1e6ff1;
     width: 70px;
     padding: 10px 0;
     border-radius: 10px;
@@ -2125,7 +2136,7 @@
 
 .progress {
     height: 100%;
-    background: #ff6565;
+    background: linear-gradient(135deg, #3b82f6, #1e40af);;
     border-radius: 20px;
 }
 
