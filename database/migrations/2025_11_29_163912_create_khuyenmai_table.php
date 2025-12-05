@@ -13,7 +13,7 @@ return new class extends Migration
 
             $table->string('ten_khuyenmai', 255);
             $table->string('ma_code', 255)->unique()->nullable();
-
+            
             $table->integer('gia_tri_giam')->nullable(); // int, null
             $table->enum('kieu_giam', ['percent', 'money'])->default('percent'); // enum
 
