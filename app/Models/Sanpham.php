@@ -26,7 +26,7 @@ class SanPham extends Model
         'id_danhmuc'
     ];
 
-    public function danhMuc()
+    public function danhmuc()
     {
         return $this->belongsTo(DanhMuc::class, 'id_danhmuc', 'id_danhmuc');
     }
