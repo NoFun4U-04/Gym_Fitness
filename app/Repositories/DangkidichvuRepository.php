@@ -61,19 +61,58 @@ class DangkidichvuRepository implements IDangkidichvuRepository
      * ENUM HANDLER
      * ========================= */
 
-    public function getEnumValues($table, $column)
+
+    public function getEnumValues(string $table, string $column): array
     {
-        $type = DB::table('information_schema.columns')
-            ->where('table_name', $table)
-            ->where('column_name', $column)
-            ->value('column_type');
+        $driver = DB::connection()->getDriverName();
 
-        if (!$type) return [];
+        if ($driver === 'pgsql') {
+            $row = DB::table('information_schema.columns')
+                ->select('udt_name', 'data_type')
+                ->where('table_name', $table)
+                ->where('column_name', $column)
+                ->first();
 
-        preg_match('/^enum\((.*)\)$/', $type, $matches);
+            if (!$row || $row->data_type !== 'USER-DEFINED') {
+                return [];
+            }
 
-        return str_getcsv($matches[1], ',', "'");
+            $enumType = $row->udt_name;
+
+            $values = DB::table('pg_type as t')
+                ->join('pg_enum as e', 't.oid', '=', 'e.enumtypid')
+                ->join('pg_catalog.pg_namespace as n', 'n.oid', '=', 't.typnamespace')
+                ->where('t.typname', $enumType)
+                ->orderBy('e.enumsortorder')
+                ->pluck('e.enumlabel')
+                ->toArray();
+
+            return $values;
+        }
+
+        if ($driver === 'mysql') {
+            $type = DB::table('information_schema.columns')
+                ->where('table_name', $table)
+                ->where('column_name', $column)
+                ->value('COLUMN_TYPE');
+
+            if (!$type) {
+                return [];
+            }
+
+            if (preg_match('/^enum\((.*)\)$/', $type, $matches)) {
+                return collect(explode(',', $matches[1]))
+                    ->map(fn($v) => trim($v, " '\""))
+                    ->values()
+                    ->toArray();
+            }
+
+            return [];
+        }
+
+        return [];
     }
+
 
 
     public function getMonUaThich()
