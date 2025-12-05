@@ -6,43 +6,35 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::create('khuyenmai', function (Blueprint $table) {
+            $table->increments('id_khuyenmai'); // AUTO_INCREMENT, khóa chính
 
-            $table->increments('id_khuyenmai'); // promotion_id
+            $table->string('ten_khuyenmai', 255);
+            $table->string('ma_code', 255)->unique()->nullable();
 
-            $table->string('ten_khuyenmai'); // promotion_name
-            $table->string('ma_khuyenmai')->unique(); // promotion_code
+            $table->integer('gia_tri_giam')->nullable(); // int, null
+            $table->enum('kieu_giam', ['percent', 'money'])->default('percent'); // enum
 
-            // Giá trị giảm (số tiền hoặc %)
-            $table->integer('gia_tri_giam')->nullable(); // discount_value
+            $table->text('mo_ta')->nullable(); // mô tả
 
-            // Loại giảm giá: percent / amount
-            $table->enum('loai_giam', ['percent', 'amount'])->default('percent'); // discount_type
+            $table->integer('don_toi_thieu')->default(0); // int default 0
+            $table->integer('giam_toi_da')->nullable(); // int, null
 
-            $table->text('mo_ta')->nullable(); // description
+            $table->integer('so_luot_da_dung')->default(0); // int default 0
+            $table->integer('gioi_han_luot')->nullable(); // int, null
 
-            // Điều kiện áp dụng
-            $table->integer('don_toi_thieu')->nullable(); // min_order_value
-            $table->integer('giam_toi_da')->nullable(); // max_discount_amount
+            $table->dateTime('ngay_bat_dau')->nullable();
+            $table->dateTime('ngay_ket_thuc')->nullable();
 
-            // Lượt sử dụng
-            $table->integer('so_luot_da_dung')->default(0); // usage_count
-            $table->integer('gioi_han_luot')->nullable(); // usage_limit
-
-            // Thời gian áp dụng
-            $table->dateTime('ngay_bat_dau')->nullable(); // start_date
-            $table->dateTime('ngay_ket_thuc')->nullable(); // end_date
-
-            // Trạng thái (1 = hoạt động, 0 = tắt)
             $table->tinyInteger('trang_thai')->default(1);
 
-            $table->timestamps();
+            $table->timestamps(); // created_at, updated_at
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('khuyenmai');
     }
