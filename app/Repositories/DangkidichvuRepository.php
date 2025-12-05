@@ -63,18 +63,18 @@ class DangkidichvuRepository implements IDangkidichvuRepository
 
     public function getEnumValues($table, $column)
     {
-        $result = DB::select("SHOW COLUMNS FROM {$table} LIKE '{$column}'");
+        $type = DB::table('information_schema.columns')
+            ->where('table_name', $table)
+            ->where('column_name', $column)
+            ->value('column_type');
 
-        if (!$result) {
-            return [];
-        }
-
-        $type = $result[0]->Type;
+        if (!$type) return [];
 
         preg_match('/^enum\((.*)\)$/', $type, $matches);
 
         return str_getcsv($matches[1], ',', "'");
     }
+
 
     public function getMonUaThich()
     {
