@@ -378,3 +378,8 @@
 .product-slider-dot.active {
     background: #10b981;
 }
+
+
+.page-title {
+    text-transform: uppercase;
+}

@@ -9,18 +9,18 @@
 <section class="page-header">
     <div class="header-overlay"></div>
     <div class="header-content">
-        <h1>
             @php
-            $ten = 'TẤT CẢ SẢN PHẨM';
-            if(request('danhmuc_id')) {
-            $dm = $danhmucs->firstWhere('id_danhmuc', request('danhmuc_id'));
-            if ($dm) {
-            $ten = 'SẢN PHẨM: ' . strtoupper($dm->ten_danhmuc);
-            }
-            }
+                $ten = 'TẤT CẢ SẢN PHẨM';
+
+                if (request('category')) {
+                    $dm = $danhmucs->firstWhere('id_danhmuc', request('category'));
+                    if ($dm) {
+                        $ten = 'SẢN PHẨM: ' . strtoupper($dm->ten_danhmuc);
+                    }
+                }
             @endphp
-            {{ $ten }}
-        </h2>
+
+            <h1 class="page-title">{{ $ten }}</h1>   
     </div>
 </section>
 <!-- Tất cả sản phẩm -->
@@ -46,7 +46,6 @@
                                                 >
                                             @endforeach
                                         @else
-                                            {{-- fallback nếu chưa có hình trong bảng images --}}
                                             <img
                                                 class="slide active"
                                                 src="{{ asset('frontend/upload/placeholder.jpg') }}"
