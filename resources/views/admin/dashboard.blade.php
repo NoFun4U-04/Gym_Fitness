@@ -1,224 +1,213 @@
 @extends('admin_layout')
+
 @section('admin_content')
 
 <style>
-/* ======================= KPI CARDS ======================= */
-.kpi-card {
-    border-radius: 16px;
-    padding: 22px;
-    background: #ffffff;
+.dashboard-filter button {
     border: none;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-    transition: 0.25s ease;
-}
-.kpi-card:hover {
-    transform: translateY(-3px);
-}
-
-.kpi-icon {
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    font-size: 22px;
-}
-
-.kpi-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: #6b7280;
-}
-
-.kpi-value {
-    font-size: 30px;
-    font-weight: 800;
-    margin-top: 6px;
-}
-
-/* ======================= TABLE ======================= */
-.table-card {
-    border-radius: 16px;
-    overflow: hidden;
-    border: none;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-}
-
-.table thead th {
-    background: #0f172a !important;
-    color: #fff !important;
-    padding: 14px 10px;
-    text-transform: uppercase;
-    font-size: 12px;
-    letter-spacing: 0.5px;
-}
-
-.table tbody tr:hover {
-    background: #f8fafc;
-}
-
-.badge {
-    padding: 8px 12px;
-    font-size: 12px;
+    padding: 8px 20px;
     border-radius: 8px;
+    background: #f1f5f9;
+    font-weight: 600;
+    transition: 0.2s;
 }
-
-.btn-edit {
-    padding: 6px 12px;
-    border-radius: 10px;
+.dashboard-filter button.active {
+    background: #10b981;
+    color: #fff;
+}
+.kpi-box {
+    background: white;
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+.kpi-value {
+    font-size: 26px;
+    font-weight: 800;
+}
+.kpi-growth {
+    font-size: 13px;
+    color: #10b981;
+    font-weight: bold;
 }
 </style>
 
+<h3 class="fw-bold mb-3">Tổng Quan</h3>
 
-<div class="container-fluid p-0">
+<div class="dashboard-filter d-flex gap-2 mb-4">
+    <a href="?range=today"><button class="{{ $range=='today'?'active':'' }}">Hôm nay</button></a>
+    <a href="?range=week"><button class="{{ $range=='week'?'active':'' }}">Tuần này</button></a>
+    <a href="?range=month"><button class="{{ $range=='month'?'active':'' }}">Tháng này</button></a>
+    <a href="?range=year"><button class="{{ $range=='year'?'active':'' }}">Năm nay</button></a>
+</div>
 
-    <h1 class="h3 mb-4 fw-bold"><i class="bi bi-speedometer2 me-2"></i>Dashboard</h1>
+<div class="row g-4">
 
-    {{-- ======================== KPI ROW ======================== --}}
-    <div class="row g-4 mb-4">
-
-        {{-- Orders --}}
-        <div class="col-md-3">
-            <div class="kpi-card">
-                <div class="d-flex justify-content-between align-items-center">
-                    <p class="kpi-title">Đơn hàng</p>
-                    <div class="kpi-icon bg-blue-100 text-primary">
-                        <i class="bi bi-cart-check"></i>
-                    </div>
-                </div>
-                <div class="kpi-value">{{ $totalsOrders }}</div>
-                <small class="text-danger fw-semibold">-2.25% tuần trước</small>
-            </div>
+    <div class="col-md-3">
+        <div class="kpi-box">
+            <p>Doanh Thu</p>
+            <div class="kpi-value">{{ number_format($stats['revenue'], 0, ',', '.') }} đ</div>
+            <div class="kpi-growth">↑ {{ $stats['revenueGrowth'] }}%</div>
         </div>
-
-        {{-- Members --}}
-        <div class="col-md-3">
-            <div class="kpi-card">
-                <div class="d-flex justify-content-between align-items-center">
-                    <p class="kpi-title">Thành viên</p>
-                    <div class="kpi-icon bg-green-100 text-success">
-                        <i class="bi bi-people"></i>
-                    </div>
-                </div>
-                <div class="kpi-value">{{ $totalsCustomer }}</div>
-                <small class="text-success fw-semibold">+5.25% tuần trước</small>
-            </div>
-        </div>
-
-        {{-- Sales --}}
-        <div class="col-md-3">
-            <div class="kpi-card">
-                <div class="d-flex justify-content-between align-items-center">
-                    <p class="kpi-title">Sản phẩm đã bán</p>
-                    <div class="kpi-icon bg-purple-100 text-purple">
-                        <i class="bi bi-bag"></i>
-                    </div>
-                </div>
-                <div class="kpi-value">{{ $totalsSaleProducts }}</div>
-                <small class="text-danger fw-semibold">-3.65% tuần trước</small>
-            </div>
-        </div>
-
-        {{-- Income --}}
-        <div class="col-md-3">
-            <div class="kpi-card">
-                <div class="d-flex justify-content-between align-items-center">
-                    <p class="kpi-title">Tổng thu nhập</p>
-                    <div class="kpi-icon bg-yellow-100 text-warning">
-                        <i class="bi bi-cash-coin"></i>
-                    </div>
-                </div>
-                <div class="kpi-value">{{ number_format($totalsMoney,0,',','.') }} đ</div>
-                <small class="text-success fw-semibold">+6.65% tuần trước</small>
-            </div>
-        </div>
-
     </div>
 
-    {{-- ======================== TABLE ORDERS ======================== --}}
-    <div class="table-card">
-
-        <div class="card-header bg-white py-3 px-4">
-            <h5 class="fw-bold mb-0"><i class="bi bi-list-check me-2"></i>Đơn hàng mới nhất</h5>
+    <div class="col-md-3">
+        <div class="kpi-box">
+            <p>Đơn Hàng</p>
+            <div class="kpi-value">{{ $stats['orders'] }}</div>
+            <div class="kpi-growth">↑ {{ $stats['ordersGrowth'] }}%</div>
         </div>
+    </div>
 
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Thanh toán</th>
-                        <th>Ngày đặt</th>
-                        <th>Ngày giao</th>
-                        <th>Trạng thái</th>
-                        <th>Địa chỉ</th>
-                        <th>Thao tác</th>
-                    </tr>
-                </thead>
+    <div class="col-md-3">
+        <div class="kpi-box">
+            <p>Khách Hàng</p>
+            <div class="kpi-value">{{ $stats['customers'] }}</div>
+            <div class="kpi-growth">↑ {{ $stats['customersGrowth'] }}%</div>
+        </div>
+    </div>
 
-                <tbody>
-                @foreach($getOrderView as $order)
-                    <tr>
-                        <td class="fw-bold">#{{ $order->id_dathang }}</td>
-
-                        {{-- Payment --}}
-                        <td>
-                            @if($order->phuongthucthanhtoan == "COD")
-                                <span class="badge bg-secondary">COD</span>
-                            @elseif($order->phuongthucthanhtoan == "VNPAY")
-                                <span class="badge bg-primary">VNPAY</span>
-                            @else
-                                <span class="badge bg-dark">{{ $order->phuongthucthanhtoan }}</span>
-                            @endif
-                        </td>
-
-                        <td>{{ $order->ngaydathang }}</td>
-
-                        <td>
-                            {{ $order->ngaygiaohang ? date('d/m/Y', strtotime($order->ngaygiaohang)) : '—' }}
-                        </td>
-
-                        {{-- Status --}}
-                        <td>
-                            @switch($order->trangthai)
-                                @case('đang xử lý')
-                                    <span class="badge bg-warning text-dark">Đang xử lý</span>
-                                @break
-
-                                @case('chờ lấy hàng')
-                                    <span class="badge bg-info text-dark">Chờ lấy</span>
-                                @break
-
-                                @case('đang giao hàng')
-                                    <span class="badge bg-primary">Đang giao</span>
-                                @break
-
-                                @case('giao thành công')
-                                    <span class="badge bg-success">Thành công</span>
-                                @break
-
-                                @default
-                                    <span class="badge bg-danger">{{ $order->trangthai }}</span>
-                            @endswitch
-                        </td>
-
-                        <td>{{ $order->diachigiaohang }}</td>
-
-                        <td>
-                            <a href="{{ route('orders.edit', ['id' => $order->id_dathang]) }}" 
-                               class="btn btn-sm btn-primary btn-edit">
-                                <i class="bi bi-pencil-square"></i> Sửa
-                            </a>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-
+    <div class="col-md-3">
+        <div class="kpi-box">
+            <p>Sản Phẩm Đã Bán</p>
+            <div class="kpi-value">{{ $stats['soldProducts'] }}</div>
+            <div class="kpi-growth">↑ {{ $stats['soldGrowth'] }}%</div>
         </div>
     </div>
 
 </div>
+
+<div class="row mt-4">
+
+    <div class="col-lg-6 mb-4">
+        <div class="card">
+            <div class="card-header fw-bold">Biểu đồ Doanh Thu</div>
+            <div class="card-body">
+                <canvas id="revenueChart" height="130"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 mb-4">
+        <div class="card">
+            <div class="card-header fw-bold">Biểu đồ Đơn Hàng</div>
+            <div class="card-body">
+                <canvas id="orderChart" height="130"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 mb-4">
+        <div class="card">
+            <div class="card-header fw-bold">Khách Hàng Mới</div>
+            <div class="card-body">
+                <canvas id="customerChart" height="130"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 mb-4">
+        <div class="card">
+            <div class="card-header fw-bold">Top Sản phẩm bán chạy</div>
+            <div class="card-body">
+                <canvas id="soldChart" height="130"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // 1. Revenue
+    fetch("/admin/chart/revenue")
+        .then(r => r.json())
+        .then(data => {
+            new Chart(revenueChart, {
+                type: "line",
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: "Doanh thu",
+                        data: data.values,
+                        borderColor: "#4e73df",
+                        backgroundColor: "rgba(78,115,223,0.15)",
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 3
+                    }]
+                }
+            });
+        });
+
+
+    // 2. Orders
+    fetch("/admin/chart/orders")
+        .then(r => r.json())
+        .then(data => {
+            new Chart(orderChart, {
+                type: "bar",
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: "Đơn hàng",
+                        data: data.values,
+                        backgroundColor: "#1cc88a",
+                    }]
+                }
+            });
+        });
+
+
+    // 3. Customers
+    fetch("/admin/chart/customers")
+        .then(r => r.json())
+        .then(data => {
+            new Chart(customerChart, {
+                type: "line",
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: "Khách hàng mới",
+                        data: data.values,
+                        borderColor: "#36b9cc",
+                        backgroundColor: "rgba(54,185,204,0.15)",
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 2
+                    }]
+                }
+            });
+        });
+
+
+    // 4. Sold products
+    fetch("/admin/chart/sold")
+        .then(r => r.json())
+        .then(data => {
+            new Chart(soldChart, {
+                type: "pie",
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: "Số lượng",
+                        data: data.values,
+                        backgroundColor: [
+                            "#4e73df", "#1cc88a", "#36b9cc", "#f6c23e", "#e74a3b"
+                        ]
+                    }]
+                }
+            });
+        });
+
+});
+</script>
+
+
 
 @endsection

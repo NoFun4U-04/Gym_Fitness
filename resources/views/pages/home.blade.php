@@ -171,21 +171,17 @@
             <div class="sale-slider-wrapper" id="saleWrapper">
 
                 @foreach($sanphams as $sp)
-                    <div class="sale-item">
-
+                    <div class="sale-item" data-href="{{ route('detail', ['id' => $sp->id_sanpham]) }}">
                         <!-- IMAGE -->
                         <div class="sale-img">
                             @php
                                 $img = $sp->images->first();
                                 $imagePath1 = $img ? str_replace('\\', '/', $img->duong_dan) : 'frontend/upload/default.jpg';
                             @endphp
-
                             <img src="{{ asset($imagePath1) }}" alt="{{ $sp->tensp }}">
                         </div>
-
                         <!-- ICON HOVER -->
                         <div class="hover-icons">
-
                             <!-- Nút thêm vào giỏ hàng -->
                             <a href="#" class="icon-btn js-add-to-cart" data-url="{{ route('add_to_cart', $sp->id_sanpham) }}">
                                 <i class="fa fa-shopping-cart"></i>
@@ -210,10 +206,8 @@
                         </div>
 
                         <!-- INFO -->
-                        <div class="sale-info">
-                            <p>Giá tốt nhất thị trường</p>
-                            <p>Quà tặng trị giá {{ number_format(rand(50000,200000)) }}đ</p>
-                        </div>
+                        <div class="benefit">🔥 Giá tốt nhất thị trường</div>
+                        <div class="gift">🎁 Quà tặng trị giá 100.000đ</div>
 
                         <!-- PROGRESS BAR -->
                         <div class="progress-bar">
@@ -249,8 +243,7 @@
 
         <div class="top-sell-grid">
             @foreach($sanphams as $sp)
-                <div class="sale-item">
-
+                <div class="sale-item" data-href="{{ route('detail', ['id' => $sp->id_sanpham]) }}">
                     <!-- IMAGE -->
                     <div class="sale-img">
                         @php
@@ -288,10 +281,8 @@
                     </div>
 
                     <!-- INFO -->
-                    <div class="sale-info">
-                        <p>Giá tốt nhất thị trường</p>
-                        <p>Quà tặng trị giá {{ number_format(rand(50000,200000)) }}đ</p>
-                    </div>
+                    <div class="benefit">🔥 Giá tốt nhất thị trường</div>
+                    <div class="gift">🎁 Quà tặng trị giá 100.000đ</div>
 
                     <!-- PROGRESS BAR -->
                     <div class="progress-bar">
@@ -320,8 +311,7 @@
 
         <div class="top-sell-grid">
             @foreach($alls->where('id_danhmuc', 1)->take(8) as $sp)
-                <div class="sale-item">
-
+                <div class="sale-item" data-href="{{ route('detail', ['id' => $sp->id_sanpham]) }}">
                     <!-- IMAGE -->
                     <div class="sale-img">
                         @php
@@ -359,10 +349,8 @@
                     </div>
 
                     <!-- INFO -->
-                    <div class="sale-info">
-                        <p>Giá tốt nhất thị trường</p>
-                        <p>Quà tặng trị giá {{ number_format(rand(50000,200000)) }}đ</p>
-                    </div>
+                    <div class="benefit">🔥 Giá tốt nhất thị trường</div>
+                    <div class="gift">🎁 Quà tặng trị giá 100.000đ</div>
 
                     <!-- PROGRESS BAR -->
                     <div class="progress-bar">
@@ -385,72 +373,71 @@
   <img src="/frontend/img/Gioi-thieu/section-image-2.webp" alt="Sale 40%" class="sale-banner-img">
 </div>
 
-<section class="top-sell-section">
-    <div class="container">
-        <h2 class="section-badge">ÁO TẬP</h2>
+    <section class="top-sell-section">
+        <div class="container">
+            <h2 class="section-badge">ÁO TẬP</h2>
 
-        <div class="top-sell-grid">
-            @foreach($alls->where('id_danhmuc', 1)->take(8) as $sp)
-                <div class="sale-item">
+            <div class="top-sell-grid">
+                @foreach($alls->where('id_danhmuc', 1)->take(8) as $sp)
+                    <div class="sale-item" data-href="{{ route('detail', ['id' => $sp->id_sanpham]) }}">
 
-                    <!-- IMAGE -->
-                    <div class="sale-img">
-                        @php
-                            $img = $sp->images->first();
-                            $imagePath1 = $img ? str_replace('\\', '/', $img->duong_dan) : 'frontend/upload/default.jpg';
-                        @endphp
+                        <!-- IMAGE -->
+                        <div class="sale-img">
+                            @php
+                                $img = $sp->images->first();
+                                $imagePath1 = $img ? str_replace('\\', '/', $img->duong_dan) : 'frontend/upload/default.jpg';
+                            @endphp
 
-                        <img src="{{ asset($imagePath1) }}" alt="{{ $sp->tensp }}">
+                            <a href="{{ route('detail', ['id' => $sp->id_sanpham]) }}" class="full-link"></a> 
+                            <img src="{{ asset($imagePath1) }}" alt="{{ $sp->tensp }}">
+                        </div>
+
+                        <!-- ICON HOVER -->
+                        <div class="hover-icons">
+
+                            <!-- Nút thêm vào giỏ hàng -->
+                            <a href="#" class="icon-btn js-add-to-cart" data-url="{{ route('add_to_cart', $sp->id_sanpham) }}">
+                                <i class="fa fa-shopping-cart"></i>
+                            </a>
+
+
+                            <!-- Nút xem chi tiết -->
+                            <a href="{{ route('detail', ['id' => $sp->id_sanpham]) }}" class="icon-btn" title="Xem chi tiết">
+                                <i class="fa fa-search"></i>
+                            </a>
+
+                        </div>
+
+                        <!-- NAME -->
+                        <h3 class="sale-name">{{ $sp->tensp }}</h3>
+
+                        <!-- PRICE -->
+                        <div class="sale-price">
+                            <span class="new-price">{{ number_format($sp->gia_duoc_giam) }}đ</span>
+                            <span class="old-price">{{ number_format($sp->giasp) }}đ</span>
+                            <span class="discount">-{{ $sp->giamgia }}%</span>
+                        </div>
+
+                        <!-- INFO -->
+                        <div class="benefit">🔥 Giá tốt nhất thị trường</div>
+                        <div class="gift">🎁 Quà tặng trị giá 100.000đ</div>
+
+                        <!-- PROGRESS BAR -->
+                        <div class="progress-bar">
+                            <div class="progress" style="width: {{ rand(30,80) }}%"></div>
+                        </div>
+
+                        <span class="sold">{{ $sp->sold }} sản phẩm đã bán</span>
+
                     </div>
+                @endforeach
+            </div>
 
-                    <!-- ICON HOVER -->
-                    <div class="hover-icons">
-
-                        <!-- Nút thêm vào giỏ hàng -->
-                        <a href="#" class="icon-btn js-add-to-cart" data-url="{{ route('add_to_cart', $sp->id_sanpham) }}">
-                            <i class="fa fa-shopping-cart"></i>
-                        </a>
-
-
-                        <!-- Nút xem chi tiết -->
-                        <a href="{{ route('detail', ['id' => $sp->id_sanpham]) }}" class="icon-btn" title="Xem chi tiết">
-                            <i class="fa fa-search"></i>
-                        </a>
-
-                    </div>
-
-                    <!-- NAME -->
-                    <h3 class="sale-name">{{ $sp->tensp }}</h3>
-
-                    <!-- PRICE -->
-                    <div class="sale-price">
-                        <span class="new-price">{{ number_format($sp->gia_duoc_giam) }}đ</span>
-                        <span class="old-price">{{ number_format($sp->giasp) }}đ</span>
-                        <span class="discount">-{{ $sp->giamgia }}%</span>
-                    </div>
-
-                    <!-- INFO -->
-                    <div class="sale-info">
-                        <p>Giá tốt nhất thị trường</p>
-                        <p>Quà tặng trị giá {{ number_format(rand(50000,200000)) }}đ</p>
-                    </div>
-
-                    <!-- PROGRESS BAR -->
-                    <div class="progress-bar">
-                        <div class="progress" style="width: {{ rand(30,80) }}%"></div>
-                    </div>
-
-                    <span class="sold">{{ $sp->sold }} sản phẩm đã bán</span>
-
-                </div>
-            @endforeach
+            <div class="view-more-container">
+                <a href="#" class="view-more-btn">Xem tất cả →</a>
+            </div>
         </div>
-
-        <div class="view-more-container">
-            <a href="#" class="view-more-btn">Xem tất cả →</a>
-        </div>
-    </div>
-</section>
+    </section>
 
 <section id="bmi">
   <div class="bmi-container">
@@ -744,6 +731,17 @@ document.querySelectorAll(".copy-btn").forEach(btn => {
         document.getElementById("seconds").innerHTML = seconds;
 
     }, 1000);
+
+
+    document.querySelectorAll('.sale-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+            // Không click khi bấm vào icon
+            if (e.target.closest('.icon-btn')) return;
+
+            window.location.href = this.dataset.href;
+        });
+    });
+
 </script>
 
 

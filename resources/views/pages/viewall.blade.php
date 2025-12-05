@@ -1,194 +1,334 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('frontend/css/sanpham.css') }}">
 @endpush
+
 @extends('layout')
 @section('content')
 
+@php 
+    $ten = request('category')
+        ? 'SẢN PHẨM: ' . optional($danhmucs->firstWhere('id_danhmuc', request('category')))->ten_danhmuc
+        : 'TẤT CẢ SẢN PHẨM';
+@endphp
 
-
+<!-- HEADER -->
 <section class="page-header">
     <div class="header-overlay"></div>
     <div class="header-content">
-            @php
-                $ten = 'TẤT CẢ SẢN PHẨM';
-
-                if (request('category')) {
-                    $dm = $danhmucs->firstWhere('id_danhmuc', request('category'));
-                    if ($dm) {
-                        $ten = 'SẢN PHẨM: ' . strtoupper($dm->ten_danhmuc);
-                    }
-                }
-            @endphp
-
-            <h1 class="page-title">{{ $ten }}</h1>   
+        <h1 class="page-title">{{ $ten }}</h1>
     </div>
 </section>
-<!-- Tất cả sản phẩm -->
-<div class="body">
-        <div>
-            <div class="row">
-                @foreach($sanphams as $sanpham)
-                <div class="col-lg-2_5 col-md-4 col-6 post2">
-                    <a href="{{ route('detail', ['id' => $sanpham->id_sanpham]) }}">
-                        <div class="product">
-                            <div class="product__img">
-                                <div class="product-slider">
-                                        @php
-                                            $images = $sanpham->images ?? collect();
-                                        @endphp
 
-                                        @if($images->isNotEmpty())
-                                            @foreach($images as $index => $img)
-                                                <img
-                                                    class="slide {{ $index === 0 ? 'active' : '' }}"
-                                                    src="{{ asset($img->duong_dan) }}"
-                                                    alt="{{ $sanpham->tensp }}"
-                                                >
-                                            @endforeach
-                                        @else
-                                            <img
-                                                class="slide active"
-                                                src="{{ asset('frontend/upload/placeholder.jpg') }}"
-                                                alt="{{ $sanpham->tensp }}">
-                                        @endif
+<section class="product-page">
 
-                                        <div class="product-slider-dots">
-                                            @php $total = max($images->count(), 1); @endphp
-                                            @for($i = 0; $i < $total; $i++)
-                                                <span class="product-slider-dot {{ $i === 0 ? 'active' : '' }}" data-index="{{ $i }}"></span>
-                                            @endfor
-                                        </div>
-                                    </div>
-                                </div>
-                            <div class="box-icon-new-product">
-                                <a href="{{ route('add_to_cart', $sanpham->id_sanpham) }}" title="Thêm vào giỏ hàng">
-                                    <i style="font-size: 19px;" id="cart-Product" class="cart-product fa-solid fa-cart-shopping"></i>
-                                </a>
-                                {{-- <a href="{{ route('wishlist_add', $sanpham->id_sanpham) }}" title="Thêm vào yêu thích">
-                                <i style="font-size: 18px;" id="heart-Product" class="fa-solid fa-heart"></i>
-                    </a> --}}
-                    <a href="{{ route('detail', ['id' => $sanpham->id_sanpham]) }}" title="Xem chi tiết sản phẩm">
-                        <i style="font-size: 18px;" id="search-Product" class="fa-solid fa-magnifying-glass"></i>
-                    </a>
+    <!-- TOP BAR -->
+    <div class="topbar-wrapper">
+        <div class="container">
+            <div class="top-bar">
+                <div class="result-count">
+                    Tìm thấy <strong>{{ $sanphams->total() }}</strong> sản phẩm
                 </div>
 
-                <div class="product__sale">
-                    <div>
-                        @if($sanpham->giamgia)
-                        -{{$sanpham->giamgia}}%
-                        @else Mới
-                        @endif
-                    </div>
-                </div>
-
-                <div class="product__content">
-                    {{-- Added product brand for consistency --}}
-                    @if(isset($sanpham->danhmuc->ten_danhmuc))
-                    <div class="product__brand">
-                        {{ $sanpham->danhmuc->ten_danhmuc }}
-                    </div>
-                    @endif
-                    <div class="product__title">
-                        {{$sanpham->tensp}}
-                    </div>
-
-                    <div class="product__pride-oldPride">
-                        <span class="Price">
-                            <bdi>
-                                {{ number_format($sanpham->giasp, 0, ',', '.') }}
-                                <span class="currencySymbol">₫</span>
-                            </bdi>
-                        </span>
-                    </div>
-
-                    <div class="product__pride-newPride">
-                        <span class="Price">
-                            <bdi>
-                                {{ number_format($sanpham->giakhuyenmai, 0, ',', '.') }}
-                                <span class="currencySymbol">₫</span>
-                            </bdi>
-                        </span>
-                    </div>
+                <div class="sort-box">
+                    <select class="sort-select">
+                        <option value="">Mặc định</option>
+                        <option value="price_asc">Giá tăng dần</option>
+                        <option value="price_desc">Giá giảm dần</option>
+                        <option value="newest">Mới nhất</option>
+                    </select>
                 </div>
             </div>
-            </a>
         </div>
-        @endforeach
     </div>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item @if($sanphams->currentPage() === 1) disabled @endif">
-                <a class="page-link" href="{{ $sanphams->appends(request()->query())->previousPageUrl() }}">
-                    &laquo;
-                </a>
-            </li>
-            @for ($i = 1; $i <= $sanphams->lastPage(); $i++)
-                <li class="page-item @if($sanphams->currentPage() === $i) active @endif">
-                    <a class="page-link" href="{{ $sanphams->appends(request()->query())->url($i) }}">{{ $i }}</a>
-                </li>
-                @endfor
-                <li class="page-item @if($sanphams->currentPage() === $sanphams->lastPage()) disabled @endif">
-                    <a class="page-link" href="{{ $sanphams->appends(request()->query())->nextPageUrl() }}">
-                        &raquo;
-                    </a>
-                </li>
-        </ul>
-    </nav>
-</div>
-</div>
-</div>
+
+
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+        <div class="row">
+
+            <!-- SIDEBAR FILTER -->
+            <aside class="col-lg-3 sidebar">
+                <div class="filter-box">
+
+                    <!-- SELECTED FILTER -->
+                    <div id="selectedBox" class="selected-filter-box" style="display:none;">
+                        <div class="selected-header">
+                            <span>Bạn chọn</span>
+                            <a href="#" class="clear-all">Bỏ hết</a>
+                        </div>
+                        <div class="selected-tags" id="selectedTags"></div>
+                    </div>
+
+                    <hr class="divider" id="selectedDivider" style="display:none;">
+
+
+                    <!-- PRICE FILTER -->
+                    <div class="filter-group">
+                        <h3 class="filter-title">Chọn mức giá</h3>
+                        <ul class="filter-list">
+                            @foreach([
+                                'under500' => 'Dưới 500.000đ',
+                                '500-1000' => '500.000đ – 1.000.000đ',
+                                '1-3' => '1.000.000đ – 3.000.000đ',
+                                '3-5' => '3.000.000đ – 5.000.000đ',
+                                '5-7' => '5.000.000đ – 7.000.000đ',
+                                'above7' => 'Trên 7.000.000đ'
+                            ] as $key => $label)
+                                <li>
+                                    <label>
+                                        <input type="checkbox" name="price[]" value="{{ $key }}">
+                                        <span>{{ $label }}</span>
+                                    </label>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+
+                    <hr class="divider">
+
+                    <!-- CATEGORY FILTER -->
+                    <div class="filter-group">
+                        <h3 class="filter-title">Loại sản phẩm</h3>
+                        <ul class="filter-list">
+                            @foreach($danhmucs as $dm)
+                                <li>
+                                    <label>
+                                        <input type="checkbox" name="category[]" value="{{ $dm->id_danhmuc }}">
+                                        <span>{{ $dm->ten_danhmuc }}</span>
+                                    </label>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+
+                </div>
+            </aside>
+
+
+            <!-- PRODUCT GRID -->
+            <div class="col-lg-9">
+
+                <div class="product-grid" id="productList">
+                   @foreach($sanphams as $p)
+                        <div class="sale-item" data-href="{{ route('detail', ['id'=>$p->id_sanpham]) }}">
+
+                            <div class="sale-img">
+                                @php
+                                    $img = $p->images->first();
+                                    $imagePath = $img ? str_replace('\\','/',$img->duong_dan) : 'frontend/upload/placeholder.jpg';
+                                @endphp
+                                <a href="{{ route('detail', ['id'=>$p->id_sanpham]) }}" class="full-link"></a>
+                                <img src="{{ asset($imagePath) }}" alt="{{ $p->tensp }}">
+                            </div>
+
+                            <div class="hover-icons">
+                                <a href="#" class="icon-btn js-add-to-cart" data-url="{{ route('add_to_cart',$p->id_sanpham) }}">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </a>
+                                <a href="{{ route('detail', $p->id_sanpham) }}" class="icon-btn">
+                                    <i class="fa fa-search"></i>
+                                </a>
+                            </div>
+
+                            <h3 class="sale-name">{{ $p->tensp }}</h3>
+
+                            <div class="sale-price">
+                                <span class="new-price">{{ number_format($p->giakhuyenmai) }}đ</span>
+                                <span class="old-price">{{ number_format($p->giasp) }}đ</span>
+                                <span class="discount">-{{ $p->giamgia }}%</span>
+                            </div>
+
+                            <div class="benefit">🔥 Giá tốt nhất thị trường</div>
+                            <div class="gift">🎁 Quà tặng trị giá {{ rand(100000,200000) }}đ</div>
+
+                            <div class="progress-bar">
+                                <div class="progress" style="width: {{ rand(40,80) }}%"></div>
+                            </div>
+
+                            <span class="sold">{{ $p->sold }} sản phẩm đã bán</span>
+
+                        </div>
+                        @endforeach
+
+                </div>
+
+                <div class="pagination-wrapper" id="paginationBox">
+                    {{ $sanphams->links('pagination::bootstrap-4') }}
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+
+
+<!-- JS AJAX FILTER -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const sliders = document.querySelectorAll('.product-slider');
+document.addEventListener("DOMContentLoaded", function () {
 
-        sliders.forEach((slider) => {
-            const slides = slider.querySelectorAll('img.slide');
-            const dots = slider.querySelectorAll('.product-slider-dot');
+    // trạng thái filter hiện tại
+    const filters = { price: "", category: [], sort: "" };
 
-            if (slides.length === 0) return;
+    const priceCbs = document.querySelectorAll("input[name='price[]']");
+    const catCbs   = document.querySelectorAll("input[name='category[]']");
+    const tagBox   = document.getElementById("selectedTags");
+    const selectedBox = document.getElementById("selectedBox");
+    const divider = document.getElementById("selectedDivider");
 
-            let currentIndex = 0;
-            const intervalMs = 3000;
+    function toggleSelectedUI() {
+        const show = tagBox.children.length > 0;
+        selectedBox.style.display = show ? "block" : "none";
+        divider.style.display = show ? "block" : "none";
+    }
 
-            function showSlide(index) {
-                slides.forEach((img, i) => {
-                    img.classList.toggle('active', i === index);
-                });
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('active', i === index);
-                });
-                currentIndex = index;
-            }
-
-            let timer = setInterval(() => {
-                const nextIndex = (currentIndex + 1) % slides.length;
-                showSlide(nextIndex);
-            }, intervalMs);
-
-            dots.forEach((dot) => {
-                dot.addEventListener('click', () => {
-                    const index = parseInt(dot.getAttribute('data-index'), 10);
-                    showSlide(index);
-                    clearInterval(timer);
-                    timer = setInterval(() => {
-                        const nextIndex = (currentIndex + 1) % slides.length;
-                        showSlide(nextIndex);
-                    }, intervalMs);
-                });
-            });
-
-            const productCard = slider.closest('.product');
-            if (productCard) {
-                productCard.addEventListener('mouseenter', () => clearInterval(timer));
-                productCard.addEventListener('mouseleave', () => {
-                    clearInterval(timer);
-                    timer = setInterval(() => {
-                        const nextIndex = (currentIndex + 1) % slides.length;
-                        showSlide(nextIndex);
-                    }, intervalMs);
-                });
+    /* ===== AJAX LOAD ===== */
+    function loadProducts(page = 1) {
+        $.ajax({
+            url: "{{ route('ajax.filter.products') }}",
+            method: "GET",
+            data: {
+                price: filters.price,
+                category: filters.category.join(","),
+                sort: filters.sort,
+                page: page,
+            },
+            success: res => {
+                document.getElementById("productList").innerHTML = res.html;
+                document.getElementById("paginationBox").innerHTML = res.pagination;
+                document.querySelector(".result-count strong").innerText = res.count;
             }
         });
+    }
+
+
+    /* ===== PRICE FILTER (ONLY ONE) ===== */
+    priceCbs.forEach(cb => {
+        cb.addEventListener("change", function () {
+
+            // uncheck others
+            priceCbs.forEach(x => { if (x !== this) x.checked = false });
+
+            // update filter
+            filters.price = this.checked ? this.value : "";
+
+            // create tag
+            tagBox.querySelectorAll("[data-group='price']").forEach(t => t.remove());
+
+            if (this.checked) {
+                const tag = document.createElement("span");
+                tag.className = "tag";
+                tag.dataset.group = "price";
+                tag.innerHTML = this.nextElementSibling.innerText + " ×";
+
+                tag.onclick = () => {
+                    this.checked = false;
+                    filters.price = "";
+                    tag.remove();
+                    toggleSelectedUI();
+                    loadProducts();
+                };
+
+                tagBox.appendChild(tag);
+            }
+
+            toggleSelectedUI();
+            loadProducts();
+        });
     });
+
+
+    /* ===== CATEGORY FILTER (MULTI SELECT) ===== */
+    catCbs.forEach(cb => {
+        cb.addEventListener("change", function () {
+
+            const label = this.nextElementSibling.innerText;
+
+            // update filter array
+            filters.category = [...document.querySelectorAll("input[name='category[]']:checked")].map(x => x.value);
+
+            const existing = tagBox.querySelector(`[data-tag='cat-${this.value}']`);
+
+            if (this.checked) {
+                if (!existing) {
+                    const tag = document.createElement("span");
+                    tag.className = "tag";
+                    tag.dataset.tag = "cat-" + this.value;
+                    tag.innerHTML = label + " ×";
+
+                    tag.onclick = () => {
+                        this.checked = false;
+                        tag.remove();
+                        filters.category = filters.category.filter(i => i != this.value);
+                        toggleSelectedUI();
+                        loadProducts();
+                    };
+
+                    tagBox.appendChild(tag);
+                }
+            } else if (existing) {
+                existing.remove();
+            }
+
+            toggleSelectedUI();
+            loadProducts();
+        });
+    });
+
+
+    /* ===== SORT ===== */
+    document.querySelector(".sort-select").addEventListener("change", function () {
+        filters.sort = this.value;
+        loadProducts();
+    });
+
+
+    /* ===== CLEAR ALL ===== */
+    document.querySelector(".clear-all").addEventListener("click", e => {
+        e.preventDefault();
+
+        priceCbs.forEach(cb => cb.checked = false);
+        catCbs.forEach(cb => cb.checked = false);
+
+        filters.price = "";
+        filters.category = [];
+
+        tagBox.innerHTML = "";
+        toggleSelectedUI();
+
+        loadProducts();
+    });
+
+
+    /* ===== PAGINATION AJAX ===== */
+    document.addEventListener("click", e => {
+            if (e.target.closest(".pagination a")) {
+                e.preventDefault();
+                const page = new URL(e.target.href).searchParams.get("page");
+                loadProducts(page);
+            }
+        });
+
+    });
+
+    
 </script>
+<script>
+document.addEventListener("click", function(e) {
+
+    // Nếu click vào icon → KHÔNG mở trang
+    if (e.target.closest('.icon-btn')) return;
+
+    // Tìm thẻ có class .sale-item gần nhất
+    const card = e.target.closest('.sale-item');
+
+    if (card) {
+        window.location.href = card.dataset.href;
+    }
+
+});
+</script>
+
 @endsection
