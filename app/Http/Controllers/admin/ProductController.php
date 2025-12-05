@@ -43,7 +43,7 @@ class ProductController extends Controller
             case IMAGETYPE_GIF:
                 $image = imagecreatefromgif($sourcePath);
                 break;
-             case IMAGETYPE_WEBP:
+            case IMAGETYPE_WEBP:
                 $image = imagecreatefromwebp($sourcePath);
                 break;
             default:
@@ -62,7 +62,10 @@ class ProductController extends Controller
         imagecopyresampled(
             $newImage,
             $image,
-            0, 0, 0, 0,
+            0,
+            0,
+            0,
+            0,
             $newWidth,
             $newHeight,
             $origWidth,
@@ -81,7 +84,6 @@ class ProductController extends Controller
                 break;
             case IMAGETYPE_WEBP:
                 imagewebp($newImage, $destPath, 90);
-            
         }
 
         imagedestroy($image);
@@ -90,7 +92,7 @@ class ProductController extends Controller
         return true;
     }
 
-    
+
 
 
     /* ==================== INDEX ==================== */
@@ -125,52 +127,52 @@ class ProductController extends Controller
     /* ==================== STORE ==================== */
     public function store(Request $request)
     {
-    $validatedData = $request->validate([
-        'tensp'           => 'required',
-        'sku'             => 'nullable|string',
-        'anhsp'           => 'required',
-        'anhsp.*'       => 'mimes:jpeg,png,jpg,gif,webp|max:5120',
-        'giasp'           => 'required|numeric',
-        'giakhuyenmai'    => 'nullable|numeric',
-        'giamgia'         => 'nullable|numeric',
-        'gia_duoc_giam'   => 'nullable|numeric',
-        'mota'            => 'nullable',
-        'mota_ngan'       => 'nullable|string',
-        'soluong'         => 'required|numeric',
-        'id_danhmuc'      => 'required',
-        'noi_bat'         => 'numeric'
-    ]);
+        $validatedData = $request->validate([
+            'tensp'           => 'required',
+            'sku'             => 'nullable|string',
+            'anhsp'           => 'required',
+            'anhsp.*'       => 'mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'giasp'           => 'required|numeric',
+            'giakhuyenmai'    => 'nullable|numeric',
+            'giamgia'         => 'nullable|numeric',
+            'gia_duoc_giam'   => 'nullable|numeric',
+            'mota'            => 'nullable',
+            'mota_ngan'       => 'nullable|string',
+            'soluong'         => 'required|numeric',
+            'id_danhmuc'      => 'required',
+            'noi_bat'         => 'numeric'
+        ]);
 
-    $files = $request->file('anhsp');
+        $files = $request->file('anhsp');
 
-    unset($validatedData['anhsp']);
+        unset($validatedData['anhsp']);
 
-    $sanpham = $this->productRepository->storeProduct($validatedData);
+        $sanpham = $this->productRepository->storeProduct($validatedData);
 
-    if ($files) {
-        $destination = public_path('frontend/upload');
-        if (!file_exists($destination)) {
-            mkdir($destination, 0755, true);
+        if ($files) {
+            $destination = public_path('frontend/upload');
+            if (!file_exists($destination)) {
+                mkdir($destination, 0755, true);
+            }
+
+            foreach ($files as $file) {
+                if (!$file) continue;
+
+                $imageName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $sourcePath = $file->getRealPath();
+                $destPath   = $destination . '/' . $imageName;
+
+                $this->resizeImageKeepRatio($sourcePath, $destPath, self::IMAGE_MAX_WIDTH, self::IMAGE_MAX_HEIGHT);
+
+                \App\Models\Image::create([
+                    'id_sanpham' => $sanpham->id_sanpham,
+                    'duong_dan'  => 'frontend/upload/' . $imageName,
+                ]);
+            }
         }
 
-        foreach ($files as $file) {
-            if (!$file) continue;
-
-            $imageName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $sourcePath = $file->getRealPath();
-            $destPath   = $destination . '/' . $imageName;
-
-            $this->resizeImageKeepRatio($sourcePath, $destPath, self::IMAGE_MAX_WIDTH, self::IMAGE_MAX_HEIGHT);
-
-            \App\Models\Image::create([
-                'id_sanpham' => $sanpham->id_sanpham, 
-                'duong_dan'  => 'frontend/upload/' . $imageName,
-            ]);
-        }
+        return redirect()->route('product.index')->with('success', 'Thêm sản phẩm thành công!');
     }
-
-    return redirect()->route('product.index')->with('success', 'Thêm sản phẩm thành công!');
-}
 
     /* ==================== EDIT ==================== */
     public function edit($id)
@@ -188,8 +190,8 @@ class ProductController extends Controller
         $validatedData = $request->validate([
             'tensp'           => 'required',
             'sku'             => 'nullable|string',
-            'anhsp'           => 'nullable',     
-            'anhsp.*'         => 'mimes:jpeg,png,jpg,gif,webp|max:5120',    
+            'anhsp'           => 'nullable',
+            'anhsp.*'         => 'mimes:jpeg,png,jpg,gif,webp|max:5120',
             'giasp'           => 'required|numeric',
             'giakhuyenmai'    => 'nullable|numeric',
             'giamgia'         => 'nullable|numeric',
@@ -199,16 +201,33 @@ class ProductController extends Controller
             'soluong'         => 'required|numeric',
             'id_danhmuc'      => 'required',
             'noi_bat'         => 'numeric',
-            'trang_thai'      => 'numeric'
+            'trang_thai'      => 'numeric',
+            'delete_images'   => 'nullable|array',
+            'delete_images.*' => 'numeric'
         ]);
 
-        $files = $request->file('anhsp');
         unset($validatedData['anhsp']);
 
         $this->productRepository->updateProduct($validatedData, $id);
 
+        if ($request->has('delete_images')) {
+            foreach ($request->delete_images as $imgId) {
+                $img = Image::find($imgId);
+                if ($img) {
+                    $filePath = public_path($img->duong_dan);
+                    if (file_exists($filePath)) {
+                        @unlink($filePath);
+                    }
+                    $img->delete();
+                }
+            }
+        }
+
+        $files = $request->file('anhsp');
+
         if ($files) {
             $destination = public_path('frontend/upload');
+
             if (!file_exists($destination)) {
                 mkdir($destination, 0755, true);
             }
@@ -216,21 +235,27 @@ class ProductController extends Controller
             foreach ($files as $file) {
                 if (!$file) continue;
 
-                $imageName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $imageName  = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $sourcePath = $file->getRealPath();
                 $destPath   = $destination . '/' . $imageName;
 
-            $this->resizeImageKeepRatio($sourcePath, $destPath, self::IMAGE_MAX_WIDTH, self::IMAGE_MAX_HEIGHT);
+                $this->resizeImageKeepRatio(
+                    $sourcePath,
+                    $destPath,
+                    self::IMAGE_MAX_WIDTH,
+                    self::IMAGE_MAX_HEIGHT
+                );
 
                 Image::create([
                     'id_sanpham' => $id,
-                    'duong_dan'  => 'frontend/upload/' . $imageName,
+                    'duong_dan'  => 'frontend/upload/' . $imageName
                 ]);
             }
         }
 
         return redirect()->route('product.index')->with('success', 'Cập nhật thành công!');
     }
+
 
     /* ==================== DELETE ==================== */
     public function destroy($id)
@@ -241,5 +266,4 @@ class ProductController extends Controller
             ->route('product.index')
             ->with('success', 'Sản phẩm đã được chuyển sang trạng thái ẩn');
     }
-
 }

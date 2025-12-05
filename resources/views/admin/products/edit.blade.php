@@ -200,7 +200,7 @@
             <input type="number" name="giakhuyenmai"
                 class="form-control promo-input"
                 value="{{ old('giakhuyenmai', $sp->giakhuyenmai) }}"
-                readonly/>
+                readonly />
         </div>
 
         <!-- Danh mục -->
@@ -229,11 +229,34 @@
             <div class="mt-3">
                 <label class="promo-label">Ảnh hiện tại</label>
                 <div class="d-flex flex-wrap gap-2">
+
                     @foreach($sp->images as $img)
-                    <div class="current-image-box">
+                    <div class="current-image-box position-relative">
+
                         <img src="{{ asset($img->duong_dan) }}" alt="Ảnh hiện tại">
+
+                        <!-- nút xoá -->
+                        <span class="remove-current-img"
+                            data-id="{{ $img->id }}"
+                            style="
+                      position:absolute;
+                      top:-6px;
+                      right:-6px;
+                      background:#dc2626;
+                      color:#fff;
+                      width:22px;
+                      height:22px;
+                      display:flex;
+                      justify-content:center;
+                      align-items:center;
+                      border-radius:50%;
+                      cursor:pointer;
+                  ">
+                            ×
+                        </span>
                     </div>
                     @endforeach
+
                 </div>
             </div>
             @endif
@@ -280,6 +303,22 @@
         <button type="submit" id="btnUpdate" class="btn btn-footer-submit">Cập nhật</button>
     </div>
 
+    <script>
+        document.querySelectorAll('.remove-current-img').forEach(btn => {
+            btn.addEventListener('click', function() {
+
+                let imgId = this.getAttribute('data-id');
+                let input = document.createElement("input");
+                input.type = "hidden";
+                input.name = "delete_images[]";
+                input.value = imgId;
+
+                document.querySelector("form").appendChild(input);
+                this.parentElement.style.opacity = "0.4";
+                this.parentElement.style.pointerEvents = "none";
+            });
+        });
+    </script>
 </form>
 
 @if($errors->any())

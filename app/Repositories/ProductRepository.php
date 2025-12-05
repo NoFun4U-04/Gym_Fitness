@@ -49,7 +49,7 @@ class ProductRepository implements IProductRepository
 
     public function updateProduct($data, $id)
     {
-        unset($data['anhsp']);
+        unset($data['anhsp'], $data['delete_images']);
 
         return Sanpham::where('id_sanpham', $id)->update($data);
     }

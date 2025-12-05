@@ -13,8 +13,7 @@ interface IDangkidichvuRepository
     public function update($id, array $data);
     public function delete($id);
 
-    public function getEnumValues($table, $column);
-
+    public function getEnumValues(string $table, string $column): array;
     public function getMonUaThich();
     public function getCoSoTap();
     public function getGioMongMuon();

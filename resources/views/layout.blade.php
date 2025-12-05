@@ -97,26 +97,26 @@
                         <li class="{{ request()->is('services') ? 'active' : '' }}">
                             <a href="{{ URL::to('/services') }}" class="hover-a">Giới thiệu </a>
                         </li>
-                            <li class="dropdown {{ request()->is('viewAll*') ? 'active' : '' }}" id="sanpham-dropdown">
-                                <a href="javascript:void(0)" class="hover-a">Sản phẩm</a>
-                                <ul class="dropdown-menu" id="dropdown-danhmuc">
-                                    {{-- ➤ MỤC TẤT CẢ --}}
-                                    <li>
-                                        <a href="{{ url('/viewAll') }}" class="dropdown-item">
-                                            Tất cả
-                                        </a>
-                                    </li>
+                        <li class="dropdown {{ request()->is('viewAll*') ? 'active' : '' }}" id="sanpham-dropdown">
+                            <a href="javascript:void(0)" class="hover-a">Sản phẩm</a>
+                            <ul class="dropdown-menu" id="dropdown-danhmuc">
+                                {{-- ➤ MỤC TẤT CẢ --}}
+                                <li>
+                                    <a href="{{ url('/viewAll') }}" class="dropdown-item">
+                                        Tất cả
+                                    </a>
+                                </li>
 
-                                    {{-- ➤ DANH MỤC --}}
-                                    @foreach($categories as $dm)
-                                        <li>
-                                            <a href="{{ url('/viewAll?category=' . $dm->id_danhmuc) }}" class="dropdown-item">
-                                                {{ $dm->ten_danhmuc }}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </li>
+                                {{-- ➤ DANH MỤC --}}
+                                @foreach($categories as $dm)
+                                <li>
+                                    <a href="{{ url('/viewAll?category=' . $dm->id_danhmuc) }}" class="dropdown-item">
+                                        {{ $dm->ten_danhmuc }}
+                                    </a>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </li>
                         <li class="dropdown {{ request()->is('dich-vu/*') ? 'active' : '' }}">
                             <a href="javascript:void(0)" class="hover-a">Dịch vụ </a>
                             <ul class="dropdown-menu dropdown-services">
@@ -170,11 +170,19 @@
                     @endif
                     <a href="{{ route('cart') }}" class="navbar__shoppingCart hover-effect">
                         <img src="{{ asset('frontend/img/shopping-cart.svg')}}" alt="">
-                        @if (session('cart'))
-                        <span>{{ count((array) session('cart')) }}</span>
-                        @else
-                        <span>0</span>
-                        @endif
+
+                        @php
+                        $cart = session('cart', []);
+                        $totalQty = 0;
+
+                        if (is_array($cart)) {
+                            foreach ($cart as $item) {
+                                $totalQty += $item['quantity'] ?? 0;
+                            }
+                        }
+                        @endphp
+
+                        <span>{{ $totalQty }}</span>
                     </a>
                 </div>
             </div>

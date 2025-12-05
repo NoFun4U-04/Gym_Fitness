@@ -1,14 +1,16 @@
 # PHP base image với Apache
 FROM php:8.1-apache
 
-# Cài các thư viện cần thiết cho Laravel
+# Cài các thư viện cần thiết cho Laravel + GD
 RUN apt-get update && apt-get install -y \
     libpng-dev \
-    libjpeg-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
     libonig-dev \
     libxml2-dev \
     libpq-dev \
     zip unzip curl git \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo_pgsql pdo_mysql mbstring exif pcntl bcmath gd
 
 # Bật module rewrite của Apache
@@ -30,7 +32,7 @@ RUN composer install --optimize-autoloader --no-dev
 RUN chown -R www-data:www-data /var/www \
     && chmod -R 775 storage bootstrap/cache
 
-# Copy thư mục public vào đúng vị trí Apache phục vụ
+# Trỏ Apache DocumentRoot về public
 RUN rm -rf /var/www/html && ln -s /var/www/public /var/www/html
 
 # Tạo APP_KEY và cache config
