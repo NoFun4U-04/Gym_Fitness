@@ -14,6 +14,9 @@ class Dathang extends Model
         'ngaydathang',
         'ngaygiaohang',
         'tongtien',
+        'tiengiam',           // thêm
+        'tienphaitra',        // thêm
+        'id_khuyenmai',       // thêm
         'phuongthucthanhtoan',
         'diachigiaohang',
         'hoten',
@@ -28,6 +31,9 @@ class Dathang extends Model
         'ngaydathang' => 'datetime',
         'ngaygiaohang' => 'datetime',
         'tongtien' => 'int',
+        'tiengiam' => 'int',       // thêm
+        'tienphaitra' => 'int',    // thêm
+        'id_khuyenmai' => 'int',   // thêm
         'phuongthucthanhtoan' => 'string',
         'diachigiaohang' => 'string',
         'hoten' => 'string',
@@ -41,9 +47,10 @@ class Dathang extends Model
         'ngaydathang',
         'ngaygiaohang',
     ];
+
     public function khuyenmai()
     {
         return $this->belongsTo(Khuyenmai::class, 'id_khuyenmai', 'id_khuyenmai');
     }
-
 }
+

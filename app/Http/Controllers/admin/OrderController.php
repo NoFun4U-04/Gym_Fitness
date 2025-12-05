@@ -60,9 +60,6 @@ class OrderController extends Controller
     }
 
 
-
-
-
     // 2. Đơn đang giao (chờ giao + đang giao)
     // 2. Đơn đang giao
     public function shipping(Request $request)

@@ -179,55 +179,49 @@
     text-align: center;        
     }
 
-    .quantity-btn {
-        width: 32px;
-        height: 32px;
-        border-radius: 999px;
-        border: none;
-        background-color: #34A4E0;
-        color: #020617;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        
-    }
+    .quantity-input {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
 
-    .quantity-btn:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 10px 26px rgba(16, 185, 129, 0.45);
-    }
+.quantity-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: none;
+    background-color: #34A4E0;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: 0.2s ease;
+}
 
-    .quantity-field {
-        width: 56px;
-        text-align: center;
-        padding: 6px 0;
-        border-radius: 999px;
-        border: 1px solid #d1d5db;
-        outline: none;
-        font-weight: 500;
-        font-size: 14px;
-        background: #f9fafb;
-    }
+.quantity-btn:hover {
+    background-color: #1e8ac4;
+}
 
-    .quantity-field::-webkit-outer-spin-button,
-    .quantity-field::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+.quantity-field {
+    width: 45px;             /* vừa cột, không quá to */
+    height: 28px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+}
 
-    .quantity-field[type=number] {
-        -moz-appearance: textfield;
-    }
+.cart-stock-note {
+    font-size: 12px;
+    color: #777;
+    margin-top: 2px;
+}
 
-    .cart-stock-note {
-        font-size: 11px;
-        color: #6b7280;
-        margin-top: 2px;
-        width: 100%;
-    }
 
     .cart-summary {
         flex: 0 0 380px;
@@ -629,8 +623,6 @@
 
                                         <td class="cart-quantity" data-th="Quantity">
                                             <div class="quantity-input">
-                                                <button class="quantity-btn decreaseValue" style='color:#fff;'>-</button>
-
                                                 <input
                                                     class="quantity-field quantity cart_update"
                                                     type="number"
@@ -644,8 +636,6 @@
                                                         Tồn kho: {{ $stock[$id] }}
                                                     </div>
                                                 @endif
-
-                                                <button class="quantity-btn increaseValue" style='color:#fff;'>+</button>
                                             </div>
                                         </td>
 
@@ -697,7 +687,7 @@
                 <div class="cart-empty">
                     <h2>Giỏ hàng của bạn đang trống</h2>
                     <p>Tiếp tục mua sắm để thêm sản phẩm vào giỏ.</p>
-                    <a href="{{ url('/') }}" class="btn btn-primary mt-3">
+                    <a href="{{ url('/viewAll') }}" class="btn btn-primary mt-3">
                         <i class="fa fa-arrow-left mr-1"></i> Về trang sản phẩm
                     </a>
                 </div>

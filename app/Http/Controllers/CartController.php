@@ -199,140 +199,132 @@ class CartController extends Controller
         }
     }
 
+// Đặt hàng
+
     public function dathang(Request $request)
     {
-        if (!session()->has('cart') || empty(session('cart'))) {
-            return redirect()->back()->with('error', 'Không có đơn hàng để đặt!');
+
+        // -----------------------------
+        // KIỂM TRA GIỎ HÀNG
+        // -----------------------------
+        $cart = session('cart', []);
+        if (empty($cart)) {
+            return back()->with('error', 'Không có sản phẩm nào trong giỏ hàng!');
         }
 
         // -----------------------------
-        // TÍNH TỔNG TIỀN GIỎ HÀNG
+        // LẤY THÔNG TIN TỪ FORM
         // -----------------------------
-        $tongtien = $request->tongtien;
-        $tiengiam = 0;
-        $tienphaitra = $tongtien;
-        $id_km = null;
+        $tongtien = (int) $request->tongtien;
+        $tiengiam = (int) $request->tiengiam;
+        $tienphaitra = (int) $request->tienphaitra;
+        $id_km = $request->id_khuyenmai;
 
         // -----------------------------
-        // ÁP MÃ KHUYẾN MÃI (NẾU NHẬP)
+        // BẢO VỆ: CHECK KHUYẾN MÃI LẠI
         // -----------------------------
-        if ($request->ma_khuyen_mai) {
+        if ($id_km) {
+            $km = Khuyenmai::find($id_km);
 
-            $km = Khuyenmai::where('ma_code', $request->ma_khuyen_mai)
-                    ->where('trang_thai', 1)
-                    ->first();
-
-            if (!$km) {
-                return redirect()->back()->with('error', 'Mã khuyến mãi không hợp lệ!');
+            if (!$km || $km->trang_thai != 1) {
+                return back()->with('error', 'Mã khuyến mãi không hợp lệ!');
             }
 
-            // kiểm tra ngày
             $today = now();
-            if ($km->ngay_bat_dau && $today < $km->ngay_bat_dau ||
-                $km->ngay_ket_thuc && $today > $km->ngay_ket_thuc) {
-                return redirect()->back()->with('error', 'Mã khuyến mãi đã hết hạn!');
+            if (($km->ngay_bat_dau && $today < $km->ngay_bat_dau) ||
+                ($km->ngay_ket_thuc && $today > $km->ngay_ket_thuc)) {
+                return back()->with('error', 'Mã khuyến mãi đã hết hạn!');
             }
 
-            // kiểm tra đơn tối thiểu
-            if ($km->don_toi_thieu && $tongtien < $km->don_toi_thieu) {
-                return redirect()->back()->with('error', 'Đơn hàng chưa đạt giá trị tối thiểu để áp mã!');
-            }
-
-            // kiểm tra số lượt sử dụng
+            // Bảo vệ số lượt dùng
             if ($km->gioi_han_luot !== null && $km->so_luot_da_dung >= $km->gioi_han_luot) {
-                return redirect()->back()->with('error', 'Mã khuyến mãi đã hết lượt sử dụng!');
+                return back()->with('error', 'Mã khuyến mãi đã hết lượt sử dụng!');
             }
 
-            // -----------------------------
-            // TÍNH SỐ TIỀN GIẢM
-            // -----------------------------
-            if ($km->kieu_giam === 'percent') {
-                $tiengiam = ($tongtien * $km->gia_tri_giam) / 100;
-            } else {
-                $tiengiam = $km->gia_tri_giam;
+            // Nếu AJAX tính sai → Controller tính lại
+            $tiengiam_auto = ($km->kieu_giam === 'percent')
+                ? ($tongtien * $km->gia_tri_giam / 100)
+                : $km->gia_tri_giam;
+
+            if ($km->giam_toi_da && $tiengiam_auto > $km->giam_toi_da) {
+                $tiengiam_auto = $km->giam_toi_da;
             }
 
-            // áp max giảm giá nếu có
-            if ($km->giam_toi_da && $tiengiam > $km->giam_toi_da) {
-                $tiengiam = $km->giam_toi_da;
+            if ($tiengiam != $tiengiam_auto) {
+                // ép theo giá trị chuẩn để tránh bị chỉnh giá client
+                $tiengiam = $tiengiam_auto;
+                $tienphaitra = max($tongtien - $tiengiam, 0);
             }
 
-            // tổng phải trả
-            $tienphaitra = max($tongtien - $tiengiam, 0);
-
-            // cập nhật lượt dùng
+            // Cập nhật lượt dùng mã KM
             $km->increment('so_luot_da_dung');
-
-            $id_km = $km->id_khuyenmai;
         }
 
+        // -----------------------------
+        // KIỂM TRA TỒN KHO CHUẨN
+        // -----------------------------
+        foreach ($cart as $item) {
+            $sanpham = Sanpham::find($item['id_sanpham']);
+
+            if (!$sanpham) {
+                return back()->with('error', 'Sản phẩm không tồn tại!');
+            }
+
+            // tồn kho trực tiếp từ bảng sanpham
+            if ($item['quantity'] > $sanpham->soluong) {
+                return back()->with('error', "Sản phẩm {$sanpham->tensp} không đủ tồn kho!");
+            }
+        }
 
         // -----------------------------
         // TẠO ĐƠN HÀNG
         // -----------------------------
-        $validatedDataDatHang = [];
-
-        $validatedDataDatHang['tongtien'] = $tongtien;
-        if (session()->has('promo')) {
-            $validatedDataDatHang['id_khuyenmai'] = session('promo.id');
-            $validatedDataDatHang['tiengiam'] = session('promo.discount');
-            $validatedDataDatHang['tienphaitra'] = session('promo.new_total');
-        } else {
-            $validatedDataDatHang['tiengiam'] = 0;
-            $validatedDataDatHang['tienphaitra'] = $request->tongtien;
-}
-
-
-        $validatedDataDatHang['ngaygiaohang'] = Carbon::now()->addDay(4);
-        $validatedDataDatHang['phuongthucthanhtoan'] = $request->redirect;
-        $validatedDataDatHang['diachigiaohang'] = $request->display_diachigiaohang;
-        $validatedDataDatHang['hoten'] = $request->display_hoten;
-        $validatedDataDatHang['email'] = $request->display_email;
-        $validatedDataDatHang['sdt'] = $request->display_sdt;
-        $validatedDataDatHang['id_nd'] = Auth::user()->id_nd;
-
-        $dathangCre = Dathang::create($validatedDataDatHang);
-
+        $order = Dathang::create([
+            'tongtien'     => $tongtien,
+            'tiengiam'     => $tiengiam,
+            'tienphaitra'  => $tienphaitra,
+            'id_khuyenmai' => $id_km,
+            'phuongthucthanhtoan' => $request->redirect,
+            'diachigiaohang' => $request->display_diachigiaohang,
+            'hoten'        => $request->display_hoten,
+            'email'        => $request->display_email,
+            'sdt'          => $request->display_sdt,
+            'ngaygiaohang' => now()->addDays(4),
+            'id_nd'        => Auth::user()->id_nd,
+        ]);
 
         // -----------------------------
-        // KIỂM TRA TỒN KHO + TẠO CTDH
+        // TẠO CHI TIẾT ĐƠN HÀNG + TRỪ TỒN
         // -----------------------------
-        $validatedDataCTDatHang = [];
+        foreach ($cart as $item) {
+            
+            ChitietDonhang::create([
+                'tensp'         => $item['tensp'],
+                'soluong'       => $item['quantity'],
+                'giamgia'       => $item['giamgia'],
+                'giatien'       => $item['giasp'],
+                'giakhuyenmai'  => $item['giakhuyenmai'],
+                'id_sanpham'    => $item['id_sanpham'],
+                'id_dathang'    => $order->id_dathang,
+                'id_nd'         => Auth::user()->id_nd,
+            ]);
 
-        foreach (session('cart') as $item) {
-
-            $sanpham = Sanpham::findOrFail($item['id_sanpham']);
-            $soluongDaBan = DB::table('chitiet_donhang')
-                ->where('id_sanpham', $item['id_sanpham'])
-                ->sum('soluong');
-
-            $soluongconlai = $sanpham->soluong - $soluongDaBan;
-
-            if ($item['quantity'] > $soluongconlai) {
-                return redirect()->back()->with('error', "Sản phẩm {$sanpham->tensp} không đủ số lượng!");
-            }
+            // Trừ tồn kho
+            $sp = Sanpham::find($item['id_sanpham']);
+            $sp->soluong -= $item['quantity'];
+            $sp->save();
         }
 
-        foreach (session('cart') as $item) {
-
-            $validatedDataCTDatHang['tensp'] = $item['tensp'];
-            $validatedDataCTDatHang['soluong'] = $item['quantity'];
-            $validatedDataCTDatHang['giamgia'] = $item['giamgia'];
-            $validatedDataCTDatHang['giatien'] = $item['giasp'];
-            $validatedDataCTDatHang['giakhuyenmai'] = $item['giakhuyenmai'];
-            $validatedDataCTDatHang['id_sanpham'] = $item['id_sanpham'];
-            $validatedDataCTDatHang['id_dathang'] = $dathangCre->id_dathang;
-            $validatedDataCTDatHang['id_nd'] = Auth::user()->id_nd;
-
-            ChitietDonhang::create($validatedDataCTDatHang);
-        }
-
-
-        // XÓA GIỎ
+        // -----------------------------
+        // XÓA GIỎ HÀNG
+        // -----------------------------
         session()->forget('cart');
 
         return view('pages.thongbaodathang');
     }
+
+
+
 
     public function thongbaodathang(Request $request)
     {
@@ -413,41 +405,73 @@ class CartController extends Controller
         return redirect($vnp_Url);
     }
     
+    
     public function applyPromo(Request $request)
     {
         $code = $request->promo_code;
 
-        // Tìm mã
+        // Tìm mã khuyến mãi
         $promo = Khuyenmai::where('ma_code', $code)
                     ->where('trang_thai', 1)
-                    ->whereDate('ngay_bat_dau', '<=', now())
-                    ->whereDate('ngay_ket_thuc', '>=', now())
                     ->first();
 
         if (!$promo) {
             return response()->json([
                 'success' => false,
-                'message' => 'Mã khuyến mãi không hợp lệ hoặc đã hết hạn!',
+                'message' => 'Mã khuyến mãi không hợp lệ!',
             ]);
         }
 
-        // Tính tổng tiền hiện có trong giỏ
-        $cart = session('cart');
+        // Kiểm tra ngày áp dụng
+        $today = now();
+        if (($promo->ngay_bat_dau && $today < $promo->ngay_bat_dau) ||
+            ($promo->ngay_ket_thuc && $today > $promo->ngay_ket_thuc)) 
+        {
+            return response()->json([
+                'success' => false,
+                'message' => 'Mã khuyến mãi đã hết hạn!',
+            ]);
+        }
+
+        // Tính tổng tiền giỏ hàng
+        $cart = session('cart', []);
         $total = 0;
         foreach ($cart as $item) {
             $total += $item['giakhuyenmai'] * $item['quantity'];
         }
 
+        // Kiểm tra đơn tối thiểu
+        if ($promo->don_toi_thieu != null && $total < $promo->don_toi_thieu) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Giá trị đơn hàng chưa đủ để áp dụng mã khuyến mãi!',
+            ]);
+        }
+
+        // Kiểm tra giới hạn lượt
+        if ($promo->gioi_han_luot != null && $promo->so_luot_da_dung >= $promo->gioi_han_luot) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Mã khuyến mãi đã hết lượt sử dụng!',
+            ]);
+        }
+
         // Tính giảm giá
         if ($promo->kieu_giam === 'percent') {
             $discount = ($total * $promo->gia_tri_giam) / 100;
-        } else { // money
+        } else {
             $discount = $promo->gia_tri_giam;
         }
 
-        $newTotal = max($total - $discount, 0); // tránh âm tiền
+        // Giảm tối đa (nếu có)
+        if ($promo->giam_toi_da && $discount > $promo->giam_toi_da) {
+            $discount = $promo->giam_toi_da;
+        }
 
-        // Lưu session mã KM để đặt hàng dùng
+        // Tính tổng mới
+        $newTotal = max($total - $discount, 0);
+
+        // Lưu session tạm (client dùng để hiển thị)
         session([
             'promo' => [
                 'id' => $promo->id_khuyenmai,
@@ -459,11 +483,15 @@ class CartController extends Controller
 
         return response()->json([
             'success' => true,
+            'id_khuyenmai' => $promo->id_khuyenmai,   // ⭐ trả về ID đúng
             'discount' => $discount,
             'new_total' => $newTotal,
             'message' => 'Áp dụng mã thành công!',
         ]);
     }
+
+
+
 
 
 }

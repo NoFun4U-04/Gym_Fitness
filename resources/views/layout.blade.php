@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý cửa hàng Gym Fitness</title>
+    <title>Chào mừng đến với Rise Fitness & Yoga</title>
     <link rel="shortcut icon" type="image/png" href="/frontend/img/LOGO.png" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -98,8 +98,16 @@
                             <a href="{{ URL::to('/services') }}" class="hover-a">Giới thiệu </a>
                         </li>
                         <li class="dropdown {{ request()->is('viewAll*') ? 'active' : '' }}" id="sanpham-dropdown">
-                            <a href="javascript:void(0)" class="hover-a">Sản phẩm </a>
+                            <a href="javascript:void(0)" class="hover-a">Sản phẩm</a>
                             <ul class="dropdown-menu" id="dropdown-danhmuc">
+                                {{-- ➤ MỤC TẤT CẢ --}}
+                                <li>
+                                    <a href="{{ url('/viewAll') }}" class="dropdown-item">
+                                        Tất cả
+                                    </a>
+                                </li>
+
+                                {{-- ➤ DANH MỤC --}}
                                 @foreach($categories as $dm)
                                     <li>
                                         <a href="{{ url('/viewAll?category=' . $dm->id_danhmuc) }}" class="dropdown-item">
@@ -108,9 +116,7 @@
                                     </li>
                                 @endforeach
                             </ul>
-
                         </li>
-
                         <li class="dropdown {{ request()->is('dich-vu/*') ? 'active' : '' }}">
                             <a href="javascript:void(0)" class="hover-a">Dịch vụ </a>
                             <ul class="dropdown-menu dropdown-services">
@@ -293,42 +299,8 @@
     </script>
     @endif
 
-    <script>
-        let danhMucLoaded = false;
 
-        // Lấy phần tử dropdown sản phẩm
-        const sanphamDropdown = document.getElementById('sanpham-dropdown');
 
-        // Tạo một hàm riêng để xử lý việc tải danh mục
-        function loadDanhmuc() {
-            // Nếu danh mục đã được tải, thoát khỏi hàm
-            if (danhMucLoaded) {
-                return;
-            }
-
-            fetch('/api/danhmuc')
-                .then(response => response.json())
-                .then(data => {
-                    const ul = document.getElementById('dropdown-danhmuc');
-                    ul.innerHTML = '';
-                    data.forEach(dm => {
-                        const li = document.createElement('li');
-                        const a = document.createElement('a');
-                        a.href = `/viewAll?danhmuc_id=${dm.id_danhmuc}`;
-                        a.textContent = dm.ten_danhmuc;
-                        li.appendChild(a);
-                        ul.appendChild(li);
-                    });
-                    danhMucLoaded = true; // Đánh dấu là đã tải xong
-                })
-                .catch(error => console.error('Lỗi khi tải danh mục:', error));
-        }
-
-        // Gắn sự kiện mouseenter cho phần tử dropdown sản phẩm
-        if (sanphamDropdown) {
-            sanphamDropdown.addEventListener('mouseenter', loadDanhmuc);
-        }
-    </script>
     <script>
         document.getElementById('logoutForm').addEventListener('submit', function(e) {
             e.preventDefault();

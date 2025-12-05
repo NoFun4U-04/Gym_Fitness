@@ -34,4 +34,20 @@ class SanPham extends Model
     {
         return $this->hasMany(Image::class, 'id_sanpham', 'id_sanpham');
     }
+    public function chitiets()
+    {
+        return $this->hasMany(ChitietDonhang::class, 'id_sanpham');
+    }
+
+
+    public function getSoldAttribute()
+    {
+        return $this->chitiets()
+            ->whereHas('dathang', function ($q) {
+                $q->where('trangthai', 'Hoàn thành');
+            })
+            ->sum('soluong');
+    }
+
+
 }

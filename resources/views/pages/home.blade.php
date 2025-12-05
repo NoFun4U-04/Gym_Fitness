@@ -117,9 +117,130 @@
     </div>
 </section>
 
+<section class="sale-section container">
+
+    <!-- TITLE -->
+    <div class="sale-header">
+
+        <div class="header-left">
+            <h2>Ưu đãi hot! Đừng bỏ lỡ <span class="save-badge">SAVE 60%</span></h2>
+            <p>Sản phẩm sale đến khi hết hàng. Tiết kiệm đến 60%, đừng bỏ lỡ bạn ơi...</p>
+        </div>
+
+        <div class="header-right">
+            <div class="countdown-wrapper">
+                <div class="time-box">
+                    <span id="days">00</span>
+                    <small>Ngày</small>
+                </div>
+                <div class="time-box">
+                    <span id="hours">00</span>
+                    <small>Giờ</small>
+                </div>
+                <div class="time-box">
+                    <span id="minutes">00</span>
+                    <small>Phút</small>
+                </div>
+                <div class="time-box">
+                    <span id="seconds">00</span>
+                    <small>Giây</small>
+                </div>
+            </div>
+        </div>
+
+    </div>
 
 
-<img src="/frontend/img/Gioi-thieu/section-image-1.webp" alt="Sale 40%" class="sale-banner-img">
+
+    <div class="sale-content">
+
+        <!-- LEFT BANNER -->
+        <div class="sale-banner">
+            <img src="/frontend/img/Gioi-thieu/section-sale.webp" alt="Sale Banner">
+        </div>
+
+        <!-- RIGHT PRODUCT SLIDER -->
+        <div class="sale-slider">
+
+            <!-- Mũi tên trái -->
+            <button class="arrow-btn left" id="slideLeft">
+                <i class="fa fa-chevron-left"></i>
+            </button>
+
+            <!-- Slider wrapper -->
+            <div class="sale-slider-wrapper" id="saleWrapper">
+
+                @foreach($sanphams as $sp)
+                    <div class="sale-item">
+
+                        <!-- IMAGE -->
+                        <div class="sale-img">
+                            @php
+                                $img = $sp->images->first();
+                                $imagePath1 = $img ? str_replace('\\', '/', $img->duong_dan) : 'frontend/upload/default.jpg';
+                            @endphp
+
+                            <img src="{{ asset($imagePath1) }}" alt="{{ $sp->tensp }}">
+                        </div>
+
+                        <!-- ICON HOVER -->
+                        <div class="hover-icons">
+
+                            <!-- Nút thêm vào giỏ hàng -->
+                            <a href="#" class="icon-btn js-add-to-cart" data-url="{{ route('add_to_cart', $sp->id_sanpham) }}">
+                                <i class="fa fa-shopping-cart"></i>
+                            </a>
+
+
+                            <!-- Nút xem chi tiết -->
+                            <a href="{{ route('detail', ['id' => $sp->id_sanpham]) }}" class="icon-btn" title="Xem chi tiết">
+                                <i class="fa fa-search"></i>
+                            </a>
+
+                        </div>
+
+                        <!-- NAME -->
+                        <h3 class="sale-name">{{ $sp->tensp }}</h3>
+
+                        <!-- PRICE -->
+                        <div class="sale-price">
+                            <span class="new-price">{{ number_format($sp->gia_duoc_giam) }}đ</span>
+                            <span class="old-price">{{ number_format($sp->giasp) }}đ</span>
+                            <span class="discount">-{{ $sp->giamgia }}%</span>
+                        </div>
+
+                        <!-- INFO -->
+                        <div class="sale-info">
+                            <p>Giá tốt nhất thị trường</p>
+                            <p>Quà tặng trị giá {{ number_format(rand(50000,200000)) }}đ</p>
+                        </div>
+
+                        <!-- PROGRESS BAR -->
+                        <div class="progress-bar">
+                            <div class="progress" style="width: {{ rand(30,80) }}%"></div>
+                        </div>
+
+                        <span class="sold">{{ $sp->sold }} sản phẩm đã bán</span>
+
+                    </div>
+                @endforeach
+
+            </div>
+
+            <!-- Mũi tên phải -->
+            <button class="arrow-btn right" id="slideRight">
+                <i class="fa fa-chevron-right"></i>
+            </button>
+
+        </div>
+    </div>
+
+</section>
+
+<div style='margin-top: 10px;'>
+  <img src="/frontend/img/Gioi-thieu/section-image-1.webp" alt="Sale 40%" class="sale-banner-img">
+  
+</div>
 
 
 <section class="top-sell-section">
@@ -127,53 +248,59 @@
         <h2 class="top-sell-title">Top sản phẩm bán chạy!</h2>
 
         <div class="top-sell-grid">
-            @foreach($featured as $sp)
-            <div class="sell-card">
+            @foreach($sanphams as $sp)
+                <div class="sale-item">
 
-                <!-- Icon trái tim -->
-                <button class="wishlist-btn">
-                    <i class="fa-regular fa-heart"></i>
-                </button>
+                    <!-- IMAGE -->
+                    <div class="sale-img">
+                        @php
+                            $img = $sp->images->first();
+                            $imagePath1 = $img ? str_replace('\\', '/', $img->duong_dan) : 'frontend/upload/default.jpg';
+                        @endphp
 
-                <a href="{{ route('detail', $sp->id_sanpham) }}" class="product-link">
-
-                    <!-- Ảnh -->
-                    <div class="sell-img">
-                        <img src="{{ asset($sp->anhsp) }}" alt="{{ $sp->tensp }}">
+                        <img src="{{ asset($imagePath1) }}" alt="{{ $sp->tensp }}">
                     </div>
 
-                    <!-- Tên -->
-                    <h3 class="sell-name">{{ $sp->tensp }}</h3>
+                    <!-- ICON HOVER -->
+                    <div class="hover-icons">
 
-                    <!-- Giá -->
-                    <div class="sell-price-box">
-                        <span class="sell-new">{{ number_format($sp->giakhuyenmai) }}đ</span>
+                        <!-- Nút thêm vào giỏ hàng -->
+                        <a href="#" class="icon-btn js-add-to-cart" data-url="{{ route('add_to_cart', $sp->id_sanpham) }}">
+                            <i class="fa fa-shopping-cart"></i>
+                        </a>
 
-                        @if($sp->giamgia)
-                        <span class="sell-old">{{ number_format($sp->giasp) }}đ</span>
-                        <span class="sell-percent">-{{ $sp->giamgia }}%</span>
-                        @endif
+
+                        <!-- Nút xem chi tiết -->
+                        <a href="{{ route('detail', ['id' => $sp->id_sanpham]) }}" class="icon-btn" title="Xem chi tiết">
+                            <i class="fa fa-search"></i>
+                        </a>
+
                     </div>
 
-                    <!-- Hàng dưới: Ưu đãi -->
-                    <div class="sell-bonus">
-                        <div class="bonus-line">
-                            <i class="fa-solid fa-gift"></i> Giá tốt nhất thị trường
-                        </div>
-                        <div class="bonus-line">
-                            <i class="fa-solid fa-gift"></i> Quà tặng trị giá {{ rand(100,200) }}.000đ
-                        </div>
+                    <!-- NAME -->
+                    <h3 class="sale-name">{{ $sp->tensp }}</h3>
+
+                    <!-- PRICE -->
+                    <div class="sale-price">
+                        <span class="new-price">{{ number_format($sp->gia_duoc_giam) }}đ</span>
+                        <span class="old-price">{{ number_format($sp->giasp) }}đ</span>
+                        <span class="discount">-{{ $sp->giamgia }}%</span>
                     </div>
 
-                </a>
+                    <!-- INFO -->
+                    <div class="sale-info">
+                        <p>Giá tốt nhất thị trường</p>
+                        <p>Quà tặng trị giá {{ number_format(rand(50000,200000)) }}đ</p>
+                    </div>
 
-                <!-- Nút giỏ hàng -->
-                <a href="{{ route('add_to_cart', $sp->id_sanpham) }}"
-                   class="add-cart-btn js-add-to-cart" data-url="{{ route('add_to_cart', $sp->id_sanpham) }}">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                </a>
+                    <!-- PROGRESS BAR -->
+                    <div class="progress-bar">
+                        <div class="progress" style="width: {{ rand(30,80) }}%"></div>
+                    </div>
 
-            </div>
+                    <span class="sold">{{ $sp->sold }} sản phẩm đã bán</span>
+
+                </div>
             @endforeach
         </div>
 
@@ -369,7 +496,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     buttons.forEach(btn => {
         btn.addEventListener('click', function (e) {
-            e.preventDefault(); 
+            e.preventDefault();
 
             const url = this.dataset.url;
             if (!url) return;
@@ -378,13 +505,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 method: 'GET',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json'
                 }
             })
-            .then(res => res.json().catch(() => ({})))
-            .then(data => {
-                const msg = data.message || 'Đã thêm sản phẩm vào giỏ hàng';
-                showCartToast(msg);
+            .then(async res => {
+                // Tránh lỗi JSON.parse khi Laravel trả HTML
+                let data = {};
+                try {
+                    data = await res.json();
+                } catch (e) {
+                    data = { message: "Đã thêm sản phẩm vào giỏ hàng!" };
+                }
+                showCartToast(data.message);
             })
             .catch(() => {
                 showCartToast('Có lỗi xảy ra, vui lòng thử lại!');
@@ -399,9 +530,10 @@ document.addEventListener('DOMContentLoaded', function () {
         clearTimeout(toastTimeout);
         toastTimeout = setTimeout(() => {
             toast.classList.remove('show');
-        }, 2000); // hiện 2s rồi tự ẩn
+        }, 2000);
     }
 });
+
 
 
 // === Tính BMI ===
@@ -461,6 +593,51 @@ document.querySelectorAll(".copy-btn").forEach(btn => {
         setTimeout(() => btn.innerText = "Sao chép mã", 1500);
     });
 });
+</script>
+
+<script>
+    const wrapper = document.getElementById('saleWrapper');
+    const step = 260; // mỗi lần trượt 1 item
+
+    document.getElementById("slideLeft").onclick = () => {
+        wrapper.scrollLeft -= step;
+    };
+
+    document.getElementById("slideRight").onclick = () => {
+        wrapper.scrollLeft += step;
+    };
+</script>
+
+<script>
+    // Set ngày kết thúc
+    const endDate = new Date("2025-12-31 23:59:59").getTime();
+
+    const timer = setInterval(function () {
+        const now = new Date().getTime();
+        const distance = endDate - now;
+
+        if (distance < 0) {
+            clearInterval(timer);
+            document.getElementById("days").innerHTML = "00";
+            document.getElementById("hours").innerHTML = "00";
+            document.getElementById("minutes").innerHTML = "00";
+            document.getElementById("seconds").innerHTML = "00";
+            return;
+        }
+
+        // Tính toán
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Hiển thị
+        document.getElementById("days").innerHTML = days;
+        document.getElementById("hours").innerHTML = hours;
+        document.getElementById("minutes").innerHTML = minutes;
+        document.getElementById("seconds").innerHTML = seconds;
+
+    }, 1000);
 </script>
 
 
