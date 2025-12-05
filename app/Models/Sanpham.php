@@ -26,9 +26,9 @@ class SanPham extends Model
         'id_danhmuc'
     ];
 
-    public function danhmuc()
+    public function danhMuc()
     {
-        return $this->belongsTo(DanhMuc::class, 'id_danhmuc', 'id_danhmuc');
+        return $this->belongsTo(Danhmuc::class, 'id_danhmuc', 'id_danhmuc');
     }
     public function images()
     {
