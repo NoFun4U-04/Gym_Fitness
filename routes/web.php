@@ -123,6 +123,7 @@ Route::post('/mail', [MailController::class, 'subscribe'])
 
 
 
+
 //admin
 Route::prefix('/')->group(function () {
     Route::get('/admin', [AdminController::class, 'index']);

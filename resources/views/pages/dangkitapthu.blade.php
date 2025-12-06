@@ -28,7 +28,7 @@
             <h2>Đăng ký tập thử</h2>
 
             {{-- FORM SUBMIT --}}
-            <form action="{{ route('dangki.store') }}" method="POST" class="trial-register__form" id="trialForm">
+            <form action="{{ route('dang-ky-tap-thu.store') }}" method="POST" class="trial-register__form" id="trialForm">
                 @csrf
 
                 <div class="form-group">
