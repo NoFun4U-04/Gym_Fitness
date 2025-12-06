@@ -13,7 +13,7 @@
         <div class="banner-yoga-content text-center">
             <h1 class="banner-yoga-title">YOGA</h1>
 
-            <a href="{{ url('/donhang') }}" class="banner-yoga-btn">
+            <a href="{{ route('dang-ky-tap-thu') }}" class="banner-yoga-btn">
                 Miễn Phí Tập Thử
             </a>
         </div>
@@ -149,7 +149,7 @@
                         <p class="rf-yoga-why-line">RISE FITNESS CENTER?</p>
                     </div>
                     <div class="mt-4">
-                        <a href="{{ url('/donhang') }}" class="rf-yoga-why-btn">
+                        <a href="{{ route('dang-ky-tap-thu') }}" class="rf-yoga-why-btn">
                             Liên hệ tư vấn
                         </a>
                     </div>

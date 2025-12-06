@@ -13,7 +13,7 @@
         <div class="banner-dance-content text-center">
             <h1 class="banner-dance-title">DANCE</h1>
 
-            <a href="{{ url('/donhang') }}" class="banner-dance-btn">
+            <a href="{{ route('dang-ky-tap-thu') }}" class="banner-dance-btn">
                 Miễn Phí Tập Thử
             </a>
         </div>

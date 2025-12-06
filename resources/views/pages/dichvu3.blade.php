@@ -337,7 +337,7 @@
 
             {{-- NÚT LIÊN HỆ TƯ VẤN (CĂN GIỮA) --}}
             <div class="text-center mt-5">
-                <a href="{{ url('/donhang') }}" class="rf-swim-cta-btn">
+                <a href="{{ route('dang-ky-tap-thu') }}" class="rf-swim-cta-btn">
                     Liên hệ tư vấn
                 </a>
             </div>
