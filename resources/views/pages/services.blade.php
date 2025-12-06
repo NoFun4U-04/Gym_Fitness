@@ -56,7 +56,7 @@
                     <p>Năm kinh nghiệm thực chiến</p>
                 </div>
             </div>
-            <a href="#" class="hero-btn">ĐĂNG KÝ</a>
+            <a href="{{ route('dang-ky-tap-thu') }}" class="hero-btn">ĐĂNG KÝ</a>
         </div>
 
     </div>
@@ -150,7 +150,7 @@
             Chúng tôi cung cấp các sản phẩm hỗ trợ tập luyện, phụ kiện gym và đồ thể thao cao cấp.<br>
             Giúp bạn duy trì động lực và đạt hiệu quả tối đa trong từng buổi tập.
         </p>
-        <a href="#" class="hero-btn">KHÁM PHÁ SẢN PHẨM</a>
+        <a href="{{ url('/viewAll') }}" class="hero-btn">KHÁM PHÁ SẢN PHẨM</a>
     </div>
 </section>
 <section class="stats-section">

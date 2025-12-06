@@ -265,7 +265,7 @@ class HomeController extends Controller
             }
         }
 
-        $products = $query->paginate(12);
+        $products = $query->paginate(12)->appends($request->query());
 
         return response()->json([
             'html' => view('pages.components.product_list', compact('products'))->render(),

@@ -12,7 +12,7 @@
         <div class="banner-gym-content text-center">
             <h1 class="banner-gym-title">GYM</h1>
 
-            <a href="{{ url('/donhang') }}" class="banner-gym-btn">
+            <a href="{{ route('dang-ky-tap-thu') }}" class="banner-gym-btn">
                 Miễn Phí Tập Thử
             </a>
         </div>
@@ -293,7 +293,7 @@
                     </div>
 
                     <div class="rf-why-cta-wrapper">
-                        <a href="{{ URL::to('/donhang') }}" class="rf-why-cta-btn">
+                        <a href="{{ route('dang-ky-tap-thu') }}" class="rf-why-cta-btn">
                             Liên hệ tư vấn
                         </a>
                     </div>
