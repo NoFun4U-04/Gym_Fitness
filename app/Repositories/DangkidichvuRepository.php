@@ -117,16 +117,32 @@ class DangkidichvuRepository implements IDangkidichvuRepository
 
     public function getMonUaThich()
     {
-        return $this->getEnumValues('dangkidichvu', 'mon_ua_thich');
+        return [
+            'gym',
+            'yoga',
+            'boxing',
+            'dance',
+            'cardio'
+        ];
     }
 
     public function getCoSoTap()
     {
-        return $this->getEnumValues('dangkidichvu', 'co_so_tap');
+        return [
+            '12-Chùa Bộc',
+            '12-Cầu Giấy'
+        ];
     }
 
     public function getGioMongMuon()
     {
-        return $this->getEnumValues('dangkidichvu', 'gio_mong_muon');
+        return [
+            '06:00',
+            '07:00',
+            '08:00',
+            '17:00',
+            '18:00',
+            '19:00'
+        ];
     }
 }

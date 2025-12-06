@@ -67,7 +67,7 @@ class DangkidichvuController extends Controller
             'ngay_mong_muon' => 'required|date',
             'gio_mong_muon' => 'required',
             'mon_ua_thich' => 'required',
-            'co_so_tap'=> 'required'
+            'co_so_tap' => 'required'
 
         ]);
 
@@ -120,4 +120,5 @@ class DangkidichvuController extends Controller
         $this->DangkiRepository->delete($id);
         return redirect()->route('dangki.index')->with('success', 'Xóa thành công!');
     }
+    
 }
