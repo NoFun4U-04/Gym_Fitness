@@ -225,6 +225,10 @@ class ProductController extends Controller
 
         $files = $request->file('anhsp');
 
+        if ($files && !is_array($files)) {
+            $files = [$files];
+        }
+
         if ($files) {
             $destination = public_path('frontend/upload');
 
@@ -235,7 +239,7 @@ class ProductController extends Controller
             foreach ($files as $file) {
                 if (!$file) continue;
 
-                $imageName  = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $imageName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $sourcePath = $file->getRealPath();
                 $destPath   = $destination . '/' . $imageName;
 

@@ -218,12 +218,16 @@
 
         <div>
             <label class="promo-label">Ảnh sản phẩm (chọn thêm / thay thế)</label>
+
             <input type="file"
                 name="anhsp[]"
+                id="anhspInput"
                 class="form-control promo-input"
                 multiple
                 onchange="previewImagesEdit(event)">
-            <div id="preview-wrapper"></div>
+
+            <div id="preview-wrapper" class="mt-2"></div>
+
 
             @if($sp->images && $sp->images->count())
             <div class="mt-3">
@@ -336,7 +340,7 @@
 
     function previewImagesEdit(event) {
         const files = Array.from(event.target.files);
-        selectedFilesEdit = files;
+        selectedFilesEdit = selectedFilesEdit.concat(files);
 
         renderPreviewEdit();
     }
@@ -348,18 +352,18 @@
 
     function renderPreviewEdit() {
         const wrapper = document.getElementById('preview-wrapper');
-        wrapper.innerHTML = '';
+        wrapper.innerHTML = "";
 
         selectedFilesEdit.forEach((file, index) => {
-            const box = document.createElement('div');
-            box.classList.add('preview-box');
+            const box = document.createElement("div");
+            box.classList.add("preview-box");
 
-            const img = document.createElement('img');
+            const img = document.createElement("img");
             img.src = URL.createObjectURL(file);
 
-            const removeBtn = document.createElement('div');
-            removeBtn.classList.add('remove-btn');
-            removeBtn.innerHTML = '&times;';
+            const removeBtn = document.createElement("div");
+            removeBtn.classList.add("remove-btn");
+            removeBtn.innerHTML = "&times;";
             removeBtn.onclick = () => removeImageEdit(index);
 
             box.appendChild(img);
@@ -371,13 +375,14 @@
     }
 
     function updateFileInputEdit() {
-        const input = document.querySelector('input[name="anhsp[]"]');
+        const input = document.getElementById("anhspInput");
         const dt = new DataTransfer();
-        selectedFilesEdit.forEach(file => dt.items.add(file));
+        selectedFilesEdit.forEach(f => dt.items.add(f));
+
         input.files = dt.files;
     }
 
-    /* ==== TÍNH GIÁ ==== */
+
     document.addEventListener("DOMContentLoaded", function() {
 
         const giaGoc = document.querySelector("input[name='giasp']");
