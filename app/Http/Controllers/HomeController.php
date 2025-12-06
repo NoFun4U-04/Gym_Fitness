@@ -183,9 +183,36 @@ class HomeController extends Controller
     public function dangKyTapThu()
     {
         $danhmucs = Danhmuc::all();
-        return view('pages.dangkitapthu', compact('danhmucs'));
-    }
 
+        $mon_ua_thich = [
+            'gym',
+            'yoga',
+            'boxing',
+            'dance',
+            'cardio'
+        ];
+
+        $co_so_tap = [
+            '12-Chùa Bộc',
+            '12-Cầu Giấy'
+        ];
+
+        $gio_mong_muon = [
+            '06:00',
+            '07:00',
+            '08:00',
+            '17:00',
+            '18:00',
+            '19:00'
+        ];
+
+        return view('pages.dangkitapthu', compact(
+            'danhmucs',
+            'mon_ua_thich',
+            'co_so_tap',
+            'gio_mong_muon'
+        ));
+    }
 
     public function ajaxFilter(Request $request)
     {
@@ -246,5 +273,4 @@ class HomeController extends Controller
             'count' => $products->total()
         ]);
     }
-
 }

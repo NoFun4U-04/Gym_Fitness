@@ -14,7 +14,11 @@
                 <a href="{{ route('detail', ['id' => $search->id_sanpham]) }}">
                     <div class="product">
                         <div class="product__img">
-                            <img src="{{$search->anhsp}}" alt="">
+                            @php
+                            $img = $search->images->first()->duong_dan ?? 'frontend/upload/placeholder.jpg';
+                            @endphp
+
+                            <img src="{{ asset($img) }}" alt="{{ $search->tensp }}">
                         </div>
                         <div class="product__sale">
                             <div>
