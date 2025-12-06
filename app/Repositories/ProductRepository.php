@@ -32,11 +32,11 @@ class ProductRepository implements IProductRepository
             ->get();
     }
 
-   public function findProduct($id)
+    public function findProduct($id)
     {
         return Sanpham::with(['images', 'danhmuc'])->findOrFail($id);
     }
-    
+
     public function findByName($name)
     {
         return Sanpham::where('tensp', $name)->first();
@@ -67,7 +67,8 @@ class ProductRepository implements IProductRepository
 
         return Sanpham::where('tensp', 'LIKE', "%$keyword%")
             ->where('trang_thai', 1)
-            ->get();
+            ->paginate(12)                
+            ->appends($request->query());
     }
 
     public function getAllByDanhMuc($request)
@@ -105,5 +106,4 @@ class ProductRepository implements IProductRepository
 
         return $query->get();
     }
-
 }
