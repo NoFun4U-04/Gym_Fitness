@@ -137,12 +137,13 @@ class DangkidichvuRepository implements IDangkidichvuRepository
     public function getGioMongMuon()
     {
         return [
-            '06:00',
-            '07:00',
-            '08:00',
-            '17:00',
-            '18:00',
-            '19:00'
+            '07:00 - 09:00',
+            '09:00 - 11:00',
+            '13:00 - 15:00',
+            '15:00 - 17:00',
+            '17:00 - 19:00',
+            '19:00 - 21:00',
+            '21:00 - 23:00'
         ];
     }
 }
