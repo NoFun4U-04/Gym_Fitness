@@ -65,9 +65,10 @@ class ProductRepository implements IProductRepository
     {
         $keyword = $request->input('tukhoa');
 
-        return Sanpham::where('tensp', 'LIKE', "%$keyword%")
+        return Sanpham::with('images')
+            ->where('tensp', 'LIKE', "%$keyword%")
             ->where('trang_thai', 1)
-            ->paginate(12)                
+            ->paginate(12)
             ->appends($request->query());
     }
 
