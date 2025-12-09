@@ -16,7 +16,10 @@ class Dangkidichvu extends Model
         'ngay_mong_muon',
         'gio_mong_muon',
         'ghi_chu',
+        'mon_ua_thich',
+        'co_so_tap',
         'trangthai',
         'id_nguoidung'
+
     ];
 }

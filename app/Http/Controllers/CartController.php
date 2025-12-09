@@ -362,59 +362,77 @@ class CartController extends Controller
 
     public function vnpay(Request $request)
     {
-        $vnp_TmnCode = "GHHNT2HB"; // Mã website tại VNPAY
-        $vnp_HashSecret = "BAGAOHAPRHKQZASKQZASVPRSAKPXNYXS"; // Chuỗi bí mật
+        $vnp_TmnCode    = "4M7EXIQQ"; 
+        $vnp_HashSecret = "QKB1K3QJ7DL73O6GHQDRUNWTIJ3XQ77Q";
 
-        $vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = url('/thongbaodathang');;
-        $vnp_TxnRef = date("YmdHis"); // Mã đơn hàng
-        $vnp_OrderInfo = "Thanh toán hóa đơn phí dich vụ";
-        $vnp_OrderType = 'billpayment';
+        $vnp_Url        = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+        $vnp_Returnurl  = url('/thongbaodathang');
 
-        $vnp_Amount = $request->tongtien * 100;
-        $vnp_Locale = 'vn';
-        $vnp_IpAddr = request()->ip();
-        $inputData = array(
-            "vnp_Version" => "2.0.0",
-            "vnp_TmnCode" => $vnp_TmnCode,
-            "vnp_Amount" => $vnp_Amount,
-            "vnp_Command" => "pay",
+        $vnp_TxnRef     = date("YmdHis");   // mã giao dịch
+        $vnp_Amount     = $request->tienphaitra * 100; // nhân 100 theo chuẩn VNPAY
+        $vnp_OrderInfo  = "Thanh toán hóa đơn: " . $vnp_TxnRef;
+        $vnp_OrderType  = "other";
+        $vnp_IpAddr     = request()->ip();
+
+        // -------------------------------
+        // BUILD DATA GỬI LÊN VNPAY
+        // -------------------------------
+        $inputData = [
+            "vnp_Version"    => "2.1.0",
+            "vnp_TmnCode"    => $vnp_TmnCode,
+            "vnp_Amount"     => $vnp_Amount,
+            "vnp_Command"    => "pay",
             "vnp_CreateDate" => date('YmdHis'),
-            "vnp_CurrCode" => "VND",
-            "vnp_IpAddr" => $vnp_IpAddr,
-            "vnp_Locale" => $vnp_Locale,
-            "vnp_OrderInfo" => $vnp_OrderInfo,
-            "vnp_OrderType" => $vnp_OrderType,
-            "vnp_ReturnUrl" => $vnp_Returnurl,
-            "vnp_TxnRef" => $vnp_TxnRef,
-        );
+            "vnp_CurrCode"   => "VND",
+            "vnp_IpAddr"     => $vnp_IpAddr,
+            "vnp_Locale"     => "vn",
+            "vnp_OrderInfo"  => $vnp_OrderInfo,
+            "vnp_OrderType"  => $vnp_OrderType,
+            "vnp_ReturnUrl"  => $vnp_Returnurl,
+            "vnp_TxnRef"     => $vnp_TxnRef
+        ];
 
-        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
-            $inputData['vnp_BankCode'] = $vnp_BankCode;
+        // Nếu có bankCode
+        if ($request->bankCode) {
+            $inputData['vnp_BankCode'] = $request->bankCode;
         }
+
+        // -------------------------------
+        // SORT KEY + TẠO QUERY & HASH
+        // -------------------------------
         ksort($inputData);
+
         $query = "";
-        $i = 0;
         $hashdata = "";
+        $i = 0;
+
         foreach ($inputData as $key => $value) {
             if ($i == 1) {
-                $hashdata .= '&' . $key . "=" . $value;
+                $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
             } else {
-                $hashdata .= $key . "=" . $value;
+                $hashdata .= urlencode($key) . "=" . urlencode($value);
                 $i = 1;
             }
+
             $query .= urlencode($key) . "=" . urlencode($value) . '&';
         }
 
-        $vnp_Url = $vnp_Url . "?" . $query;
-        if (isset($vnp_HashSecret)) {
-            $vnpSecureHash = hash('sha256', $vnp_HashSecret . $hashdata);
-            $vnp_Url .= 'vnp_SecureHashType=SHA256&vnp_SecureHash=' . $vnpSecureHash;
-        }
+        // -------------------------------
+        // TẠO SECURE HASH ĐÚNG CHUẨN
+        // -------------------------------
+        $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);
+
+        // Append vào URL
+        $vnp_Url = $vnp_Url . "?" . $query . "vnp_SecureHash=" . $vnpSecureHash;
+
+        // -------------------------------
+        // LƯU ORDER TẠM (NẾU CẦN)
+        // -------------------------------
         session()->put('order_data', $request->all());
+        session()->put('vnp_TxnRef', $vnp_TxnRef);
+
         return redirect($vnp_Url);
     }
-    
     
     public function applyPromo(Request $request)
     {
@@ -499,8 +517,6 @@ class CartController extends Controller
             'message' => 'Áp dụng mã thành công!',
         ]);
     }
-
-
 
 
 

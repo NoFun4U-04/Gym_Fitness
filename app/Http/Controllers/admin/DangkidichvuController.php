@@ -84,6 +84,7 @@ class DangkidichvuController extends Controller
             'updated_at' => now(),
         ];
 
+
         $this->DangkiRepository->store($data);
 
         return redirect()->back()->with('success', 'Đăng ký thành công! Chúng tôi sẽ liên hệ sớm.');
