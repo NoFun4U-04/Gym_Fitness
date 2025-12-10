@@ -11,13 +11,13 @@ return new class extends Migration
         Schema::table('nguoidung', function (Blueprint $table) {
             // Nếu bảng chưa có timestamps thì thêm vào
             if (!Schema::hasColumn('nguoidung', 'created_at')) {
-                $table->timestamp('created_at')->useCurrent(); // mặc định = NOW()
+                $table->timestamp('created_at')->useCurrent(); 
             }
 
             if (!Schema::hasColumn('nguoidung', 'updated_at')) {
                 $table->timestamp('updated_at')
                       ->useCurrent()
-                      ->useCurrentOnUpdate(); // tự động cập nhật khi update
+                      ->useCurrentOnUpdate(); 
             }
         });
     }
