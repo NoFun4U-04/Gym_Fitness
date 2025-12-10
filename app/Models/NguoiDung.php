@@ -16,7 +16,7 @@ class NguoiDung extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'hoten', 'email', 'password', 'diachi', 'sdt', 'id_phanquyen'
+        'hoten', 'email', 'password', 'diachi', 'sdt', 'id_phanquyen', 'trang_thai'
     ];
 
     /**

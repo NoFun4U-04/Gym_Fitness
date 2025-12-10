@@ -35,17 +35,27 @@ class AuthController extends Controller
 
     public function loginPost(Request $request)
     {
-        $credetials = [
+        // Lấy user theo email
+        $user = NguoiDung::where('email', $request->email)->first();
+
+        // Nếu không có user hoặc trạng thái = 0 -> báo lỗi
+        if ($user->trang_thai == 0) {
+            return back()->with('error', 'Tài khoản đang bị khóa!');
+        }
+
+        // Kiểm tra đăng nhập
+        $credentials = [
             'email' => $request->email,
             'password' => $request->password
         ];
 
-        if (Auth::attempt($credetials)) {
+        if (Auth::attempt($credentials)) {
             return redirect('/')->with('thongbao', 'Đăng nhập thành công');
         }
 
-        return redirect()->back()->with('error', 'Sai tên đăng nhập hoặc mật khẩu!');;
+        return back()->with('error', 'Sai tên đăng nhập hoặc mật khẩu!');
     }
+
 
     public function logout()
     {

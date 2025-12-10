@@ -132,7 +132,6 @@
                 <option value="">📌 Tất cả quyền</option>
                 <option value="1" {{ request('role')==1 ? 'selected':'' }}>Admin</option>
                 <option value="2" {{ request('role')==2 ? 'selected':'' }}>User</option>
-                <option value="3" {{ request('role')==3 ? 'selected':'' }}>Nhân viên</option>
             </select>
         </form>
 
